@@ -10,7 +10,6 @@ export const siteConfig = {
     linkedin: "https://www.linkedin.com/in/martinov/",
     github: "https://github.com/martinov/",
   },
-  location: "Pleven, Bulgaria 🇧🇬",
   copyright: `© ${new Date().getFullYear()} Martin Martinov`,
 };
 

@@ -8,8 +8,7 @@ export const workIntro = {
 export const caseStudies = [
   {
     id: "ecommerce",
-    title: "E-Commerce Order Fulfillment with Agentic AI",
-    status: "Can be discussed freely",
+    title: "E-Commerce Order Processing with Agentic AI",
     challenge: {
       heading: "The Challenge",
       points: [
@@ -39,7 +38,6 @@ export const caseStudies = [
   {
     id: "insurance",
     title: "Insurance Broker AI Assistant",
-    status: "Brief mention only (under NDA, not yet production)",
     challenge: {
       heading: "The Challenge",
       points: [
@@ -57,16 +55,12 @@ export const caseStudies = [
     },
     outcome: {
       heading: null,
-      points: [
-        "Full case study available once project is in production",
-      ],
+      points: ["Full case study available once project is in production"],
     },
   },
   {
     id: "hvac",
-    title:
-      "HVAC Systems Company - Digital Foundation & Automation Roadmap",
-    status: "Can discuss (family business, website live)",
+    title: "HVAC Systems Company - Digital Foundation & Automation Roadmap",
     challenge: {
       heading: "The Challenge",
       points: [
@@ -125,7 +119,6 @@ export const caseStudies = [
   {
     id: "iaea",
     title: "IAEA - Centralized CMS Management",
-    status: "Can mention generally (Drupal-specific, historical)",
     challenge: {
       heading: "The Challenge",
       points: [
@@ -147,10 +140,8 @@ export const caseStudies = [
 
 export const otherExperience = {
   heading: "Other Experience",
-  text:
-    "Brief mention of other domains: FOREX trading automation with ML models, healthcare systems, fintech backend systems.",
-  note:
-    "Most of my work involves complex integrations, API design, and backend systems. If you want to know whether I've solved a problem similar to yours, just ask.",
+  text: "Brief mention of other domains: FOREX trading automation with ML models, healthcare systems, fintech backend systems.",
+  note: "Most of my work involves complex integrations, API design, and backend systems. If you want to know whether I've solved a problem similar to yours, just ask.",
 };
 
 export const workCta = {

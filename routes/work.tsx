@@ -3,7 +3,12 @@ import PageLayout from "../components/PageLayout.tsx";
 import Section from "../components/Section.tsx";
 import Button from "../components/Button.tsx";
 import SEO from "../components/SEO.tsx";
-import { workIntro, caseStudies, otherExperience, workCta } from "../content/work.ts";
+import {
+  workIntro,
+  caseStudies,
+  otherExperience,
+  workCta,
+} from "../content/work.ts";
 
 export default define.page(function Work() {
   return (
@@ -20,9 +25,7 @@ export default define.page(function Work() {
             <h1 class="text-4xl sm:text-5xl font-bold mb-6">
               {workIntro.heading}
             </h1>
-            <p class="text-lg text-gray-600">
-              {workIntro.intro}
-            </p>
+            <p class="text-lg text-gray-600">{workIntro.intro}</p>
           </div>
         </Section>
 
@@ -35,7 +38,6 @@ export default define.page(function Work() {
           >
             <div class="max-w-4xl mx-auto">
               <h2 class="text-3xl font-bold mb-3">{caseStudy.title}</h2>
-              <p class="text-sm text-gray-500 mb-8 italic">{caseStudy.status}</p>
 
               {/* Challenge */}
               {caseStudy.challenge && (
@@ -45,7 +47,10 @@ export default define.page(function Work() {
                   </h3>
                   <ul class="space-y-2">
                     {caseStudy.challenge.points.map((point, i) => (
-                      <li key={i} class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0">
+                      <li
+                        key={i}
+                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                      >
                         {point}
                       </li>
                     ))}
@@ -61,7 +66,10 @@ export default define.page(function Work() {
                   </h3>
                   <ul class="space-y-2">
                     {caseStudy.solution.points.map((point, i) => (
-                      <li key={i} class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0">
+                      <li
+                        key={i}
+                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                      >
                         {point}
                       </li>
                     ))}
@@ -96,7 +104,10 @@ export default define.page(function Work() {
                   </h3>
                   <ul class="space-y-2">
                     {caseStudy.approach.points.map((point, i) => (
-                      <li key={i} class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0">
+                      <li
+                        key={i}
+                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                      >
                         {point}
                       </li>
                     ))}
@@ -112,7 +123,10 @@ export default define.page(function Work() {
                   </h3>
                   <ul class="space-y-2">
                     {caseStudy.insight.points.map((point, i) => (
-                      <li key={i} class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0">
+                      <li
+                        key={i}
+                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                      >
                         {point}
                       </li>
                     ))}
@@ -128,7 +142,10 @@ export default define.page(function Work() {
                   </h3>
                   <ul class="space-y-2">
                     {caseStudy.outcome.points.map((point, i) => (
-                      <li key={i} class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0">
+                      <li
+                        key={i}
+                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                      >
                         {point}
                       </li>
                     ))}

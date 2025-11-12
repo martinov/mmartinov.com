@@ -12,22 +12,11 @@ export default function Footer() {
             <p class="text-sm text-gray-600">
               Software architect specializing in business process automation and AI integration
             </p>
-            <p class="text-sm text-gray-600 mt-2">
-              {siteConfig.location}
-            </p>
           </div>
 
           <div>
             <h3 class="text-sm font-semibold text-gray-900 mb-4">Connect</h3>
             <ul class="space-y-2">
-              <li>
-                <a
-                  href={`mailto:${siteConfig.email}`}
-                  class="text-sm text-gray-600 hover:text-teal-600"
-                >
-                  {siteConfig.email}
-                </a>
-              </li>
               <li>
                 <a
                   href={siteConfig.social.linkedin}

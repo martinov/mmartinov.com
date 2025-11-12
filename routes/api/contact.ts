@@ -1,4 +1,5 @@
 import { define } from "../../utils.ts";
+import { Resend } from "resend";
 
 interface ContactFormData {
   name: string;
@@ -7,6 +8,9 @@ interface ContactFormData {
   message: string;
   preferredTime?: string;
 }
+
+// Initialize Resend with API key from environment
+const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 export const handler = define.handlers({
   async POST(ctx) {
@@ -36,35 +40,134 @@ export const handler = define.handlers({
         );
       }
 
-      // Log the submission (in production, this would send an email)
-      console.log("Contact form submission:", {
-        timestamp: new Date().toISOString(),
-        name: data.name,
-        email: data.email,
-        company: data.company || "N/A",
-        message: data.message,
-        preferredTime: data.preferredTime || "N/A",
-      });
+      // Sanitize message to prevent XSS in email
+      const sanitizeHtml = (text: string) =>
+        text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;")
+          .replace(/\n/g, "<br>");
 
-      // TODO: In production, integrate with email service (e.g., Resend, SendGrid)
-      // Example with Resend:
-      // await resend.emails.send({
-      //   from: 'website@mmartinov.com',
-      //   to: 'me@mmartinov.com',
-      //   subject: `New contact form submission from ${data.name}`,
-      //   html: `
-      //     <h2>New Contact Form Submission</h2>
-      //     <p><strong>Name:</strong> ${data.name}</p>
-      //     <p><strong>Email:</strong> ${data.email}</p>
-      //     <p><strong>Company:</strong> ${data.company || 'N/A'}</p>
-      //     <p><strong>Message:</strong></p>
-      //     <p>${data.message}</p>
-      //     <p><strong>Preferred Time:</strong> ${data.preferredTime || 'N/A'}</p>
-      //   `
-      // });
+      // Send email via Resend
+      try {
+        const { data: emailData, error: emailError } = await resend.emails.send({
+          from: "Martin Martinov Website <website@mmartinov.com>",
+          to: "me@mmartinov.com",
+          replyTo: data.email,
+          subject: `New Contact: ${data.name}${data.company ? ` from ${data.company}` : ""}`,
+          html: `
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <meta charset="utf-8">
+                <style>
+                  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; }
+                  .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                  .header { background-color: #111827; color: white; padding: 20px; border-radius: 8px 8px 0 0; }
+                  .header h1 { margin: 0; font-size: 24px; }
+                  .content { background-color: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
+                  .field { margin-bottom: 20px; }
+                  .label { font-weight: 600; color: #374151; margin-bottom: 5px; }
+                  .value { color: #1f2937; }
+                  .message-box { background-color: white; padding: 15px; border-radius: 4px; border-left: 4px solid #111827; margin-top: 10px; }
+                  .footer { margin-top: 20px; padding-top: 20px; border-top: 1px solid #d1d5db; color: #6b7280; font-size: 14px; }
+                  .reply-button { display: inline-block; background-color: #111827; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin-top: 20px; }
+                </style>
+              </head>
+              <body>
+                <div class="container">
+                  <div class="header">
+                    <h1>📧 New Contact Form Submission</h1>
+                  </div>
+                  <div class="content">
+                    <div class="field">
+                      <div class="label">From:</div>
+                      <div class="value"><strong>${sanitizeHtml(data.name)}</strong></div>
+                    </div>
+
+                    <div class="field">
+                      <div class="label">Email:</div>
+                      <div class="value"><a href="mailto:${data.email}">${data.email}</a></div>
+                    </div>
+
+                    ${data.company ? `
+                    <div class="field">
+                      <div class="label">Company:</div>
+                      <div class="value">${sanitizeHtml(data.company)}</div>
+                    </div>
+                    ` : ""}
+
+                    ${data.preferredTime ? `
+                    <div class="field">
+                      <div class="label">Preferred Time for Call:</div>
+                      <div class="value">${sanitizeHtml(data.preferredTime)}</div>
+                    </div>
+                    ` : ""}
+
+                    <div class="field">
+                      <div class="label">Message:</div>
+                      <div class="message-box">
+                        ${sanitizeHtml(data.message)}
+                      </div>
+                    </div>
+
+                    <a href="mailto:${data.email}" class="reply-button">Reply to ${sanitizeHtml(data.name)}</a>
+
+                    <div class="footer">
+                      <p>Received: ${new Date().toLocaleString("en-US", {
+                        dateStyle: "full",
+                        timeStyle: "short",
+                        timeZone: "Europe/Sofia"
+                      })}</p>
+                      <p>Submitted via mmartinov.com contact form</p>
+                    </div>
+                  </div>
+                </div>
+              </body>
+            </html>
+          `,
+        });
+
+        if (emailError) {
+          console.error("Resend API error:", emailError);
+          throw new Error("Failed to send email");
+        }
+
+        console.log("Contact form email sent successfully:", emailData);
+      } catch (emailSendError) {
+        console.error("Error sending email via Resend:", emailSendError);
+
+        // Log the submission even if email fails
+        console.log("Contact form submission (email failed):", {
+          timestamp: new Date().toISOString(),
+          name: data.name,
+          email: data.email,
+          company: data.company || "N/A",
+          message: data.message,
+          preferredTime: data.preferredTime || "N/A",
+        });
+
+        // Return success to user but log the error
+        // (User shouldn't be penalized for email service issues)
+        return new Response(
+          JSON.stringify({
+            success: true,
+            message: "Message received. We'll get back to you soon."
+          }),
+          {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+      }
 
       return new Response(
-        JSON.stringify({ success: true, message: "Message received" }),
+        JSON.stringify({
+          success: true,
+          message: "Message sent successfully"
+        }),
         {
           status: 200,
           headers: { "Content-Type": "application/json" },

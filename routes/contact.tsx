@@ -60,7 +60,7 @@ export default define.page(function Contact() {
             </h2>
 
             {/* Primary Booking - Google Calendar */}
-            <div class="bg-white border-2 border-gray-900 rounded-lg p-8 mb-8 text-center">
+            <div class="bg-white border-2 border-teal-600 rounded-lg p-8 mb-8 text-center">
               <h3 class="text-xl font-semibold mb-3">
                 {bookingInfo.primaryBooking.text}
               </h3>
@@ -99,7 +99,7 @@ export default define.page(function Contact() {
                       href={method.href}
                       target={method.href.startsWith("http") ? "_blank" : undefined}
                       rel={method.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      class="text-gray-900 hover:underline"
+                      class="text-teal-600 hover:text-teal-700 hover:underline"
                     >
                       {method.value}
                     </a>
@@ -121,7 +121,7 @@ export default define.page(function Contact() {
                 href={camplightNote.link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-gray-900 font-medium hover:underline"
+                class="text-teal-600 font-medium hover:text-teal-700 hover:underline"
               >
                 {camplightNote.link.text}
               </a>

@@ -76,14 +76,14 @@ export default function ContactForm() {
     <div class="bg-white border border-gray-200 rounded-lg p-6 sm:p-8">
       {submitStatus.value === "success" ? (
         <div class="text-center py-8">
-          <div class="text-green-600 text-5xl mb-4">✓</div>
+          <div class="text-emerald-500 text-5xl mb-4">✓</div>
           <h3 class="text-2xl font-semibold mb-2">Message Sent!</h3>
           <p class="text-gray-600 mb-6">
             Thanks for reaching out. I'll get back to you soon.
           </p>
           <button
             onClick={() => submitStatus.value = "idle"}
-            class="text-gray-900 hover:underline font-medium"
+            class="text-teal-600 hover:text-teal-700 hover:underline font-medium"
           >
             Send another message
           </button>
@@ -117,7 +117,7 @@ export default function ContactForm() {
                   required={field.required}
                   placeholder={field.placeholder}
                   rows={field.rows || 4}
-                  class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent"
                 />
               ) : (
                 <input
@@ -126,7 +126,7 @@ export default function ContactForm() {
                   name={field.name}
                   required={field.required}
                   placeholder={field.placeholder}
-                  class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-transparent"
                 />
               )}
             </div>

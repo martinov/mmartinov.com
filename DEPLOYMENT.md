@@ -13,23 +13,25 @@
 - [ ] Verify analytics script is loading (check Network tab in browser DevTools)
 
 ### 3. Email Integration (Contact Form)
-The contact form currently logs submissions to console. To enable email notifications:
+**✅ Resend is already integrated!**
 
-**Option A: Using Resend (Recommended)**
-1. Sign up at https://resend.com
-2. Install Resend: `deno add npm:resend`
-3. Add RESEND_API_KEY to environment variables
-4. Update `routes/api/contact.ts` to use Resend (see TODO comments in file)
+The contact form uses Resend for email delivery. You just need to configure it:
 
-**Option B: Using SendGrid**
-1. Sign up at https://sendgrid.com
-2. Install SendGrid SDK
-3. Add SENDGRID_API_KEY to environment variables
-4. Update `routes/api/contact.ts` accordingly
+**Quick Setup:**
+1. Sign up at https://resend.com (free tier: 3,000 emails/month)
+2. Get your API key from https://resend.com/api-keys
+3. Add domain mmartinov.com and verify DNS records
+4. Add `RESEND_API_KEY` to environment variables
+5. Done!
 
-**Option C: Using Form Service**
-- Consider using services like Formspree, Netlify Forms, or similar
-- Update the contact form to POST to their endpoint
+**📖 Detailed Instructions:** See [RESEND_SETUP.md](./RESEND_SETUP.md) for complete setup guide
+
+**Features Included:**
+- ✅ Professional HTML email template
+- ✅ Spam prevention (honeypot + timing validation)
+- ✅ Reply-to sender's email for easy responses
+- ✅ Error handling and fallback logging
+- ✅ XSS protection and input sanitization
 
 ### 4. Content Review
 - [ ] Verify all case study information is accurate

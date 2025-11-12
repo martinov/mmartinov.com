@@ -1,4 +1,5 @@
 import { useSignal } from "@preact/signals";
+import { useEffect } from "preact/hooks";
 import Button from "../components/Button.tsx";
 import { formFields } from "../content/contact.ts";
 
@@ -6,6 +7,12 @@ export default function ContactForm() {
   const isSubmitting = useSignal(false);
   const submitStatus = useSignal<"idle" | "success" | "error">("idle");
   const errorMessage = useSignal("");
+  const formLoadTime = useSignal(0);
+
+  // Track when the form was loaded for anti-spam timing check
+  useEffect(() => {
+    formLoadTime.value = Date.now();
+  }, []);
 
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
@@ -16,6 +23,28 @@ export default function ContactForm() {
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
+
+    // Anti-spam checks
+    // 1. Check honeypot field (should be empty)
+    if (data.website) {
+      // Bot detected - fail silently
+      submitStatus.value = "error";
+      errorMessage.value = "Something went wrong. Please try again.";
+      isSubmitting.value = false;
+      return;
+    }
+
+    // 2. Check minimum time (humans take at least 3 seconds to fill a form)
+    const timeSpent = Date.now() - formLoadTime.value;
+    if (timeSpent < 3000) {
+      submitStatus.value = "error";
+      errorMessage.value = "Please take your time filling out the form.";
+      isSubmitting.value = false;
+      return;
+    }
+
+    // Remove honeypot from data before sending
+    delete data.website;
 
     try {
       const response = await fetch("/api/contact", {
@@ -61,6 +90,18 @@ export default function ContactForm() {
         </div>
       ) : (
         <form onSubmit={handleSubmit} class="space-y-6">
+          {/* Honeypot field - hidden from humans, visible to bots */}
+          <div style={{ position: "absolute", left: "-9999px" }} aria-hidden="true">
+            <label htmlFor="website">Website (leave blank)</label>
+            <input
+              type="text"
+              id="website"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
+
           {formFields.map((field) => (
             <div key={field.name}>
               <label

@@ -76,7 +76,7 @@ Domain name: mmartinov.com
 **Final CTA Section:**
 - Heading: "Ready to Automate the Boring Stuff?"
 - Text: "Let's talk about your processes, your challenges, and whether automation makes sense for you."
-- CTA: "Book a 30-Minute Call" (link to Calendly or contact page)
+- CTA: "Book a 30-Minute Call" (link to Google Calendar or contact page)
 
 ---
 
@@ -226,7 +226,7 @@ Domain name: mmartinov.com
 - I'll tell you if I think I can help (and if I can't, I might know who can)
 
 **Booking Options:**
-1. **Primary:** Calendly embed/link for direct booking
+1. **Primary:** Google Calendar link for direct booking: https://calendar.app.google/QyDm9yt2LodPDp2P9
 2. **Alternative:** Email form with fields:
    - Name
    - Email
@@ -272,7 +272,7 @@ Domain name: mmartinov.com
 
 ### Forms & Booking:
 - Contact form
-- Calendly embed for booking (or alternative booking system)
+- Google Calendar link for booking
 
 ### Analytics:
 - Basic analytics (Plausible or similar privacy-focused option preferred)
@@ -350,7 +350,6 @@ Domain name: mmartinov.com
 3. **Content finalization:**
    - Verify e-commerce case study with client
    - Gather any additional project details
-   - Confirm Calendly/booking setup
 4. **Development:** Build site based on this spec
 5. **Review & iterate:** Martin reviews, provides feedback
 6. **Deploy:** Launch to mmartinov.com

@@ -76,7 +76,7 @@ export default define.page(function About() {
                           href={point.link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          class="text-gray-900 font-medium hover:underline"
+                          class="text-teal-600 font-medium hover:text-teal-700 hover:underline"
                         >
                           {point.link.text}
                         </a>

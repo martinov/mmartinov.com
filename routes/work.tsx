@@ -77,8 +77,8 @@ export default define.page(function Work() {
                   </h3>
                   <div class="space-y-4">
                     {caseStudy.roadmap.items.map((item, i) => (
-                      <div key={i} class="border-l-4 border-gray-300 pl-4">
-                        <h4 class="font-semibold text-gray-900 mb-1">
+                      <div key={i} class="border-l-4 border-teal-600 pl-4">
+                        <h4 class="font-semibold text-teal-600 mb-1">
                           {item.title}
                         </h4>
                         <p class="text-gray-700">{item.description}</p>

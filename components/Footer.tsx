@@ -23,7 +23,7 @@ export default function Footer() {
               <li>
                 <a
                   href={`mailto:${siteConfig.email}`}
-                  class="text-sm text-gray-600 hover:text-gray-900"
+                  class="text-sm text-gray-600 hover:text-teal-600"
                 >
                   {siteConfig.email}
                 </a>
@@ -33,7 +33,7 @@ export default function Footer() {
                   href={siteConfig.social.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="text-sm text-gray-600 hover:text-gray-900"
+                  class="text-sm text-gray-600 hover:text-teal-600"
                 >
                   LinkedIn
                 </a>
@@ -43,7 +43,7 @@ export default function Footer() {
                   href={siteConfig.social.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="text-sm text-gray-600 hover:text-gray-900"
+                  class="text-sm text-gray-600 hover:text-teal-600"
                 >
                   GitHub
                 </a>
@@ -59,7 +59,7 @@ export default function Footer() {
               href="https://camplight.net"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-gray-900 hover:underline font-medium"
+              class="text-teal-600 hover:text-teal-700 hover:underline font-medium"
             >
               Camplight
             </a>

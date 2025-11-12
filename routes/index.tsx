@@ -51,7 +51,7 @@ export default define.page(function Home() {
                     href={item.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="hover:text-gray-900 font-medium"
+                    class="hover:text-teal-600 font-medium"
                   >
                     {item.text}
                   </a>
@@ -70,8 +70,8 @@ export default define.page(function Home() {
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             {whatIDo.services.map((service, index) => (
-              <div key={index}>
-                <h3 class="text-xl font-semibold mb-3">{service.title}</h3>
+              <div key={index} class="border-l-4 border-teal-600 pl-4">
+                <h3 class="text-xl font-semibold mb-3 text-teal-600">{service.title}</h3>
                 <p class="text-gray-600 mb-2">
                   <span class="font-medium">Problem:</span> {service.problem}
                 </p>
@@ -93,11 +93,11 @@ export default define.page(function Home() {
               <a
                 key={index}
                 href={project.link}
-                class="block bg-white p-6 rounded-lg border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all"
+                class="block bg-white p-6 rounded-lg border border-gray-200 hover:border-teal-600 hover:shadow-md transition-all"
               >
                 <h3 class="text-xl font-semibold mb-3">{project.type}</h3>
                 <p class="text-gray-600 mb-4">{project.description}</p>
-                <p class="text-sm font-medium text-gray-900">
+                <p class="text-sm font-medium text-teal-600">
                   {project.outcome}
                 </p>
               </a>

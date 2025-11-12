@@ -4,8 +4,8 @@ export default function Footer() {
   return (
     <footer class="border-t border-gray-200 mt-20">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div class="md:col-span-3">
             <h3 class="text-sm font-semibold text-gray-900 mb-4">
               Martin Martinov
             </h3>

@@ -3,6 +3,7 @@ import PageLayout from "../components/PageLayout.tsx";
 import Section from "../components/Section.tsx";
 import Button from "../components/Button.tsx";
 import SEO from "../components/SEO.tsx";
+import ServiceIcon from "../components/ServiceIcon.tsx";
 import {
   hero,
   credibilityBand,
@@ -70,8 +71,11 @@ export default define.page(function Home() {
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             {whatIDo.services.map((service, index) => (
-              <div key={index} class="border-l-4 border-teal-600 pl-4">
-                <h3 class="text-xl font-semibold mb-3 text-teal-600">{service.title}</h3>
+              <div key={index}>
+                <div class="flex items-start gap-3 mb-4 h-12">
+                  <ServiceIcon type={service.icon as "workflow" | "brain" | "architecture"} />
+                  <h3 class="text-xl font-semibold text-gray-900">{service.title}</h3>
+                </div>
                 <p class="text-gray-600 mb-2">
                   <span class="font-medium">Problem:</span> {service.problem}
                 </p>

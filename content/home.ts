@@ -18,7 +18,7 @@ export const credibilityBand = [
   { text: "Building commercial systems since 2001" },
   { text: "Co-owner @ Camplight", link: "https://camplight.net" },
   {
-    text: "Cross-industry experience (fintech, edtech, healthcare)",
+    text: "Specializing in AI integration and process automation",
   },
   { text: "300+ projects delivered" },
 ];
@@ -31,18 +31,21 @@ export const whatIDo = {
       problem: "Manual processes eating your team's time",
       solution:
         "Build automation systems that handle the repetitive work reliably",
+      icon: "workflow",
     },
     {
       title: "AI Integration for Real Business Problems",
       problem: "AI hype vs actual value",
       solution:
         "Design and implement LLM agents and AI workflows that solve specific, measurable problems",
+      icon: "brain",
     },
     {
       title: "System Architecture & Technical Strategy",
       problem: "Technical decisions that lock you in or slow you down",
       solution:
         "Design systems with Event Sourcing and modern patterns that adapt as your business grows",
+      icon: "architecture",
     },
   ],
 };

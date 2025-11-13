@@ -27,7 +27,7 @@
     "vite": "npm:vite@^7.2.2",
     "tailwindcss": "npm:tailwindcss@^4.1.17",
     "@tailwindcss/vite": "npm:@tailwindcss/vite@^4.1.17",
-    "resend": "npm:resend@^4.8.0"
+    "resend": "npm:resend@^6.4.2"
   },
   "compilerOptions": {
     "lib": [

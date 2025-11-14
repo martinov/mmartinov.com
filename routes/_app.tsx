@@ -9,7 +9,7 @@ export default define.page(function App({ Component }) {
         <title>Martin Martinov - Software Architect & Automation Consultant</title>
         <meta
           name="description"
-          content="Software architect specializing in business process automation and AI integration. 20+ years building systems that work."
+          content="Software architect specializing in business process automation and AI integration. 22+ years building systems that work."
         />
 
         {/* Plausible Analytics - Privacy-focused, GDPR compliant */}

@@ -18,7 +18,7 @@ export default define.page(function About() {
     <>
       <SEO
         title="About"
-        description="20+ years of software development. From coding at age 11 to building systems across finance, insurance, healthcare, and e-commerce. Based in Bulgaria, working globally."
+        description="22+ years of software development. From coding at age 11 to building systems across finance, insurance, healthcare, and e-commerce. Based in Bulgaria, working globally."
         path="/about"
       />
       <PageLayout currentPath="/about">

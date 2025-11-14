@@ -73,7 +73,7 @@ export const recentWork = {
 };
 
 export const aboutPreview = {
-  text: "I coded my first program in 1996 on an 8-bit computer. Today I have 20+ years building systems across finance, insurance, healthcare, and e-commerce. When I'm not working, you'll find me rock climbing or riding motorcycles.",
+  text: "I coded my first program in 1996 on an 8-bit computer. Today I have 22+ years building systems across finance, insurance, healthcare, and e-commerce. When I'm not working, you'll find me rock climbing or riding motorcycles.",
   ctaText: "More About Me",
   ctaLink: "/about",
 };

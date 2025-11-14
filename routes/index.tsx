@@ -18,7 +18,7 @@ export default define.page(function Home() {
     <>
       <SEO
         title="Martin Martinov - Software Architect & Automation Consultant"
-        description="Software architect specializing in business process automation and AI integration. 20+ years building systems that work."
+        description="Software architect specializing in business process automation and AI integration. 22+ years building systems that work."
         path="/"
       />
       <PageLayout currentPath="/">

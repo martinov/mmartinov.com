@@ -7,7 +7,7 @@ export const story = {
   heading: "The Story",
   paragraphs: [
     "Born in Pleven, Bulgaria. Started coding in 1996 at age 11 on an 8-bit computer.",
-    "Moved to Sofia and started my software engineering career. 20+ years of commercial software development experience.",
+    "Moved to Sofia and started my software engineering career. Two decades of commercial software development experience.",
     "Lived and worked across multiple countries: Bulgaria, Denmark, Germany, Austria, UK. Former IAEA consultant.",
     "Moved back to Pleven with my fiancé, had a son (he's 3 years old now, almost 4).",
     "Currently: Principal Engineer and co-owner of Camplight cooperative.",

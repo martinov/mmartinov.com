@@ -3,7 +3,7 @@ export const hero = {
   headline:
     "Software architect specializing in business process automation and AI integration",
   subheadline:
-    "I help companies eliminate repetitive manual work so teams can focus on what actually matters. 20+ years of experience building systems that work.",
+    "I help companies eliminate repetitive manual work so teams can focus on what actually matters. 22+ years of experience building systems that work.",
   primaryCta: {
     text: "View My Work",
     href: "/work",
@@ -18,7 +18,7 @@ export const credibilityBand = [
   { text: "Building commercial systems since 2001" },
   { text: "Co-owner @ Camplight", link: "https://camplight.net" },
   {
-    text: "Cross-industry experience (fintech, edtech, healthcare)",
+    text: "Specializing in AI integration and process automation",
   },
   { text: "300+ projects delivered" },
 ];
@@ -31,18 +31,21 @@ export const whatIDo = {
       problem: "Manual processes eating your team's time",
       solution:
         "Build automation systems that handle the repetitive work reliably",
+      icon: "workflow",
     },
     {
       title: "AI Integration for Real Business Problems",
       problem: "AI hype vs actual value",
       solution:
         "Design and implement LLM agents and AI workflows that solve specific, measurable problems",
+      icon: "brain",
     },
     {
       title: "System Architecture & Technical Strategy",
       problem: "Technical decisions that lock you in or slow you down",
       solution:
         "Design systems with Event Sourcing and modern patterns that adapt as your business grows",
+      icon: "architecture",
     },
   ],
 };
@@ -70,7 +73,7 @@ export const recentWork = {
 };
 
 export const aboutPreview = {
-  text: "I coded my first program in 1996 on an 8-bit computer. Today I have 20+ years building systems across finance, insurance, healthcare, and e-commerce. When I'm not working, you'll find me rock climbing or riding motorcycles.",
+  text: "I coded my first program in 1996 on an 8-bit computer. Today I have 22+ years building systems across finance, insurance, healthcare, and e-commerce. When I'm not working, you'll find me rock climbing or riding motorcycles.",
   ctaText: "More About Me",
   ctaLink: "/about",
 };

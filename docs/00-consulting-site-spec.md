@@ -32,13 +32,13 @@ Domain name: mmartinov.com
 
 **Hero Section:**
 - **Headline:** "Software architect specializing in business process automation and AI integration"
-- **Subheadline:** "I help companies eliminate repetitive manual work so teams can focus on what actually matters. 20+ years of experience building systems that work."
+- **Subheadline:** "I help companies eliminate repetitive manual work so teams can focus on what actually matters. 22+ years of experience building systems that work."
 - **Primary CTA:** "View My Work" (scroll to work section or link to /work)
 - **Secondary CTA:** "Book a Discovery Call"
 
 **Credibility Band:**
 - Quick facts display (horizontal layout):
-  - "20+ years of software development"
+  - "22+ years of software development"
   - "Co-owner @ Camplight" (link to camplight.net)
   - "Former IAEA consultant"
   - Industry agnostic (fintech, edtech, healthcare)
@@ -70,7 +70,7 @@ Domain name: mmartinov.com
 
 **About Preview:**
 - Brief personal section (2-3 sentences)
-- "I coded my first program in 1996 on an 8-bit computer. Today I have 20+ years building systems across finance, insurance, healthcare, and e-commerce. When I'm not working, you'll find me rock climbing or riding motorcycles."
+- "I coded my first program in 1996 on an 8-bit computer. Today I have 22+ years building systems across finance, insurance, healthcare, and e-commerce. When I'm not working, you'll find me rock climbing or riding motorcycles."
 - CTA: "More About Me" → /about
 
 **Final CTA Section:**
@@ -180,7 +180,7 @@ Domain name: mmartinov.com
 - Born in Pleven, Bulgaria
 - Started coding in 1996 at age 11 on an 8-bit computer
 - Moved to Sofia and started software engineering career
-- 20+ years of commercial software development experience
+- 22+ years of commercial software development experience
 - Lived and worked across multiple countries: Bulgaria, Denmark, Germany, Austria, UK
 - Former IAEA consultant
 - Moved back to Pleven with fiancé, had a son (he's 3 years old now, almost 4)

@@ -75,16 +75,6 @@ export default define.page(function Home() {
                 <h3 class="text-xl font-bold mb-4 gradient-text">{service.title}</h3>
                 <p class="text-gray-700 mb-3 leading-relaxed">
                   <span class="font-semibold text-gray-900">Problem:</span> {service.problem}
-              <div key={index}>
-                <div class="flex items-start gap-3 mb-4 h-12">
-                  <ServiceIcon type={service.icon as "workflow" | "brain" | "architecture"} />
-                  <h3 class="text-xl font-semibold text-gray-900">{service.title}</h3>
-                </div>
-                <p class="text-gray-600 mb-2">
-                  <span class="font-medium">Problem:</span> {service.problem}
-                </p>
-                <p class="text-gray-700 leading-relaxed">
-                  <span class="font-semibold text-gray-900">Solution:</span> {service.solution}
                 </p>
               </div>
             ))}

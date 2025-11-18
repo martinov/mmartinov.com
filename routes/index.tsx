@@ -22,12 +22,12 @@ export default define.page(function Home() {
       />
       <PageLayout currentPath="/">
         {/* Hero Section */}
-        <Section class="pt-12 sm:pt-16">
+        <Section class="pt-16 sm:pt-20 pb-20 sm:pb-24 gradient-hero">
           <div class="text-center max-w-4xl mx-auto">
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
               {hero.headline}
             </h1>
-            <p class="text-lg sm:text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p class="text-xl sm:text-2xl text-gray-700 mb-10 max-w-3xl mx-auto font-medium">
               {hero.subheadline}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -65,18 +65,18 @@ export default define.page(function Home() {
 
         {/* What I Do Section */}
         <Section>
-          <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12">
+          <h2 class="text-4xl sm:text-5xl font-bold text-center mb-16">
             {whatIDo.heading}
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             {whatIDo.services.map((service, index) => (
-              <div key={index} class="border-l-4 border-teal-600 pl-4">
-                <h3 class="text-xl font-semibold mb-3 text-teal-600">{service.title}</h3>
-                <p class="text-gray-600 mb-2">
-                  <span class="font-medium">Problem:</span> {service.problem}
+              <div key={index} class="accent-border-l pl-4 p-6 rounded-r-lg bg-gradient-to-br from-white to-gray-50 shadow-card hover:shadow-hover">
+                <h3 class="text-xl font-bold mb-4 gradient-text">{service.title}</h3>
+                <p class="text-gray-700 mb-3 leading-relaxed">
+                  <span class="font-semibold text-gray-900">Problem:</span> {service.problem}
                 </p>
-                <p class="text-gray-600">
-                  <span class="font-medium">Solution:</span> {service.solution}
+                <p class="text-gray-700 leading-relaxed">
+                  <span class="font-semibold text-gray-900">Solution:</span> {service.solution}
                 </p>
               </div>
             ))}
@@ -84,21 +84,22 @@ export default define.page(function Home() {
         </Section>
 
         {/* Recent Work Section */}
-        <Section class="bg-gray-50">
-          <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12">
+        <Section class="bg-gradient-to-b from-gray-50 to-white">
+          <h2 class="text-4xl sm:text-5xl font-bold text-center mb-16">
             {recentWork.heading}
           </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             {recentWork.projects.map((project, index) => (
               <a
                 key={index}
                 href={project.link}
-                class="block bg-white p-6 rounded-lg border border-gray-200 hover:border-teal-600 hover:shadow-md transition-all"
+                class="block bg-white p-8 rounded-xl shadow-card hover:shadow-hover border border-gray-100 group"
               >
-                <h3 class="text-xl font-semibold mb-3">{project.type}</h3>
-                <p class="text-gray-600 mb-4">{project.description}</p>
-                <p class="text-sm font-medium text-teal-600">
+                <h3 class="text-2xl font-bold mb-4 group-hover:text-teal-600 transition-smooth">{project.type}</h3>
+                <p class="text-gray-700 mb-4 leading-relaxed">{project.description}</p>
+                <p class="text-sm font-semibold text-teal-600 flex items-center gap-2">
                   {project.outcome}
+                  <span class="transform group-hover:translate-x-1 transition-transform">→</span>
                 </p>
               </a>
             ))}
@@ -123,12 +124,12 @@ export default define.page(function Home() {
         </Section>
 
         {/* Final CTA Section */}
-        <Section class="bg-gray-900 text-white">
+        <Section class="gradient-cta text-white">
           <div class="max-w-3xl mx-auto text-center">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+            <h2 class="text-4xl sm:text-5xl font-bold mb-6">
               {finalCta.heading}
             </h2>
-            <p class="text-lg text-gray-300 mb-8">
+            <p class="text-xl text-gray-300 mb-10 leading-relaxed">
               {finalCta.text}
             </p>
             <Button href={finalCta.ctaLink} variant="secondary">

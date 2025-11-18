@@ -2,27 +2,27 @@ import { siteConfig } from "../content/site.ts";
 
 export default function Footer() {
   return (
-    <footer class="border-t border-gray-200 mt-20">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer class="border-t border-gray-200 mt-20 bg-gradient-to-b from-white to-gray-50">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div class="md:col-span-3">
-            <h3 class="text-sm font-semibold text-gray-900 mb-4">
+            <h3 class="text-base font-bold text-gray-900 mb-3">
               Martin Martinov
             </h3>
-            <p class="text-sm text-gray-600">
+            <p class="text-sm text-gray-700 leading-relaxed">
               Software architect specializing in business process automation and AI integration
             </p>
           </div>
 
           <div>
-            <h3 class="text-sm font-semibold text-gray-900 mb-4">Connect</h3>
+            <h3 class="text-base font-bold text-gray-900 mb-3">Connect</h3>
             <ul class="space-y-2">
               <li>
                 <a
                   href={siteConfig.social.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="text-sm text-gray-600 hover:text-teal-600"
+                  class="text-sm text-gray-600 hover:text-teal-600 transition-smooth link-underline"
                 >
                   LinkedIn
                 </a>
@@ -32,7 +32,7 @@ export default function Footer() {
                   href={siteConfig.social.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="text-sm text-gray-600 hover:text-teal-600"
+                  class="text-sm text-gray-600 hover:text-teal-600 transition-smooth link-underline"
                 >
                   GitHub
                 </a>
@@ -41,14 +41,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <div class="mt-8 pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div class="mt-10 pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p class="text-sm text-gray-600">
             Also co-owner of{" "}
             <a
               href="https://camplight.net"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-teal-600 hover:text-teal-700 hover:underline font-medium"
+              class="text-teal-600 hover:text-teal-700 font-semibold transition-smooth link-underline"
             >
               Camplight
             </a>

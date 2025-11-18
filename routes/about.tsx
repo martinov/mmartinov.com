@@ -23,18 +23,18 @@ export default define.page(function About() {
       />
       <PageLayout currentPath="/about">
         {/* Hero */}
-        <Section class="pt-12 sm:pt-16">
+        <Section class="pt-16 sm:pt-20 pb-12 sm:pb-16 gradient-hero">
           <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl sm:text-5xl font-bold mb-12">
+            <h1 class="text-5xl sm:text-6xl font-bold mb-16 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
               {aboutHero.heading}
             </h1>
 
             {/* The Story */}
-            <div class="mb-12">
-              <h2 class="text-2xl font-semibold mb-6">{story.heading}</h2>
-              <div class="space-y-4">
+            <div class="mb-16">
+              <h2 class="text-3xl font-bold mb-8 gradient-text">{story.heading}</h2>
+              <div class="space-y-5">
                 {story.paragraphs.map((paragraph, index) => (
-                  <p key={index} class="text-lg text-gray-700">
+                  <p key={index} class="text-lg text-gray-700 leading-relaxed">
                     {paragraph}
                   </p>
                 ))}
@@ -42,15 +42,15 @@ export default define.page(function About() {
             </div>
 
             {/* Professional Journey */}
-            <div class="mb-12">
-              <h2 class="text-2xl font-semibold mb-6">
+            <div class="mb-16">
+              <h2 class="text-3xl font-bold mb-8 gradient-text">
                 {professionalJourney.heading}
               </h2>
-              <ul class="space-y-3">
+              <ul class="space-y-4">
                 {professionalJourney.milestones.map((milestone, index) => (
                   <li
                     key={index}
-                    class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                    class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-teal-600 before:font-bold leading-relaxed text-lg"
                   >
                     {milestone}
                   </li>
@@ -59,13 +59,13 @@ export default define.page(function About() {
             </div>
 
             {/* How I Work */}
-            <div class="mb-12">
-              <h2 class="text-2xl font-semibold mb-6">{howIWork.heading}</h2>
-              <ul class="space-y-3">
+            <div class="mb-16">
+              <h2 class="text-3xl font-bold mb-8 gradient-text">{howIWork.heading}</h2>
+              <ul class="space-y-4">
                 {howIWork.points.map((point, index) => (
                   <li
                     key={index}
-                    class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                    class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-teal-600 before:font-bold leading-relaxed text-lg"
                   >
                     {typeof point === "string" ? (
                       point
@@ -76,7 +76,7 @@ export default define.page(function About() {
                           href={point.link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          class="text-teal-600 font-medium hover:text-teal-700 hover:underline"
+                          class="text-teal-600 font-semibold hover:text-teal-700 link-underline transition-smooth"
                         >
                           {point.link.text}
                         </a>
@@ -89,13 +89,13 @@ export default define.page(function About() {
             </div>
 
             {/* Beyond Work */}
-            <div class="mb-12">
-              <h2 class="text-2xl font-semibold mb-6">{beyondWork.heading}</h2>
-              <ul class="space-y-3">
+            <div class="mb-16">
+              <h2 class="text-3xl font-bold mb-8 gradient-text">{beyondWork.heading}</h2>
+              <ul class="space-y-4">
                 {beyondWork.interests.map((interest, index) => (
                   <li
                     key={index}
-                    class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                    class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-teal-600 before:font-bold leading-relaxed text-lg"
                   >
                     {interest}
                   </li>
@@ -104,15 +104,15 @@ export default define.page(function About() {
             </div>
 
             {/* Technical Approach */}
-            <div class="mb-12">
-              <h2 class="text-2xl font-semibold mb-6">
+            <div class="mb-16">
+              <h2 class="text-3xl font-bold mb-8 gradient-text">
                 {technicalApproach.heading}
               </h2>
-              <ul class="space-y-3">
+              <ul class="space-y-4">
                 {technicalApproach.points.map((point, index) => (
                   <li
                     key={index}
-                    class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                    class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-teal-600 before:font-bold leading-relaxed text-lg"
                   >
                     {point}
                   </li>
@@ -123,9 +123,9 @@ export default define.page(function About() {
         </Section>
 
         {/* CTA */}
-        <Section class="bg-gray-900 text-white">
+        <Section class="gradient-cta text-white">
           <div class="max-w-3xl mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-6">{aboutCta.text}</h2>
+            <h2 class="text-4xl sm:text-5xl font-bold mb-8">{aboutCta.text}</h2>
             <Button href={aboutCta.ctaLink} variant="secondary">
               {aboutCta.ctaText}
             </Button>

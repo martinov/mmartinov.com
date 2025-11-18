@@ -20,12 +20,12 @@ export default define.page(function Work() {
       />
       <PageLayout currentPath="/work">
         {/* Page Heading */}
-        <Section class="pt-12 sm:pt-16">
+        <Section class="pt-16 sm:pt-20 pb-12 sm:pb-16 gradient-hero">
           <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-4xl sm:text-5xl font-bold mb-6">
+            <h1 class="text-5xl sm:text-6xl font-bold mb-8 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent">
               {workIntro.heading}
             </h1>
-            <p class="text-lg text-gray-600">{workIntro.intro}</p>
+            <p class="text-xl text-gray-700 font-medium">{workIntro.intro}</p>
           </div>
         </Section>
 
@@ -37,19 +37,19 @@ export default define.page(function Work() {
             class={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
           >
             <div class="max-w-4xl mx-auto">
-              <h2 class="text-3xl font-bold mb-3">{caseStudy.title}</h2>
+              <h2 class="text-4xl font-bold mb-6 gradient-text">{caseStudy.title}</h2>
 
               {/* Challenge */}
               {caseStudy.challenge && (
-                <div class="mb-8">
-                  <h3 class="text-xl font-semibold mb-4">
+                <div class="mb-10">
+                  <h3 class="text-2xl font-bold mb-5 text-gray-900">
                     {caseStudy.challenge.heading}
                   </h3>
-                  <ul class="space-y-2">
+                  <ul class="space-y-3">
                     {caseStudy.challenge.points.map((point, i) => (
                       <li
                         key={i}
-                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-teal-600 before:font-bold leading-relaxed"
                       >
                         {point}
                       </li>
@@ -60,15 +60,15 @@ export default define.page(function Work() {
 
               {/* Solution */}
               {caseStudy.solution && (
-                <div class="mb-8">
-                  <h3 class="text-xl font-semibold mb-4">
+                <div class="mb-10">
+                  <h3 class="text-2xl font-bold mb-5 text-gray-900">
                     {caseStudy.solution.heading}
                   </h3>
-                  <ul class="space-y-2">
+                  <ul class="space-y-3">
                     {caseStudy.solution.points.map((point, i) => (
                       <li
                         key={i}
-                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-teal-600 before:font-bold leading-relaxed"
                       >
                         {point}
                       </li>
@@ -79,17 +79,17 @@ export default define.page(function Work() {
 
               {/* Roadmap (for HVAC case study) */}
               {caseStudy.roadmap && (
-                <div class="mb-8">
-                  <h3 class="text-xl font-semibold mb-4">
+                <div class="mb-10">
+                  <h3 class="text-2xl font-bold mb-5 text-gray-900">
                     {caseStudy.roadmap.heading}
                   </h3>
-                  <div class="space-y-4">
+                  <div class="space-y-5">
                     {caseStudy.roadmap.items.map((item, i) => (
-                      <div key={i} class="border-l-4 border-teal-600 pl-4">
-                        <h4 class="font-semibold text-teal-600 mb-1">
+                      <div key={i} class="accent-border-l pl-5 p-4 rounded-r-lg bg-gradient-to-r from-teal-50/50 to-transparent shadow-sm hover:shadow-md transition-smooth">
+                        <h4 class="font-bold text-teal-600 mb-2 text-lg">
                           {item.title}
                         </h4>
-                        <p class="text-gray-700">{item.description}</p>
+                        <p class="text-gray-700 leading-relaxed">{item.description}</p>
                       </div>
                     ))}
                   </div>
@@ -98,15 +98,15 @@ export default define.page(function Work() {
 
               {/* Approach (for HVAC case study) */}
               {caseStudy.approach && (
-                <div class="mb-8">
-                  <h3 class="text-xl font-semibold mb-4">
+                <div class="mb-10">
+                  <h3 class="text-2xl font-bold mb-5 text-gray-900">
                     {caseStudy.approach.heading}
                   </h3>
-                  <ul class="space-y-2">
+                  <ul class="space-y-3">
                     {caseStudy.approach.points.map((point, i) => (
                       <li
                         key={i}
-                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-teal-600 before:font-bold leading-relaxed"
                       >
                         {point}
                       </li>
@@ -117,15 +117,15 @@ export default define.page(function Work() {
 
               {/* Insight (for HVAC case study) */}
               {caseStudy.insight && (
-                <div class="mb-8">
-                  <h3 class="text-xl font-semibold mb-4">
+                <div class="mb-10">
+                  <h3 class="text-2xl font-bold mb-5 text-gray-900">
                     {caseStudy.insight.heading}
                   </h3>
-                  <ul class="space-y-2">
+                  <ul class="space-y-3">
                     {caseStudy.insight.points.map((point, i) => (
                       <li
                         key={i}
-                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-teal-600 before:font-bold leading-relaxed"
                       >
                         {point}
                       </li>
@@ -137,14 +137,14 @@ export default define.page(function Work() {
               {/* Outcome */}
               {caseStudy.outcome && (
                 <div>
-                  <h3 class="text-xl font-semibold mb-4">
+                  <h3 class="text-2xl font-bold mb-5 text-gray-900">
                     {caseStudy.outcome.heading || "The Outcome"}
                   </h3>
-                  <ul class="space-y-2">
+                  <ul class="space-y-3">
                     {caseStudy.outcome.points.map((point, i) => (
                       <li
                         key={i}
-                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0 before:text-teal-600 before:font-bold leading-relaxed"
                       >
                         {point}
                       </li>
@@ -166,9 +166,9 @@ export default define.page(function Work() {
         </Section>
 
         {/* CTA */}
-        <Section class="bg-gray-900 text-white">
+        <Section class="gradient-cta text-white">
           <div class="max-w-3xl mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-6">{workCta.text}</h2>
+            <h2 class="text-4xl sm:text-5xl font-bold mb-8">{workCta.text}</h2>
             <Button href={workCta.ctaLink} variant="secondary">
               {workCta.ctaText}
             </Button>

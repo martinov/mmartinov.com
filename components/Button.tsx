@@ -17,11 +17,11 @@ export default function Button({
   type = "button",
   onClick,
 }: ButtonProps) {
-  const baseStyles = "inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2";
+  const baseStyles = "inline-flex items-center justify-center px-6 py-3 text-base font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm hover:shadow-md active:scale-95";
 
   const variantStyles = {
-    primary: "bg-teal-600 text-white hover:bg-teal-700 focus:ring-teal-600",
-    secondary: "bg-white text-teal-600 border-2 border-teal-600 hover:bg-teal-50 focus:ring-teal-600",
+    primary: "bg-teal-700 text-white hover:bg-teal-800 focus:ring-teal-700 border border-transparent",
+    secondary: "bg-white text-teal-700 border-2 border-teal-700 hover:bg-teal-50 focus:ring-teal-700",
   };
 
   const combinedClassName = `${baseStyles} ${variantStyles[variant]} ${className}`;

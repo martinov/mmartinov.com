@@ -55,7 +55,8 @@
       "template"
     ],
     "types": [
-      "vite/client"
+      "vite/client",
+      "preact"
     ]
   }
 }

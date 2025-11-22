@@ -3,127 +3,72 @@ interface ServiceIconProps {
 }
 
 export default function ServiceIcon({ type }: ServiceIconProps) {
+  const commonClasses = "w-12 h-12 text-teal-600 mb-4";
+
   switch (type) {
     case "workflow":
       return (
         <svg
-          class="w-12 h-12 text-teal-600 mb-4"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class={commonClasses}
         >
-          {/* Workflow/Automation icon */}
-          <circle cx="6" cy="6" r="2" stroke-width="2" stroke-linecap="round" />
-          <circle cx="18" cy="6" r="2" stroke-width="2" stroke-linecap="round" />
-          <circle cx="12" cy="18" r="2" stroke-width="2" stroke-linecap="round" />
-          <path
-            d="M8 6h4m4 0h4M12 8v8M10 16h4"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+          <rect width="8" height="8" x="3" y="3" rx="2" />
+          <path d="M7 11v4a2 2 0 0 0 2 2h4" />
+          <rect width="8" height="8" x="13" y="13" rx="2" />
         </svg>
       );
-
     case "brain":
       return (
         <svg
-          class="w-12 h-12 text-teal-600 flex-shrink-0"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class={commonClasses}
         >
-          {/* AI/Neural Network icon - interconnected nodes */}
-          {/* Left nodes (3 input) */}
-          <circle cx="3" cy="5" r="1.5" fill="currentColor" />
-          <circle cx="3" cy="12" r="1.5" fill="currentColor" />
-          <circle cx="3" cy="19" r="1.5" fill="currentColor" />
-          {/* Center nodes (4 processing) */}
-          <circle cx="12" cy="4" r="1.5" fill="currentColor" />
-          <circle cx="12" cy="9" r="1.5" fill="currentColor" />
-          <circle cx="12" cy="15" r="1.5" fill="currentColor" />
-          <circle cx="12" cy="20" r="1.5" fill="currentColor" />
-          {/* Right nodes (2 output) */}
-          <circle cx="21" cy="8" r="1.5" fill="currentColor" />
-          <circle cx="21" cy="16" r="1.5" fill="currentColor" />
-          {/* Connecting lines from input to processing */}
-          <line x1="4.5" y1="5" x2="10.5" y2="4" stroke-width="1" stroke-linecap="round" />
-          <line x1="4.5" y1="5" x2="10.5" y2="9" stroke-width="1" stroke-linecap="round" />
-          <line x1="4.5" y1="12" x2="10.5" y2="9" stroke-width="1" stroke-linecap="round" />
-          <line x1="4.5" y1="12" x2="10.5" y2="15" stroke-width="1" stroke-linecap="round" />
-          <line x1="4.5" y1="19" x2="10.5" y2="15" stroke-width="1" stroke-linecap="round" />
-          <line x1="4.5" y1="19" x2="10.5" y2="20" stroke-width="1" stroke-linecap="round" />
-          {/* Connecting lines from processing to output */}
-          <line x1="13.5" y1="4" x2="19.5" y2="8" stroke-width="1" stroke-linecap="round" />
-          <line x1="13.5" y1="9" x2="19.5" y2="8" stroke-width="1" stroke-linecap="round" />
-          <line x1="13.5" y1="15" x2="19.5" y2="16" stroke-width="1" stroke-linecap="round" />
-          <line x1="13.5" y1="20" x2="19.5" y2="16" stroke-width="1" stroke-linecap="round" />
+          <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" />
+          <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z" />
+          <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4" />
+          <path d="M17.599 6.5a3 3 0 0 0 .399-1.375" />
+          <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5" />
+          <path d="M3.477 10.896a4 4 0 0 1 .585-.396" />
+          <path d="M19.938 10.5a4 4 0 0 1 .585.396" />
+          <path d="M6 18a4 4 0 0 1-1.967-.516" />
+          <path d="M19.967 17.484A4 4 0 0 1 18 18" />
         </svg>
       );
-
     case "architecture":
       return (
         <svg
-          class="w-12 h-12 text-teal-600 mb-4"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class={commonClasses}
         >
-          {/* Architecture/Blueprint icon */}
-          <rect
-            x="3"
-            y="3"
-            width="7"
-            height="7"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
-          <rect
-            x="14"
-            y="3"
-            width="7"
-            height="7"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
-          <rect
-            x="3"
-            y="14"
-            width="7"
-            height="7"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
-          <rect
-            x="14"
-            y="14"
-            width="7"
-            height="7"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
-          <line
-            x1="10"
-            y1="7"
-            x2="14"
-            y2="7"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
-          <line
-            x1="7"
-            y1="10"
-            x2="7"
-            y2="14"
-            stroke-width="2"
-            stroke-linecap="round"
-          />
+          <path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z" />
+          <path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12" />
+          <path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17" />
         </svg>
       );
-
     default:
       return null;
   }

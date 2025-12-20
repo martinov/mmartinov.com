@@ -24,10 +24,12 @@ export default define.page(function About() {
       <PageLayout currentPath="/about">
         {/* Hero */}
         <Section class="pt-12 sm:pt-16">
-          <div class="max-w-4xl mx-auto">
+          <div class="max-w-4xl mx-auto text-center">
             <h1 class="text-4xl sm:text-5xl font-bold mb-12">
               {aboutHero.heading}
             </h1>
+          </div>
+          <div class="max-w-4xl mx-auto">
 
             {/* The Story */}
             <div class="mb-12">
@@ -86,21 +88,6 @@ export default define.page(function About() {
               </ul>
             </div>
 
-            {/* Beyond Work */}
-            <div class="mb-12">
-              <h2 class="text-2xl font-semibold mb-6">{beyondWork.heading}</h2>
-              <ul class="space-y-3">
-                {beyondWork.interests.map((interest, index) => (
-                  <li
-                    key={index}
-                    class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
-                  >
-                    {interest}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
             {/* Technical Approach */}
             <div class="mb-12">
               <h2 class="text-2xl font-semibold mb-6">
@@ -113,6 +100,21 @@ export default define.page(function About() {
                     class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
                   >
                     {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Beyond Work */}
+            <div class="mb-12">
+              <h2 class="text-2xl font-semibold mb-6">{beyondWork.heading}</h2>
+              <ul class="space-y-3">
+                {beyondWork.interests.map((interest, index) => (
+                  <li
+                    key={index}
+                    class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                  >
+                    {interest}
                   </li>
                 ))}
               </ul>

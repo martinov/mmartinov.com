@@ -44,11 +44,11 @@ export default function Footer() {
 
         <div class="mt-8 pt-8 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p class="text-sm text-gray-500">
-            Also co-owner of{" "}
+            Solutions Architect and co-owner at{" "}
             <a
-              href="https://camplight.net"
+              href="https://camplight.net?utm_source=mmartinov.com&utm_medium=footer&utm_campaign=personal-site-referral"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
               class="text-teal-500 hover:text-teal-400 hover:underline font-medium"
             >
               Camplight

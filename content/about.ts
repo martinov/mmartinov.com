@@ -6,35 +6,32 @@ export const aboutHero = {
 export const story = {
   heading: "The Story",
   paragraphs: [
-    "Born in Pleven, Bulgaria. Started coding in 1996 at age 11 on an 8-bit computer.",
-    "Moved to Sofia and started my software engineering career. Two decades of commercial software development experience.",
-    "Lived and worked across multiple countries: Bulgaria, Denmark, Germany, Austria, UK. Former IAEA consultant.",
-    "Moved back to Pleven with my fiancé, had a son (he's 3 years old now, almost 4).",
-    "Currently: Principal Engineer and co-owner of Camplight cooperative.",
+    "I wrote my first code in 1996 at age 11 on an 8-bit machine at a local computer club. Once I got my own PC - a 386 with 1MB of RAM - there was no turning back. In my late teens I was writing x86 assembly.",
+    "As an introvert, I was drawn to programming because computers are predictable - they do exactly what you tell them. The irony is that software engineering is fundamentally about people: stakeholders, teammates, users. I've grown to enjoy that collaboration as much as the code.",
+    "Two decades of building software took me from Sofia to Copenhagen, Vienna, Munich, and London. I've shipped CRMs and ERPs, led teams, consulted for the IAEA, and learned that the best solutions come from understanding the problem deeply before writing any code.",
+    "Now I'm back home in Bulgaria with my family. Currently Solutions Architect and co-owner of Camplight cooperative, doing the work I love with clients across the US and Europe.",
   ],
 };
 
 export const professionalJourney = {
   heading: "Professional Journey",
   milestones: [
-    "Early career: Built 4 bespoke CRM systems from scratch",
-    "Mid-career: Led teams, specialized in complex integrations and data migrations",
-    "Recent focus: AI automation, LLM agents, Event Sourcing, system architecture",
-    "Experience spans: Finance, insurance, healthcare, e-commerce, NGOs",
+    "Early career: Built bespoke CRM systems, Drupal sites, and e-commerce stores",
+    "Mid-career: Led teams, specialized in complex integrations and data migrations across finance, insurance, healthcare, e-commerce, and corporate training",
+    "Recent focus: Business process automation (with or without AI), agentic workflows, LLMs, Event Sourcing",
   ],
 };
 
 export const howIWork = {
   heading: "How I Work",
   points: [
-    "I work remotely from Bulgaria and collaborate with clients globally",
+    "For direct consulting and focused engagements: I work independently",
     {
       text:
-        "For larger projects with bigger budgets: I work through Camplight - a validation-first product cooperative",
-      link: { text: "Camplight", url: "https://camplight.net" },
+        "For larger or team-based projects: I work through Camplight cooperative",
+      link: { text: "Camplight", url: "https://camplight.net?utm_source=mmartinov.com&utm_medium=about-page&utm_campaign=personal-site-referral" },
     },
-    "For direct consulting and smaller engagements: I work independently",
-    "I focus on projects where automation provides clear ROI",
+    "Either way, I focus on projects where automation provides clear ROI",
   ],
 };
 
@@ -42,18 +39,17 @@ export const beyondWork = {
   heading: "Beyond Work",
   interests: [
     "Rock climbing (sport, trad, alpine, multi-pitch)",
-    "Motorcycling (road and off-road)",
-    "Open source enthusiast",
+    "Motorcycling (road and off-road). Proud KTM owner.",
   ],
 };
 
 export const technicalApproach = {
   heading: "Technical Approach",
   points: [
-    "Prefer Event Sourcing for new systems (captures decision context for future AI use)",
-    "Focus on proving value before building",
-    "Pragmatic about technology choices - right tool for the job",
-    "Experience with: Python, JavaScript/TypeScript, PHP, C/C++/C#, multiple databases, Docker, AWS, GCP",
+    "I design systems that capture everything that happens - not just current state - so future AI/ML and analytics don't hit dead ends",
+    "I prove value with small, focused implementations before scaling up",
+    "I've seen too many projects fail from overbuilding - I keep things simple until complexity is earned",
+    "I design with open source, security, privacy, and sustainability in mind",
   ],
 };
 

@@ -122,9 +122,9 @@ export default define.page(function Contact() {
             <p class="text-gray-700">
               {camplightNote.text}
               <a
-                href={camplightNote.link.url}
+                href="https://camplight.net?utm_source=mmartinov.com&utm_medium=contact-page&utm_campaign=personal-site-referral"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener"
                 class="text-teal-600 font-medium hover:text-teal-700 hover:underline"
               >
                 {camplightNote.link.text}

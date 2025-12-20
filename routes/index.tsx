@@ -61,7 +61,7 @@ export default define.page(function Home() {
                       <a
                         href={item.link}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="noopener"
                         class="text-teal-700 hover:text-teal-800 hover:underline decoration-teal-300 underline-offset-2"
                       >
                         {item.text}

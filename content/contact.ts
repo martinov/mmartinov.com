@@ -48,7 +48,7 @@ export const contactMethods = {
 
 export const camplightNote = {
   text:
-    "For larger projects or if you're looking for a validation-first product partner, check out ",
+    "For team-based projects or product development partnerships, check out ",
   link: { text: "Camplight", url: "https://camplight.net" },
 };
 

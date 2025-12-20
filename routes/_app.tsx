@@ -14,6 +14,16 @@ export default define.page(function App({ Component }) {
           content="Software architect specializing in business process automation and AI integration. 22+ years building systems that work."
         />
 
+        {/* Preconnect to Google Fonts for performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        {/* Google Fonts - Newsreader (display) and DM Sans (body) */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap"
+          rel="stylesheet"
+        />
+
         {/* Plausible Analytics - Privacy-focused, GDPR compliant */}
         <script
           defer

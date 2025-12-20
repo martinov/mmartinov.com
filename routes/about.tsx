@@ -23,110 +23,151 @@ export default define.page(function About() {
       />
       <PageLayout currentPath="/about">
         {/* Hero */}
-        <Section class="pt-12 sm:pt-16">
-          <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-4xl sm:text-5xl font-bold mb-12">
+        <Section class="pt-12 sm:pt-16" width="narrow" spacing="large">
+          <div class="text-center mb-16">
+            <h1
+              class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900"
+              style="font-family: var(--font-display);"
+            >
               {aboutHero.heading}
             </h1>
           </div>
-          <div class="max-w-4xl mx-auto">
 
-            {/* The Story */}
-            <div class="mb-12">
-              <h2 class="text-2xl font-semibold mb-6">{story.heading}</h2>
-              <div class="space-y-4">
-                {story.paragraphs.map((paragraph, index) => (
-                  <p key={index} class="text-lg text-gray-700">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+          {/* The Story */}
+          <div class="mb-16">
+            <h2
+              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-teal-700"
+              style="font-family: var(--font-display);"
+            >
+              {story.heading}
+            </h2>
+            <div class="space-y-5">
+              {story.paragraphs.map((paragraph, index) => (
+                <p key={index} class="text-lg text-gray-700 leading-relaxed">
+                  {paragraph}
+                </p>
+              ))}
             </div>
+          </div>
 
-            {/* Professional Journey */}
-            <div class="mb-12">
-              <h2 class="text-2xl font-semibold mb-6">
-                {professionalJourney.heading}
-              </h2>
-              <ul class="space-y-3">
-                {professionalJourney.milestones.map((milestone, index) => (
-                  <li
-                    key={index}
-                    class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
-                  >
-                    {milestone}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Divider */}
+          <div class="h-px bg-gradient-to-r from-transparent via-teal-300 to-transparent mb-16"></div>
 
-            {/* How I Work */}
-            <div class="mb-12">
-              <h2 class="text-2xl font-semibold mb-6">{howIWork.heading}</h2>
-              <ul class="space-y-3">
-                {howIWork.points.map((point, index) => (
-                  <li
-                    key={index}
-                    class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
-                  >
-                    {typeof point === "string" ? point : (
-                      <>
-                        {point.text.split(point.link.text)[0]}
-                        <a
-                          href={point.link.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="text-teal-600 font-medium hover:text-teal-700 hover:underline"
-                        >
-                          {point.link.text}
-                        </a>
-                        {point.text.split(point.link.text)[1]}
-                      </>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Professional Journey */}
+          <div class="mb-16">
+            <h2
+              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-blue-600"
+              style="font-family: var(--font-display);"
+            >
+              {professionalJourney.heading}
+            </h2>
+            <ul class="space-y-4">
+              {professionalJourney.milestones.map((milestone, index) => (
+                <li
+                  key={index}
+                  class="text-gray-700 text-lg pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-blue-600 before:font-bold leading-relaxed"
+                >
+                  {milestone}
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            {/* Technical Approach */}
-            <div class="mb-12">
-              <h2 class="text-2xl font-semibold mb-6">
-                {technicalApproach.heading}
-              </h2>
-              <ul class="space-y-3">
-                {technicalApproach.points.map((point, index) => (
-                  <li
-                    key={index}
-                    class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
-                  >
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Divider */}
+          <div class="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent mb-16"></div>
 
-            {/* Beyond Work */}
-            <div class="mb-12">
-              <h2 class="text-2xl font-semibold mb-6">{beyondWork.heading}</h2>
-              <ul class="space-y-3">
-                {beyondWork.interests.map((interest, index) => (
-                  <li
-                    key={index}
-                    class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
-                  >
-                    {interest}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* How I Work */}
+          <div class="mb-16">
+            <h2
+              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-teal-700"
+              style="font-family: var(--font-display);"
+            >
+              {howIWork.heading}
+            </h2>
+            <ul class="space-y-4">
+              {howIWork.points.map((point, index) => (
+                <li
+                  key={index}
+                  class="text-gray-700 text-lg pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-teal-600 before:font-bold leading-relaxed"
+                >
+                  {typeof point === "string" ? point : (
+                    <>
+                      {point.text.split(point.link.text)[0]}
+                      <a
+                        href={point.link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-teal-600 font-semibold hover:text-teal-800 transition-colors duration-300 underline decoration-teal-300 hover:decoration-teal-500 underline-offset-2"
+                      >
+                        {point.link.text}
+                      </a>
+                      {point.text.split(point.link.text)[1]}
+                    </>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Divider */}
+          <div class="h-px bg-gradient-to-r from-transparent via-teal-300 to-transparent mb-16"></div>
+
+          {/* Technical Approach */}
+          <div class="mb-16">
+            <h2
+              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-gray-800"
+              style="font-family: var(--font-display);"
+            >
+              {technicalApproach.heading}
+            </h2>
+            <ul class="space-y-4">
+              {technicalApproach.points.map((point, index) => (
+                <li
+                  key={index}
+                  class="text-gray-700 text-lg pl-7 relative before:content-['✓'] before:absolute before:left-0 before:text-green-600 before:font-bold leading-relaxed"
+                >
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Divider */}
+          <div class="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent mb-16"></div>
+
+          {/* Beyond Work */}
+          <div class="mb-8">
+            <h2
+              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-blue-600"
+              style="font-family: var(--font-display);"
+            >
+              {beyondWork.heading}
+            </h2>
+            <ul class="space-y-4">
+              {beyondWork.interests.map((interest, index) => (
+                <li
+                  key={index}
+                  class="text-gray-700 text-lg pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-blue-600 before:font-bold leading-relaxed"
+                >
+                  {interest}
+                </li>
+              ))}
+            </ul>
           </div>
         </Section>
 
         {/* CTA */}
-        <Section class="bg-gray-900 text-white">
-          <div class="max-w-3xl mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-6">{aboutCta.text}</h2>
-            <Button href={aboutCta.ctaLink} variant="secondary">
+        <Section class="relative bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden" spacing="large">
+          <div class="absolute inset-0 bg-gradient-to-br from-teal-900/10 to-blue-900/10 pointer-events-none"></div>
+
+          <div class="relative max-w-3xl mx-auto text-center">
+            <h2
+              class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 text-white"
+              style="font-family: var(--font-display);"
+            >
+              {aboutCta.text}
+            </h2>
+            <Button href={aboutCta.ctaLink} variant="primary">
               {aboutCta.ctaText}
             </Button>
           </div>

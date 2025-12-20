@@ -20,12 +20,15 @@ export default define.page(function Work() {
       />
       <PageLayout currentPath="/work">
         {/* Page Heading */}
-        <Section class="pt-12 sm:pt-16">
-          <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-4xl sm:text-5xl font-bold mb-6">
+        <Section class="pt-12 sm:pt-16" width="narrow" spacing="large">
+          <div class="text-center">
+            <h1
+              class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 text-gray-900"
+              style="font-family: var(--font-display);"
+            >
               {workIntro.heading}
             </h1>
-            <p class="text-lg text-gray-600">{workIntro.intro}</p>
+            <p class="text-lg sm:text-xl text-gray-600 leading-relaxed">{workIntro.intro}</p>
           </div>
         </Section>
 
@@ -34,22 +37,29 @@ export default define.page(function Work() {
           <Section
             key={caseStudy.id}
             id={caseStudy.id}
-            class={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+            class={index % 2 === 0 ? "bg-white" : "bg-gradient-to-br from-gray-50 to-gray-100/30"}
+            width="narrow"
+            spacing="large"
           >
-            <div class="max-w-4xl mx-auto">
-              <h2 class="text-3xl font-bold mb-3">{caseStudy.title}</h2>
+            <div>
+              <h2
+                class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 text-gray-900"
+                style="font-family: var(--font-display);"
+              >
+                {caseStudy.title}
+              </h2>
 
               {/* Challenge */}
               {caseStudy.challenge && (
-                <div class="mb-8">
-                  <h3 class="text-xl font-semibold mb-4">
+                <div class="mb-10">
+                  <h3 class="text-xl sm:text-2xl font-semibold mb-5 text-teal-700">
                     {caseStudy.challenge.heading}
                   </h3>
-                  <ul class="space-y-2">
+                  <ul class="space-y-3">
                     {caseStudy.challenge.points.map((point, i) => (
                       <li
                         key={i}
-                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                        class="text-gray-700 pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-teal-600 before:font-bold leading-relaxed"
                       >
                         {point}
                       </li>
@@ -60,15 +70,15 @@ export default define.page(function Work() {
 
               {/* Solution */}
               {caseStudy.solution && (
-                <div class="mb-8">
-                  <h3 class="text-xl font-semibold mb-4">
+                <div class="mb-10">
+                  <h3 class="text-xl sm:text-2xl font-semibold mb-5 text-blue-600">
                     {caseStudy.solution.heading}
                   </h3>
-                  <ul class="space-y-2">
+                  <ul class="space-y-3">
                     {caseStudy.solution.points.map((point, i) => (
                       <li
                         key={i}
-                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                        class="text-gray-700 pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-blue-600 before:font-bold leading-relaxed"
                       >
                         {point}
                       </li>
@@ -79,17 +89,17 @@ export default define.page(function Work() {
 
               {/* Roadmap (for HVAC case study) */}
               {caseStudy.roadmap && (
-                <div class="mb-8">
-                  <h3 class="text-xl font-semibold mb-4">
+                <div class="mb-10">
+                  <h3 class="text-xl sm:text-2xl font-semibold mb-5 text-teal-700">
                     {caseStudy.roadmap.heading}
                   </h3>
-                  <div class="space-y-4">
+                  <div class="space-y-5">
                     {caseStudy.roadmap.items.map((item, i) => (
-                      <div key={i} class="border-l-4 border-teal-600 pl-4">
-                        <h4 class="font-semibold text-teal-600 mb-1">
+                      <div key={i} class="border-l-4 border-teal-600 pl-5 py-2 bg-teal-50/30 rounded-r-lg">
+                        <h4 class="font-semibold text-teal-700 mb-2 text-lg">
                           {item.title}
                         </h4>
-                        <p class="text-gray-700">{item.description}</p>
+                        <p class="text-gray-700 leading-relaxed">{item.description}</p>
                       </div>
                     ))}
                   </div>
@@ -98,15 +108,15 @@ export default define.page(function Work() {
 
               {/* Approach (for HVAC case study) */}
               {caseStudy.approach && (
-                <div class="mb-8">
-                  <h3 class="text-xl font-semibold mb-4">
+                <div class="mb-10">
+                  <h3 class="text-xl sm:text-2xl font-semibold mb-5 text-blue-600">
                     {caseStudy.approach.heading}
                   </h3>
-                  <ul class="space-y-2">
+                  <ul class="space-y-3">
                     {caseStudy.approach.points.map((point, i) => (
                       <li
                         key={i}
-                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                        class="text-gray-700 pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-blue-600 before:font-bold leading-relaxed"
                       >
                         {point}
                       </li>
@@ -117,15 +127,15 @@ export default define.page(function Work() {
 
               {/* Insight (for HVAC case study) */}
               {caseStudy.insight && (
-                <div class="mb-8">
-                  <h3 class="text-xl font-semibold mb-4">
+                <div class="mb-10">
+                  <h3 class="text-xl sm:text-2xl font-semibold mb-5 text-gray-800">
                     {caseStudy.insight.heading}
                   </h3>
-                  <ul class="space-y-2">
+                  <ul class="space-y-3">
                     {caseStudy.insight.points.map((point, i) => (
                       <li
                         key={i}
-                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                        class="text-gray-700 pl-7 relative before:content-['✓'] before:absolute before:left-0 before:text-green-600 before:font-bold leading-relaxed"
                       >
                         {point}
                       </li>
@@ -137,14 +147,14 @@ export default define.page(function Work() {
               {/* Outcome */}
               {caseStudy.outcome && (
                 <div>
-                  <h3 class="text-xl font-semibold mb-4">
+                  <h3 class="text-xl sm:text-2xl font-semibold mb-5 text-green-700">
                     {caseStudy.outcome.heading || "The Outcome"}
                   </h3>
-                  <ul class="space-y-2">
+                  <ul class="space-y-3">
                     {caseStudy.outcome.points.map((point, i) => (
                       <li
                         key={i}
-                        class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
+                        class="text-gray-700 pl-7 relative before:content-['✓'] before:absolute before:left-0 before:text-green-600 before:font-bold leading-relaxed"
                       >
                         {point}
                       </li>
@@ -157,19 +167,31 @@ export default define.page(function Work() {
         ))}
 
         {/* Other Experience */}
-        <Section>
-          <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold mb-6">{otherExperience.heading}</h2>
-            <p class="text-gray-700 mb-4">{otherExperience.text}</p>
-            <p class="text-gray-600 italic">{otherExperience.note}</p>
+        <Section width="narrow" class="border-t border-gray-200">
+          <div>
+            <h2
+              class="text-3xl sm:text-4xl font-bold mb-6 text-gray-900"
+              style="font-family: var(--font-display);"
+            >
+              {otherExperience.heading}
+            </h2>
+            <p class="text-gray-700 mb-5 text-lg leading-relaxed">{otherExperience.text}</p>
+            <p class="text-gray-600 italic leading-relaxed">{otherExperience.note}</p>
           </div>
         </Section>
 
         {/* CTA */}
-        <Section class="bg-gray-900 text-white">
-          <div class="max-w-3xl mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-6">{workCta.text}</h2>
-            <Button href={workCta.ctaLink} variant="secondary">
+        <Section class="relative bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden" spacing="large">
+          <div class="absolute inset-0 bg-gradient-to-br from-teal-900/10 to-blue-900/10 pointer-events-none"></div>
+
+          <div class="relative max-w-3xl mx-auto text-center">
+            <h2
+              class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 text-white"
+              style="font-family: var(--font-display);"
+            >
+              {workCta.text}
+            </h2>
+            <Button href={workCta.ctaLink} variant="primary">
               {workCta.ctaText}
             </Button>
           </div>

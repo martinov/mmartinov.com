@@ -23,27 +23,36 @@ export default define.page(function Home() {
       />
       <PageLayout currentPath="/">
         {/* Hero Section */}
-        <Section class="relative pt-20 pb-16 sm:pt-24 sm:pb-20 overflow-hidden">
-          {/* Background Blob */}
-          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl -z-10 pointer-events-none">
-            <div class="absolute top-[-10%] right-[-5%] w-[30rem] h-[30rem] bg-teal-100/50 rounded-full blur-3xl">
-            </div>
-            <div class="absolute top-[10%] left-[-10%] w-[25rem] h-[25rem] bg-blue-100/50 rounded-full blur-3xl">
-            </div>
+        <Section
+          class="relative pt-16 pb-12 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20 overflow-hidden"
+          width="wide"
+          spacing="large"
+        >
+          {/* Enhanced Background Blobs */}
+          <div class="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
+            <div class="absolute top-[-15%] right-[-8%] w-[35rem] h-[35rem] bg-gradient-to-br from-teal-200/40 to-teal-100/30 rounded-full blur-3xl animate-pulse" style="animation-duration: 4s;"></div>
+            <div class="absolute top-[5%] left-[-12%] w-[32rem] h-[32rem] bg-gradient-to-br from-blue-200/35 to-blue-100/25 rounded-full blur-3xl animate-pulse" style="animation-duration: 5s; animation-delay: 1s;"></div>
+            <div class="absolute bottom-[-10%] right-[15%] w-[28rem] h-[28rem] bg-gradient-to-br from-teal-100/20 to-blue-100/20 rounded-full blur-3xl animate-pulse" style="animation-duration: 6s; animation-delay: 2s;"></div>
           </div>
 
-          <div class="text-center max-w-4xl mx-auto px-4">
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-gray-900">
-              {hero.headline}
+          <div class="text-center max-w-4xl mx-auto px-4 animate-fade-in-up">
+            <h1
+              class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-6 sm:mb-8 text-gray-900 leading-tight"
+              style="font-family: var(--font-display); letter-spacing: -0.03em;"
+            >
+              Software architect<br />
+              specializing in<br />
+              business process automation<br />
+              and AI integration
             </h1>
-            <p class="text-lg sm:text-xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+            <p class="text-lg sm:text-xl lg:text-2xl text-gray-600 mb-10 sm:mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in-up stagger-1">
               {hero.subheadline}
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button href={hero.primaryCta.href} variant="primary">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up stagger-2">
+              <Button href={hero.primaryCta.href} variant="primary" fullWidthMobile>
                 {hero.primaryCta.text}
               </Button>
-              <Button href={hero.secondaryCta.href} variant="secondary">
+              <Button href={hero.secondaryCta.href} variant="secondary" fullWidthMobile>
                 {hero.secondaryCta.text}
               </Button>
             </div>
@@ -51,8 +60,8 @@ export default define.page(function Home() {
         </Section>
 
         {/* Credibility Band */}
-        <Section class="bg-teal-50/50 border-y border-teal-100/50">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        <Section class="bg-gradient-to-br from-teal-50/60 to-blue-50/40 border-y border-teal-100/60" spacing="small">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center">
             {credibilityBand.map((item, index) => (
               <div key={index} class="flex items-center justify-center h-full">
                 <div class="text-sm sm:text-base text-gray-700 font-medium">
@@ -62,7 +71,7 @@ export default define.page(function Home() {
                         href={item.link}
                         target="_blank"
                         rel="noopener"
-                        class="text-teal-700 hover:text-teal-800 hover:underline decoration-teal-300 underline-offset-2"
+                        class="text-teal-700 hover:text-teal-900 transition-all duration-300 hover:underline decoration-teal-400 underline-offset-2 decoration-2"
                       >
                         {item.text}
                       </a>
@@ -75,34 +84,40 @@ export default define.page(function Home() {
         </Section>
 
         {/* What I Do Section */}
-        <Section>
-          <h2 class="text-3xl sm:text-4xl font-bold text-center mb-16 text-gray-900">
+        <Section spacing="large">
+          <h2
+            class="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-12 sm:mb-16 text-gray-900"
+            style="font-family: var(--font-display);"
+          >
             {whatIDo.heading}
           </h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             {whatIDo.services.map((service, index) => (
               <div
                 key={index}
-                class="bg-white rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300"
+                class="group bg-white rounded-2xl p-8 lg:p-10 shadow-sm border border-gray-100 hover:shadow-xl hover:border-teal-200/50 transition-all duration-500 hover:-translate-y-1"
               >
                 <div class="mb-6">
                   <ServiceIcon
                     type={service.icon as "workflow" | "brain" | "architecture"}
                   />
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-4">
+                <h3
+                  class="text-xl lg:text-2xl font-bold text-gray-900 mb-5"
+                  style="font-family: var(--font-display);"
+                >
                   {service.title}
                 </h3>
-                <div class="space-y-3">
-                  <p class="text-gray-600">
-                    <span class="font-semibold text-teal-700 block mb-1">
-                      Problem:
+                <div class="space-y-4">
+                  <p class="text-gray-600 leading-relaxed">
+                    <span class="font-semibold text-teal-700 block mb-2 text-sm uppercase tracking-wider">
+                      Problem
                     </span>
                     {service.problem}
                   </p>
-                  <p class="text-gray-600">
-                    <span class="font-semibold text-teal-700 block mb-1">
-                      Solution:
+                  <p class="text-gray-600 leading-relaxed">
+                    <span class="font-semibold text-blue-600 block mb-2 text-sm uppercase tracking-wider">
+                      Solution
                     </span>
                     {service.solution}
                   </p>
@@ -113,20 +128,28 @@ export default define.page(function Home() {
         </Section>
 
         {/* Recent Work Section */}
-        <Section class="bg-gray-50">
-          <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12">
+        <Section class="bg-gradient-to-br from-gray-50 to-gray-100/50" spacing="large">
+          <h2
+            class="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-12 sm:mb-14 text-gray-900"
+            style="font-family: var(--font-display);"
+          >
             {recentWork.heading}
           </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-10">
             {recentWork.projects.map((project, index) => (
               <a
                 key={index}
                 href={project.link}
-                class="block bg-white p-6 rounded-lg border border-gray-200 hover:border-teal-600 hover:shadow-md transition-all"
+                class="group block bg-white p-8 rounded-2xl border border-gray-200 hover:border-teal-500 hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
               >
-                <h3 class="text-xl font-semibold mb-3">{project.type}</h3>
-                <p class="text-gray-600 mb-4">{project.description}</p>
-                <p class="text-sm font-medium text-teal-600">
+                <h3
+                  class="text-xl lg:text-2xl font-bold mb-3 text-gray-900 group-hover:text-teal-700 transition-colors"
+                  style="font-family: var(--font-display);"
+                >
+                  {project.type}
+                </h3>
+                <p class="text-gray-600 mb-5 leading-relaxed">{project.description}</p>
+                <p class="text-sm font-semibold text-teal-600 uppercase tracking-wider">
                   {project.outcome}
                 </p>
               </a>
@@ -140,9 +163,9 @@ export default define.page(function Home() {
         </Section>
 
         {/* About Preview */}
-        <Section>
-          <div class="max-w-3xl mx-auto text-center">
-            <p class="text-lg text-gray-700 mb-6">
+        <Section width="narrow">
+          <div class="text-center">
+            <p class="text-lg sm:text-xl text-gray-700 mb-8 leading-relaxed">
               {aboutPreview.text}
             </p>
             <Button href={aboutPreview.ctaLink} variant="secondary">
@@ -152,15 +175,21 @@ export default define.page(function Home() {
         </Section>
 
         {/* Final CTA Section */}
-        <Section class="bg-gray-900 text-white">
-          <div class="max-w-3xl mx-auto text-center">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+        <Section class="relative bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden" spacing="large">
+          {/* Decorative gradient overlay */}
+          <div class="absolute inset-0 bg-gradient-to-br from-teal-900/10 to-blue-900/10 pointer-events-none"></div>
+
+          <div class="relative max-w-3xl mx-auto text-center">
+            <h2
+              class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white"
+              style="font-family: var(--font-display);"
+            >
               {finalCta.heading}
             </h2>
-            <p class="text-lg text-gray-300 mb-8">
+            <p class="text-lg sm:text-xl text-gray-300 mb-10 leading-relaxed">
               {finalCta.text}
             </p>
-            <Button href={finalCta.ctaLink} variant="secondary">
+            <Button href={finalCta.ctaLink} variant="primary">
               {finalCta.ctaText}
             </Button>
           </div>

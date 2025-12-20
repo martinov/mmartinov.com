@@ -1,9 +1,7 @@
 // Homepage content
 export const hero = {
-  headline:
-    "Software architect specializing in business process automation and AI integration",
   subheadline:
-    "I help companies eliminate repetitive manual work so teams can focus on what actually matters. 22+ years of experience building systems that work.",
+    "I help companies eliminate repetitive manual work so teams can focus on what actually matters. Two decades of experience building systems that work.",
   primaryCta: {
     text: "View My Work",
     href: "/work",

@@ -1,14 +1,184 @@
 @import "tailwindcss";
 
-/* Custom styles for mmartinov.com */
+/* Design System Variables */
+:root {
+  /* Typography */
+  --font-display: 'Newsreader', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Colors - Enhanced Palette */
+  --color-primary: #0d9488; /* teal-600 */
+  --color-primary-dark: #0f766e; /* teal-700 */
+  --color-primary-darker: #115e59; /* teal-800 */
+  --color-primary-light: #5eead4; /* teal-300 */
+  --color-primary-lightest: #ccfbf1; /* teal-100 */
+
+  --color-accent: #3b82f6; /* blue-500 */
+  --color-accent-light: #93c5fd; /* blue-300 */
+  --color-accent-dark: #1d4ed8; /* blue-700 */
+
+  /* Spacing */
+  --section-spacing-lg: 8rem;
+  --section-spacing-md: 5rem;
+  --section-spacing-sm: 3rem;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Shadows */
+  --shadow-elegant: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-elegant-lg: 0 10px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
 
 /* Smooth scrolling for anchor links */
 html {
   scroll-behavior: smooth;
 }
 
-/* Focus visible for accessibility */
+/* Enhanced Focus States */
 :focus-visible {
-  outline: 2px solid #111827;
-  outline-offset: 2px;
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Base Typography */
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* Selection Styling */
+::selection {
+  background-color: var(--color-primary-lightest);
+  color: var(--color-primary-darker);
+}
+
+/* Link Transitions */
+a {
+  transition: color var(--transition-base);
+}
+
+/* Elegant Underline Animation for Content Links */
+.prose a:not(.no-underline) {
+  background-image: linear-gradient(to right, var(--color-primary), var(--color-accent));
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size var(--transition-base);
+  padding-bottom: 2px;
+}
+
+.prose a:not(.no-underline):hover {
+  background-size: 100% 2px;
+}
+
+/* Smooth Scroll Offset for Sticky Header */
+:target {
+  scroll-margin-top: 5rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+/* Utility Animation Classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.3s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.4s ease-out forwards;
+}
+
+/* Stagger Animation Delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+
+/* Gradient Mesh Background */
+.gradient-mesh {
+  background:
+    radial-gradient(at 27% 37%, rgba(13, 148, 136, 0.15) 0px, transparent 50%),
+    radial-gradient(at 97% 21%, rgba(59, 130, 246, 0.12) 0px, transparent 50%),
+    radial-gradient(at 52% 99%, rgba(13, 148, 136, 0.08) 0px, transparent 50%),
+    radial-gradient(at 10% 29%, rgba(59, 130, 246, 0.1) 0px, transparent 50%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-dark);
 }

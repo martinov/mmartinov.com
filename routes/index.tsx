@@ -5,12 +5,12 @@ import Button from "../components/Button.tsx";
 import SEO from "../components/SEO.tsx";
 import ServiceIcon from "../components/ServiceIcon.tsx";
 import {
-  hero,
-  credibilityBand,
-  whatIDo,
-  recentWork,
   aboutPreview,
+  credibilityBand,
   finalCta,
+  hero,
+  recentWork,
+  whatIDo,
 } from "../content/home.ts";
 
 export default define.page(function Home() {
@@ -26,8 +26,10 @@ export default define.page(function Home() {
         <Section class="relative pt-20 pb-16 sm:pt-24 sm:pb-20 overflow-hidden">
           {/* Background Blob */}
           <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-7xl -z-10 pointer-events-none">
-            <div class="absolute top-[-10%] right-[-5%] w-[30rem] h-[30rem] bg-teal-100/50 rounded-full blur-3xl"></div>
-            <div class="absolute top-[10%] left-[-10%] w-[25rem] h-[25rem] bg-blue-100/50 rounded-full blur-3xl"></div>
+            <div class="absolute top-[-10%] right-[-5%] w-[30rem] h-[30rem] bg-teal-100/50 rounded-full blur-3xl">
+            </div>
+            <div class="absolute top-[10%] left-[-10%] w-[25rem] h-[25rem] bg-blue-100/50 rounded-full blur-3xl">
+            </div>
           </div>
 
           <div class="text-center max-w-4xl mx-auto px-4">
@@ -54,18 +56,18 @@ export default define.page(function Home() {
             {credibilityBand.map((item, index) => (
               <div key={index} class="flex items-center justify-center h-full">
                 <div class="text-sm sm:text-base text-gray-700 font-medium">
-                  {item.link ? (
-                    <a
-                      href={item.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="text-teal-700 hover:text-teal-800 hover:underline decoration-teal-300 underline-offset-2"
-                    >
-                      {item.text}
-                    </a>
-                  ) : (
-                    <span>{item.text}</span>
-                  )}
+                  {item.link
+                    ? (
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-teal-700 hover:text-teal-800 hover:underline decoration-teal-300 underline-offset-2"
+                      >
+                        {item.text}
+                      </a>
+                    )
+                    : <span>{item.text}</span>}
                 </div>
               </div>
             ))}
@@ -79,18 +81,29 @@ export default define.page(function Home() {
           </h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
             {whatIDo.services.map((service, index) => (
-              <div key={index} class="bg-white rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+              <div
+                key={index}
+                class="bg-white rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300"
+              >
                 <div class="mb-6">
-                  <ServiceIcon type={service.icon as "workflow" | "brain" | "architecture"} />
+                  <ServiceIcon
+                    type={service.icon as "workflow" | "brain" | "architecture"}
+                  />
                 </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-4">{service.title}</h3>
+                <h3 class="text-xl font-bold text-gray-900 mb-4">
+                  {service.title}
+                </h3>
                 <div class="space-y-3">
                   <p class="text-gray-600">
-                    <span class="font-semibold text-teal-700 block mb-1">Problem:</span>
+                    <span class="font-semibold text-teal-700 block mb-1">
+                      Problem:
+                    </span>
                     {service.problem}
                   </p>
                   <p class="text-gray-600">
-                    <span class="font-semibold text-teal-700 block mb-1">Solution:</span>
+                    <span class="font-semibold text-teal-700 block mb-1">
+                      Solution:
+                    </span>
                     {service.solution}
                   </p>
                 </div>

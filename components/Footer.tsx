@@ -10,7 +10,8 @@ export default function Footer() {
               Martin Martinov
             </h3>
             <p class="text-sm text-gray-400 max-w-xs">
-              Software architect specializing in business process automation and AI integration
+              Software architect specializing in business process automation and
+              AI integration
             </p>
           </div>
 

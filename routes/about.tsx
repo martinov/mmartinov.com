@@ -4,13 +4,13 @@ import Section from "../components/Section.tsx";
 import Button from "../components/Button.tsx";
 import SEO from "../components/SEO.tsx";
 import {
-  aboutHero,
-  story,
-  professionalJourney,
-  howIWork,
-  beyondWork,
-  technicalApproach,
   aboutCta,
+  aboutHero,
+  beyondWork,
+  howIWork,
+  professionalJourney,
+  story,
+  technicalApproach,
 } from "../content/about.ts";
 
 export default define.page(function About() {
@@ -67,9 +67,7 @@ export default define.page(function About() {
                     key={index}
                     class="text-gray-700 pl-6 relative before:content-['•'] before:absolute before:left-0"
                   >
-                    {typeof point === "string" ? (
-                      point
-                    ) : (
+                    {typeof point === "string" ? point : (
                       <>
                         {point.text.split(point.link.text)[0]}
                         <a

@@ -140,8 +140,10 @@ export const caseStudies = [
 
 export const otherExperience = {
   heading: "Other Experience",
-  text: "Brief mention of other domains: FOREX trading automation with ML models, healthcare systems, fintech backend systems.",
-  note: "Most of my work involves complex integrations, API design, and backend systems. If you want to know whether I've solved a problem similar to yours, just ask.",
+  text:
+    "Brief mention of other domains: FOREX trading automation with ML models, healthcare systems, fintech backend systems.",
+  note:
+    "Most of my work involves complex integrations, API design, and backend systems. If you want to know whether I've solved a problem similar to yours, just ask.",
 };
 
 export const workCta = {

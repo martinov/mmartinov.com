@@ -4,10 +4,10 @@ import Section from "../components/Section.tsx";
 import Button from "../components/Button.tsx";
 import SEO from "../components/SEO.tsx";
 import {
-  workIntro,
   caseStudies,
   otherExperience,
   workCta,
+  workIntro,
 } from "../content/work.ts";
 
 export default define.page(function Work() {

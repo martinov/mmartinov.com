@@ -5,11 +5,11 @@ import Button from "../components/Button.tsx";
 import SEO from "../components/SEO.tsx";
 import ContactForm from "../islands/ContactForm.tsx";
 import {
-  contactHero,
-  whatToExpect,
   bookingInfo,
-  contactMethods,
   camplightNote,
+  contactHero,
+  contactMethods,
+  whatToExpect,
 } from "../content/contact.ts";
 
 export default define.page(function Contact() {
@@ -94,18 +94,22 @@ export default define.page(function Contact() {
                   <p class="text-sm font-medium text-gray-500 mb-1">
                     {method.label}
                   </p>
-                  {method.href ? (
-                    <a
-                      href={method.href}
-                      target={method.href.startsWith("http") ? "_blank" : undefined}
-                      rel={method.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      class="text-teal-600 hover:text-teal-700 hover:underline"
-                    >
-                      {method.value}
-                    </a>
-                  ) : (
-                    <p class="text-gray-900">{method.value}</p>
-                  )}
+                  {method.href
+                    ? (
+                      <a
+                        href={method.href}
+                        target={method.href.startsWith("http")
+                          ? "_blank"
+                          : undefined}
+                        rel={method.href.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined}
+                        class="text-teal-600 hover:text-teal-700 hover:underline"
+                      >
+                        {method.value}
+                      </a>
+                    )
+                    : <p class="text-gray-900">{method.value}</p>}
                 </div>
               ))}
             </div>

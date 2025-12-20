@@ -24,7 +24,7 @@ export const handler = define.handlers({
           {
             status: 400,
             headers: { "Content-Type": "application/json" },
-          }
+          },
         );
       }
 
@@ -36,7 +36,7 @@ export const handler = define.handlers({
           {
             status: 400,
             headers: { "Content-Type": "application/json" },
-          }
+          },
         );
       }
 
@@ -52,12 +52,15 @@ export const handler = define.handlers({
 
       // Send email via Resend
       try {
-        const { data: emailData, error: emailError } = await resend.emails.send({
-          from: "Martin Martinov Website <website@mmartinov.com>",
-          to: "me@mmartinov.com",
-          replyTo: data.email,
-          subject: `New Contact: ${data.name}${data.company ? ` from ${data.company}` : ""}`,
-          html: `
+        const { data: emailData, error: emailError } = await resend.emails.send(
+          {
+            from: "Martin Martinov Website <website@mmartinov.com>",
+            to: "me@mmartinov.com",
+            replyTo: data.email,
+            subject: `New Contact: ${data.name}${
+              data.company ? ` from ${data.company}` : ""
+            }`,
+            html: `
             <!DOCTYPE html>
             <html>
               <head>
@@ -84,7 +87,9 @@ export const handler = define.handlers({
                   <div class="content">
                     <div class="field">
                       <div class="label">From:</div>
-                      <div class="value"><strong>${sanitizeHtml(data.name)}</strong></div>
+                      <div class="value"><strong>${
+              sanitizeHtml(data.name)
+            }</strong></div>
                     </div>
 
                     <div class="field">
@@ -92,19 +97,29 @@ export const handler = define.handlers({
                       <div class="value"><a href="mailto:${data.email}">${data.email}</a></div>
                     </div>
 
-                    ${data.company ? `
+                    ${
+              data.company
+                ? `
                     <div class="field">
                       <div class="label">Company:</div>
                       <div class="value">${sanitizeHtml(data.company)}</div>
                     </div>
-                    ` : ""}
+                    `
+                : ""
+            }
 
-                    ${data.preferredTime ? `
+                    ${
+              data.preferredTime
+                ? `
                     <div class="field">
                       <div class="label">Preferred Time for Call:</div>
-                      <div class="value">${sanitizeHtml(data.preferredTime)}</div>
+                      <div class="value">${
+                  sanitizeHtml(data.preferredTime)
+                }</div>
                     </div>
-                    ` : ""}
+                    `
+                : ""
+            }
 
                     <div class="field">
                       <div class="label">Message:</div>
@@ -113,14 +128,18 @@ export const handler = define.handlers({
                       </div>
                     </div>
 
-                    <a href="mailto:${data.email}" class="reply-button">Reply to ${sanitizeHtml(data.name)}</a>
+                    <a href="mailto:${data.email}" class="reply-button">Reply to ${
+              sanitizeHtml(data.name)
+            }</a>
 
                     <div class="footer">
-                      <p>Received: ${new Date().toLocaleString("en-US", {
-                        dateStyle: "full",
-                        timeStyle: "short",
-                        timeZone: "Europe/Sofia"
-                      })}</p>
+                      <p>Received: ${
+              new Date().toLocaleString("en-US", {
+                dateStyle: "full",
+                timeStyle: "short",
+                timeZone: "Europe/Sofia",
+              })
+            }</p>
                       <p>Submitted via mmartinov.com contact form</p>
                     </div>
                   </div>
@@ -128,7 +147,8 @@ export const handler = define.handlers({
               </body>
             </html>
           `,
-        });
+          },
+        );
 
         if (emailError) {
           console.error("Resend API error:", emailError);
@@ -154,24 +174,24 @@ export const handler = define.handlers({
         return new Response(
           JSON.stringify({
             success: true,
-            message: "Message received. We'll get back to you soon."
+            message: "Message received. We'll get back to you soon.",
           }),
           {
             status: 200,
             headers: { "Content-Type": "application/json" },
-          }
+          },
         );
       }
 
       return new Response(
         JSON.stringify({
           success: true,
-          message: "Message sent successfully"
+          message: "Message sent successfully",
         }),
         {
           status: 200,
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
     } catch (error) {
       console.error("Error processing contact form:", error);
@@ -180,7 +200,7 @@ export const handler = define.handlers({
         {
           status: 500,
           headers: { "Content-Type": "application/json" },
-        }
+        },
       );
     }
   },

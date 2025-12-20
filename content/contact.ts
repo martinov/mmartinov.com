@@ -27,7 +27,11 @@ export const bookingInfo = {
 export const contactMethods = {
   heading: "Other Ways to Connect",
   methods: [
-    { label: "Email", value: "me@mmartinov.com", href: "mailto:me@mmartinov.com" },
+    {
+      label: "Email",
+      value: "me@mmartinov.com",
+      href: "mailto:me@mmartinov.com",
+    },
     {
       label: "LinkedIn",
       value: "linkedin.com/in/martinov",

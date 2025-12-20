@@ -14,13 +14,13 @@ export default function SEO({
   description,
   path,
   image = "/og-image.png",
-  type = "website"
+  type = "website",
 }: SEOProps) {
-  const fullTitle = path === "/"
-    ? title
-    : `${title} - Martin Martinov`;
+  const fullTitle = path === "/" ? title : `${title} - Martin Martinov`;
   const url = `${siteConfig.url}${path}`;
-  const fullImage = image.startsWith("http") ? image : `${siteConfig.url}${image}`;
+  const fullImage = image.startsWith("http")
+    ? image
+    : `${siteConfig.url}${image}`;
 
   return (
     <Head>

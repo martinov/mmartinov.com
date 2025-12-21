@@ -4,6 +4,7 @@ import Section from "../components/Section.tsx";
 import Button from "../components/Button.tsx";
 import SEO from "../components/SEO.tsx";
 import ContactForm from "../islands/ContactForm.tsx";
+import ObfuscatedEmail from "../islands/ObfuscatedEmail.tsx";
 import {
   bookingInfo,
   camplightNote,
@@ -111,18 +112,27 @@ export default define.page(function Contact() {
                   </p>
                   {method.href
                     ? (
-                      <a
-                        href={method.href}
-                        target={method.href.startsWith("http")
-                          ? "_blank"
-                          : undefined}
-                        rel={method.href.startsWith("http")
-                          ? "noopener noreferrer"
-                          : undefined}
-                        class="text-teal-600 font-medium hover:text-teal-800 transition-colors duration-300 underline decoration-teal-300 hover:decoration-teal-500 underline-offset-2"
-                      >
-                        {method.value}
-                      </a>
+                      method.obfuscated
+                        ? (
+                          <ObfuscatedEmail
+                            encoded={method.encodedValue}
+                            className="text-teal-600 font-medium hover:text-teal-800 transition-colors duration-300 underline decoration-teal-300 hover:decoration-teal-500 underline-offset-2"
+                          />
+                        )
+                        : (
+                          <a
+                            href={method.href}
+                            target={method.href.startsWith("http")
+                              ? "_blank"
+                              : undefined}
+                            rel={method.href.startsWith("http")
+                              ? "noopener noreferrer"
+                              : undefined}
+                            class="text-teal-600 font-medium hover:text-teal-800 transition-colors duration-300 underline decoration-teal-300 hover:decoration-teal-500 underline-offset-2"
+                          >
+                            {method.value}
+                          </a>
+                        )
                     )
                     : <p class="text-gray-900 font-medium">{method.value}</p>}
                 </div>

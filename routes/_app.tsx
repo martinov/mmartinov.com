@@ -93,9 +93,16 @@ export default define.page(function App({ Component }) {
               "@type": "ProfessionalService",
               "name": "Martin Martinov - Software Consulting",
               "url": "https://mmartinov.com",
+              "image": "https://mmartinov.com/og-image.png",
               "description": "Expert software consulting for business process automation and AI integration",
               "priceRange": "Contact for pricing",
               "areaServed": "Worldwide",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "28 Mur Str.",
+                "addressLocality": "Sofia",
+                "addressCountry": "BG",
+              },
               "provider": {
                 "@type": "Person",
                 "name": "Martin Martinov",

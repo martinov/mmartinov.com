@@ -29,8 +29,8 @@ export const contactMethods = {
   methods: [
     {
       label: "Email",
-      value: "me@mmartinov.com",
-      href: "mailto:me@mmartinov.com",
+      obfuscated: true, // Flag to use ObfuscatedEmail component
+      encodedValue: "==QbvNmL29mbpRnch1WbAVWb", // Base64 reversed: me@mmartinov.com
     },
     {
       label: "LinkedIn",

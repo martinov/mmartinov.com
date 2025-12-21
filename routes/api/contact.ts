@@ -1,5 +1,4 @@
 import { define } from "../../utils.ts";
-import { Resend } from "resend";
 
 interface ContactFormData {
   name: string;
@@ -9,8 +8,9 @@ interface ContactFormData {
   preferredTime?: string;
 }
 
-// Initialize Resend with API key from environment
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+// Resend API configuration
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const RESEND_API_URL = "https://api.resend.com/emails";
 
 export const handler = define.handlers({
   async POST(ctx) {
@@ -50,17 +50,16 @@ export const handler = define.handlers({
           .replace(/'/g, "&#039;")
           .replace(/\n/g, "<br>");
 
-      // Send email via Resend
+      // Send email via Resend REST API
       try {
-        const { data: emailData, error: emailError } = await resend.emails.send(
-          {
-            from: "Martin Martinov Website <website@mmartinov.com>",
-            to: "me@mmartinov.com",
-            replyTo: data.email,
-            subject: `New Contact: ${data.name}${
-              data.company ? ` from ${data.company}` : ""
-            }`,
-            html: `
+        const emailPayload = {
+          from: "Martin Martinov Website <website@mmartinov.com>",
+          to: ["me@mmartinov.com"],
+          reply_to: [data.email],
+          subject: `New Contact: ${data.name}${
+            data.company ? ` from ${data.company}` : ""
+          }`,
+          html: `
             <!DOCTYPE html>
             <html>
               <head>
@@ -147,14 +146,24 @@ export const handler = define.handlers({
               </body>
             </html>
           `,
-          },
-        );
+        };
 
-        if (emailError) {
-          console.error("Resend API error:", emailError);
+        const response = await fetch(RESEND_API_URL, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${RESEND_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(emailPayload),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          console.error("Resend API error:", response.status, errorData);
           throw new Error("Failed to send email");
         }
 
+        const emailData = await response.json();
         console.log("Contact form email sent successfully:", emailData);
       } catch (emailSendError) {
         console.error("Error sending email via Resend:", emailSendError);

@@ -53,7 +53,7 @@ export const handler = define.handlers({
       // Send email via Resend REST API
       try {
         const emailPayload = {
-          from: "Martin Martinov Website <website@mmartinov.com>",
+          from: "Martin Martinov Website <contact@notifications.mmartinov.com>",
           to: ["me@mmartinov.com"],
           reply_to: [data.email],
           subject: `New Contact: ${data.name}${

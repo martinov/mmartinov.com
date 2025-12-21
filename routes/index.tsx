@@ -42,8 +42,8 @@ export default define.page(function Home() {
             >
               Software architect<br />
               specializing in<br />
-              business process automation<br />
-              and AI integration
+              business process automation and<br />
+              AI integration
             </h1>
             <p class="text-lg sm:text-xl lg:text-2xl text-gray-600 mb-10 sm:mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in-up stagger-1">
               {hero.subheadline}

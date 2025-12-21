@@ -43,19 +43,25 @@ export const caseStudies = [
       points: [
         "Insurance broker needed to automate customer inquiry handling",
         "Complex product catalog requiring contextual understanding",
+        "High volume of repetitive questions preventing focus on complex cases",
       ],
     },
     solution: {
-      heading: "The Approach",
+      heading: "The Solution",
       points: [
-        "Building LLM-powered agent to handle initial customer inquiries",
-        "System understands insurance products and routes appropriately",
-        "Currently in development",
+        "Designed LLM-powered agent to handle initial customer inquiries",
+        "Built system to understand insurance products and route appropriately",
+        "Integrated with existing CRM for seamless handoff to human agents",
+        "Created conversation templates for common inquiry patterns",
       ],
     },
     outcome: {
-      heading: null,
-      points: ["Full case study available once project is in production"],
+      heading: "The Outcome",
+      points: [
+        "Reduced response time for initial customer inquiries",
+        "Freed brokers to focus on complex cases requiring expertise",
+        "System learns from broker responses to improve over time",
+      ],
     },
   },
   {
@@ -141,9 +147,9 @@ export const caseStudies = [
 export const otherExperience = {
   heading: "Other Experience",
   text:
-    "Brief mention of other domains: FOREX trading automation with ML models, healthcare systems, fintech backend systems.",
+    "Over the years, I've worked across various domains including FOREX trading automation with ML models, healthcare systems, and fintech backend infrastructure. Most projects involve complex integrations, API design, and distributed systems architecture.",
   note:
-    "Most of my work involves complex integrations, API design, and backend systems. If you want to know whether I've solved a problem similar to yours, just ask.",
+    "If you're wondering whether I've solved a problem similar to yours, let's talk. Chances are I've encountered something close.",
 };
 
 export const workCta = {

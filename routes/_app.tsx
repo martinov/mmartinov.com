@@ -26,9 +26,16 @@ export default define.page(function App({ Component }) {
 
         {/* Plausible Analytics - Privacy-focused, GDPR compliant */}
         <script
-          defer
-          data-domain="mmartinov.com"
-          src="https://plausible.io/js/script.js"
+          async
+          src="https://analytics.mmartinov.com/js/pa-_ee_5f_2lWSfTCCHibgKM.js"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+`,
+          }}
         />
       </head>
       <body class="bg-white text-gray-900 antialiased">

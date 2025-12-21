@@ -5,11 +5,8 @@ import Button from "../components/Button.tsx";
 import SEO from "../components/SEO.tsx";
 import ServiceIcon from "../components/ServiceIcon.tsx";
 import {
-  aboutPreview,
   credibilityBand,
-  finalCta,
   hero,
-  recentWork,
   whatIDo,
 } from "../content/home.ts";
 
@@ -127,73 +124,6 @@ export default define.page(function Home() {
           </div>
         </Section>
 
-        {/* Recent Work Section */}
-        <Section class="bg-gradient-to-br from-gray-50 to-gray-100/50" spacing="large">
-          <h2
-            class="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-12 sm:mb-14 text-gray-900"
-            style="font-family: var(--font-display);"
-          >
-            {recentWork.heading}
-          </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-10">
-            {recentWork.projects.map((project, index) => (
-              <a
-                key={index}
-                href={project.link}
-                class="group block bg-white p-8 rounded-2xl border border-gray-200 hover:border-teal-500 hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
-              >
-                <h3
-                  class="text-xl lg:text-2xl font-bold mb-3 text-gray-900 group-hover:text-teal-700 transition-colors"
-                  style="font-family: var(--font-display);"
-                >
-                  {project.type}
-                </h3>
-                <p class="text-gray-600 mb-5 leading-relaxed">{project.description}</p>
-                <p class="text-sm font-semibold text-teal-600 uppercase tracking-wider">
-                  {project.outcome}
-                </p>
-              </a>
-            ))}
-          </div>
-          <div class="text-center">
-            <Button href={recentWork.ctaLink} variant="secondary">
-              {recentWork.ctaText}
-            </Button>
-          </div>
-        </Section>
-
-        {/* About Preview */}
-        <Section width="narrow">
-          <div class="text-center">
-            <p class="text-lg sm:text-xl text-gray-700 mb-8 leading-relaxed">
-              {aboutPreview.text}
-            </p>
-            <Button href={aboutPreview.ctaLink} variant="secondary">
-              {aboutPreview.ctaText}
-            </Button>
-          </div>
-        </Section>
-
-        {/* Final CTA Section */}
-        <Section class="relative bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden" spacing="large">
-          {/* Decorative gradient overlay */}
-          <div class="absolute inset-0 bg-gradient-to-br from-teal-900/10 to-blue-900/10 pointer-events-none"></div>
-
-          <div class="relative max-w-3xl mx-auto text-center">
-            <h2
-              class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white"
-              style="font-family: var(--font-display);"
-            >
-              {finalCta.heading}
-            </h2>
-            <p class="text-lg sm:text-xl text-gray-300 mb-10 leading-relaxed">
-              {finalCta.text}
-            </p>
-            <Button href={finalCta.ctaLink} variant="primary">
-              {finalCta.ctaText}
-            </Button>
-          </div>
-        </Section>
       </PageLayout>
     </>
   );

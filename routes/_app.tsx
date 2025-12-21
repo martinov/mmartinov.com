@@ -65,12 +65,19 @@ export default define.page(function App({ Component }) {
               ],
               "worksFor": {
                 "@type": "Organization",
-                "name": "Camplight",
-                "url": "https://camplight.net",
+                "name": "MMartinov Ltd.",
+                "url": "https://mmartinov.com",
+                "address": {
+                  "@type": "PostalAddress",
+                  "streetAddress": "28 Mur Str.",
+                  "addressLocality": "Sofia",
+                  "addressCountry": "BG",
+                },
               },
               "address": {
                 "@type": "PostalAddress",
-                "addressLocality": "Pleven",
+                "streetAddress": "28 Mur Str.",
+                "addressLocality": "Sofia",
                 "addressCountry": "BG",
               },
             }),

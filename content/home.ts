@@ -48,39 +48,3 @@ export const whatIDo = {
   ],
 };
 
-export const recentWork = {
-  heading: "Recent Projects",
-  projects: [
-    {
-      type: "E-Commerce AI Automation",
-      description:
-        "Built centralized order processing platform with agentic AI to handle routine decisions, freeing operators to focus on complex cases.",
-      outcome: "Faster fulfillment, improved operator efficiency",
-      link: "/work#ecommerce",
-    },
-    {
-      type: "HVAC Digital Foundation",
-      description:
-        "Established digital presence and automation roadmap for B2B HVAC company, setting foundation for maintenance scheduling and inventory management.",
-      outcome: "Digital foundation for future automation",
-      link: "/work#hvac",
-    },
-  ],
-  ctaText: "See All Work",
-  ctaLink: "/work",
-};
-
-export const aboutPreview = {
-  text:
-    "I coded my first program in 1996 on an 8-bit computer. Today I have 22+ years building systems across finance, insurance, healthcare, and e-commerce. When I'm not working, you'll find me rock climbing or riding motorcycles.",
-  ctaText: "More About Me",
-  ctaLink: "/about",
-};
-
-export const finalCta = {
-  heading: "Ready to Automate the Boring Stuff?",
-  text:
-    "Let's talk about your processes, your challenges, and whether automation makes sense for you.",
-  ctaText: "Book a 30-Minute Call",
-  ctaLink: "/contact",
-};

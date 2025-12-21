@@ -1,0 +1,12 @@
+# Robots.txt for mmartinov.com
+# Allow all search engines to crawl the site
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://mmartinov.com/sitemap.xml
+
+# Crawl-delay (optional, helps prevent server overload)
+# Most modern bots ignore this, but it doesn't hurt
+Crawl-delay: 1

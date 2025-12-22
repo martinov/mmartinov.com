@@ -110,29 +110,27 @@ export default define.page(function Contact() {
                   <p class="text-sm font-semibold text-gray-500 mb-2 uppercase tracking-wider">
                     {method.label}
                   </p>
-                  {method.href
+                  {method.obfuscated
                     ? (
-                      method.obfuscated
-                        ? (
-                          <ObfuscatedEmail
-                            encoded={method.encodedValue}
-                            className="text-teal-600 font-medium hover:text-teal-800 transition-colors duration-300 underline decoration-teal-300 hover:decoration-teal-500 underline-offset-2"
-                          />
-                        )
-                        : (
-                          <a
-                            href={method.href}
-                            target={method.href.startsWith("http")
-                              ? "_blank"
-                              : undefined}
-                            rel={method.href.startsWith("http")
-                              ? "noopener noreferrer"
-                              : undefined}
-                            class="text-teal-600 font-medium hover:text-teal-800 transition-colors duration-300 underline decoration-teal-300 hover:decoration-teal-500 underline-offset-2"
-                          >
-                            {method.value}
-                          </a>
-                        )
+                      <ObfuscatedEmail
+                        encoded={method.encodedValue}
+                        className="text-teal-600 font-medium hover:text-teal-800 transition-colors duration-300 underline decoration-teal-300 hover:decoration-teal-500 underline-offset-2"
+                      />
+                    )
+                    : method.href
+                    ? (
+                      <a
+                        href={method.href}
+                        target={method.href.startsWith("http")
+                          ? "_blank"
+                          : undefined}
+                        rel={method.href.startsWith("http")
+                          ? "noopener noreferrer"
+                          : undefined}
+                        class="text-teal-600 font-medium hover:text-teal-800 transition-colors duration-300 underline decoration-teal-300 hover:decoration-teal-500 underline-offset-2"
+                      >
+                        {method.value}
+                      </a>
                     )
                     : <p class="text-gray-900 font-medium">{method.value}</p>}
                 </div>

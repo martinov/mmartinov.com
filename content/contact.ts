@@ -28,11 +28,6 @@ export const contactMethods = {
   heading: "Other Ways to Connect",
   methods: [
     {
-      label: "Email",
-      obfuscated: true, // Flag to use ObfuscatedEmail component
-      encodedValue: "==QbvNmL29mbpRnch1WbAVWb", // Base64 reversed: me@mmartinov.com
-    },
-    {
       label: "LinkedIn",
       value: "linkedin.com/in/martinov",
       href: "https://www.linkedin.com/in/martinov/",

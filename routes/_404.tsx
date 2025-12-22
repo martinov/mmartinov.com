@@ -20,8 +20,16 @@ export default define.page(function NotFound() {
         >
           {/* Background Blobs */}
           <div class="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
-            <div class="absolute top-[-15%] right-[-8%] w-[35rem] h-[35rem] bg-gradient-to-br from-teal-200/40 to-teal-100/30 rounded-full blur-3xl animate-pulse" style="animation-duration: 4s;"></div>
-            <div class="absolute bottom-[-10%] left-[-12%] w-[32rem] h-[32rem] bg-gradient-to-br from-blue-200/35 to-blue-100/25 rounded-full blur-3xl animate-pulse" style="animation-duration: 5s; animation-delay: 1s;"></div>
+            <div
+              class="absolute top-[-15%] right-[-8%] w-[35rem] h-[35rem] bg-gradient-to-br from-teal-200/40 to-teal-100/30 rounded-full blur-3xl animate-pulse"
+              style="animation-duration: 4s;"
+            >
+            </div>
+            <div
+              class="absolute bottom-[-10%] left-[-12%] w-[32rem] h-[32rem] bg-gradient-to-br from-blue-200/35 to-blue-100/25 rounded-full blur-3xl animate-pulse"
+              style="animation-duration: 5s; animation-delay: 1s;"
+            >
+            </div>
           </div>
 
           <div class="text-center max-w-2xl mx-auto px-4 animate-fade-in-up">

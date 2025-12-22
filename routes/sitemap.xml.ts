@@ -1,5 +1,5 @@
 import { define } from "../utils.ts";
-import { siteConfig, navigation } from "../content/site.ts";
+import { navigation, siteConfig } from "../content/site.ts";
 
 export const handler = define.handlers({
   GET() {

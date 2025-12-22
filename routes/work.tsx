@@ -28,7 +28,9 @@ export default define.page(function Work() {
             >
               {workIntro.heading}
             </h1>
-            <p class="text-lg sm:text-xl text-gray-600 leading-relaxed">{workIntro.intro}</p>
+            <p class="text-lg sm:text-xl text-gray-600 leading-relaxed">
+              {workIntro.intro}
+            </p>
           </div>
         </Section>
 
@@ -37,7 +39,9 @@ export default define.page(function Work() {
           <Section
             key={caseStudy.id}
             id={caseStudy.id}
-            class={index % 2 === 0 ? "bg-white" : "bg-gradient-to-br from-gray-50 to-gray-100/30"}
+            class={index % 2 === 0
+              ? "bg-white"
+              : "bg-gradient-to-br from-gray-50 to-gray-100/30"}
             width="narrow"
             spacing="large"
           >
@@ -95,11 +99,16 @@ export default define.page(function Work() {
                   </h3>
                   <div class="space-y-5">
                     {caseStudy.roadmap.items.map((item, i) => (
-                      <div key={i} class="border-l-4 border-teal-600 pl-5 py-2 bg-teal-50/30 rounded-r-lg">
+                      <div
+                        key={i}
+                        class="border-l-4 border-teal-600 pl-5 py-2 bg-teal-50/30 rounded-r-lg"
+                      >
                         <h4 class="font-semibold text-teal-700 mb-2 text-lg">
                           {item.title}
                         </h4>
-                        <p class="text-gray-700 leading-relaxed">{item.description}</p>
+                        <p class="text-gray-700 leading-relaxed">
+                          {item.description}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -175,14 +184,22 @@ export default define.page(function Work() {
             >
               {otherExperience.heading}
             </h2>
-            <p class="text-gray-700 mb-5 text-lg leading-relaxed">{otherExperience.text}</p>
-            <p class="text-gray-600 italic leading-relaxed">{otherExperience.note}</p>
+            <p class="text-gray-700 mb-5 text-lg leading-relaxed">
+              {otherExperience.text}
+            </p>
+            <p class="text-gray-600 italic leading-relaxed">
+              {otherExperience.note}
+            </p>
           </div>
         </Section>
 
         {/* CTA */}
-        <Section class="relative bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden" spacing="large">
-          <div class="absolute inset-0 bg-gradient-to-br from-teal-900/10 to-blue-900/10 pointer-events-none"></div>
+        <Section
+          class="relative bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden"
+          spacing="large"
+        >
+          <div class="absolute inset-0 bg-gradient-to-br from-teal-900/10 to-blue-900/10 pointer-events-none">
+          </div>
 
           <div class="relative max-w-3xl mx-auto text-center">
             <h2

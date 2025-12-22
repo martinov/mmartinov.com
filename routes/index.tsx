@@ -4,11 +4,7 @@ import Section from "../components/Section.tsx";
 import Button from "../components/Button.tsx";
 import SEO from "../components/SEO.tsx";
 import ServiceIcon from "../components/ServiceIcon.tsx";
-import {
-  credibilityBand,
-  hero,
-  whatIDo,
-} from "../content/home.ts";
+import { credibilityBand, hero, whatIDo } from "../content/home.ts";
 
 export default define.page(function Home() {
   return (
@@ -27,9 +23,21 @@ export default define.page(function Home() {
         >
           {/* Enhanced Background Blobs */}
           <div class="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
-            <div class="absolute top-[-15%] right-[-8%] w-[35rem] h-[35rem] bg-gradient-to-br from-teal-200/40 to-teal-100/30 rounded-full blur-3xl animate-pulse" style="animation-duration: 4s;"></div>
-            <div class="absolute top-[5%] left-[-12%] w-[32rem] h-[32rem] bg-gradient-to-br from-blue-200/35 to-blue-100/25 rounded-full blur-3xl animate-pulse" style="animation-duration: 5s; animation-delay: 1s;"></div>
-            <div class="absolute bottom-[-10%] right-[15%] w-[28rem] h-[28rem] bg-gradient-to-br from-teal-100/20 to-blue-100/20 rounded-full blur-3xl animate-pulse" style="animation-duration: 6s; animation-delay: 2s;"></div>
+            <div
+              class="absolute top-[-15%] right-[-8%] w-[35rem] h-[35rem] bg-gradient-to-br from-teal-200/40 to-teal-100/30 rounded-full blur-3xl animate-pulse"
+              style="animation-duration: 4s;"
+            >
+            </div>
+            <div
+              class="absolute top-[5%] left-[-12%] w-[32rem] h-[32rem] bg-gradient-to-br from-blue-200/35 to-blue-100/25 rounded-full blur-3xl animate-pulse"
+              style="animation-duration: 5s; animation-delay: 1s;"
+            >
+            </div>
+            <div
+              class="absolute bottom-[-10%] right-[15%] w-[28rem] h-[28rem] bg-gradient-to-br from-teal-100/20 to-blue-100/20 rounded-full blur-3xl animate-pulse"
+              style="animation-duration: 6s; animation-delay: 2s;"
+            >
+            </div>
           </div>
 
           <div class="text-center max-w-4xl mx-auto px-4 animate-fade-in-up">
@@ -46,10 +54,18 @@ export default define.page(function Home() {
               {hero.subheadline}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up stagger-2">
-              <Button href={hero.primaryCta.href} variant="primary" fullWidthMobile>
+              <Button
+                href={hero.primaryCta.href}
+                variant="primary"
+                fullWidthMobile
+              >
                 {hero.primaryCta.text}
               </Button>
-              <Button href={hero.secondaryCta.href} variant="secondary" fullWidthMobile>
+              <Button
+                href={hero.secondaryCta.href}
+                variant="secondary"
+                fullWidthMobile
+              >
                 {hero.secondaryCta.text}
               </Button>
             </div>
@@ -57,7 +73,10 @@ export default define.page(function Home() {
         </Section>
 
         {/* Credibility Band */}
-        <Section class="bg-gradient-to-br from-teal-50/60 to-blue-50/40 border-y border-teal-100/60" spacing="small">
+        <Section
+          class="bg-gradient-to-br from-teal-50/60 to-blue-50/40 border-y border-teal-100/60"
+          spacing="small"
+        >
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center">
             {credibilityBand.map((item, index) => (
               <div key={index} class="flex items-center justify-center h-full">
@@ -123,7 +142,6 @@ export default define.page(function Home() {
             ))}
           </div>
         </Section>
-
       </PageLayout>
     </>
   );

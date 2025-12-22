@@ -16,7 +16,11 @@ export default define.page(function App({ Component }) {
 
         {/* Preconnect to Google Fonts for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
 
         {/* Google Fonts - Newsreader (display) and DM Sans (body) */}
         <link
@@ -30,6 +34,7 @@ export default define.page(function App({ Component }) {
           src="https://analytics.mmartinov.com/js/pa-_ee_5f_2lWSfTCCHibgKM.js"
         />
         <script
+          // deno-lint-ignore react-no-danger
           dangerouslySetInnerHTML={{
             __html: `
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
@@ -41,6 +46,7 @@ export default define.page(function App({ Component }) {
         {/* Schema.org Structured Data - Person & Professional Service */}
         <script
           type="application/ld+json"
+          // deno-lint-ignore react-no-danger
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
@@ -49,7 +55,8 @@ export default define.page(function App({ Component }) {
               "url": "https://mmartinov.com",
               "image": "https://mmartinov.com/og-image.png",
               "jobTitle": "Software Architect & Automation Consultant",
-              "description": "Software architect specializing in business process automation and AI integration. 22+ years building systems that work.",
+              "description":
+                "Software architect specializing in business process automation and AI integration. 22+ years building systems that work.",
               "knowsAbout": [
                 "Business Process Automation",
                 "AI Integration",
@@ -87,6 +94,7 @@ export default define.page(function App({ Component }) {
         {/* Schema.org - Professional Service (Consulting) */}
         <script
           type="application/ld+json"
+          // deno-lint-ignore react-no-danger
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
@@ -94,7 +102,8 @@ export default define.page(function App({ Component }) {
               "name": "Martin Martinov - Software Consulting",
               "url": "https://mmartinov.com",
               "image": "https://mmartinov.com/og-image.png",
-              "description": "Expert software consulting for business process automation and AI integration",
+              "description":
+                "Expert software consulting for business process automation and AI integration",
               "priceRange": "Contact for pricing",
               "areaServed": "Worldwide",
               "address": {

@@ -51,7 +51,8 @@ export default define.page(function About() {
           </div>
 
           {/* Divider */}
-          <div class="h-px bg-gradient-to-r from-transparent via-teal-300 to-transparent mb-16"></div>
+          <div class="h-px bg-gradient-to-r from-transparent via-teal-300 to-transparent mb-16">
+          </div>
 
           {/* Professional Journey */}
           <div class="mb-16">
@@ -74,7 +75,8 @@ export default define.page(function About() {
           </div>
 
           {/* Divider */}
-          <div class="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent mb-16"></div>
+          <div class="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent mb-16">
+          </div>
 
           {/* How I Work */}
           <div class="mb-16">
@@ -110,7 +112,8 @@ export default define.page(function About() {
           </div>
 
           {/* Divider */}
-          <div class="h-px bg-gradient-to-r from-transparent via-teal-300 to-transparent mb-16"></div>
+          <div class="h-px bg-gradient-to-r from-transparent via-teal-300 to-transparent mb-16">
+          </div>
 
           {/* Technical Approach */}
           <div class="mb-16">
@@ -133,7 +136,8 @@ export default define.page(function About() {
           </div>
 
           {/* Divider */}
-          <div class="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent mb-16"></div>
+          <div class="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent mb-16">
+          </div>
 
           {/* Beyond Work */}
           <div class="mb-8">
@@ -157,8 +161,12 @@ export default define.page(function About() {
         </Section>
 
         {/* CTA */}
-        <Section class="relative bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden" spacing="large">
-          <div class="absolute inset-0 bg-gradient-to-br from-teal-900/10 to-blue-900/10 pointer-events-none"></div>
+        <Section
+          class="relative bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden"
+          spacing="large"
+        >
+          <div class="absolute inset-0 bg-gradient-to-br from-teal-900/10 to-blue-900/10 pointer-events-none">
+          </div>
 
           <div class="relative max-w-3xl mx-auto text-center">
             <h2

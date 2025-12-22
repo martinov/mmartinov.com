@@ -29,7 +29,11 @@ export const howIWork = {
     {
       text:
         "For larger or team-based projects: I work through Camplight cooperative",
-      link: { text: "Camplight", url: "https://camplight.net?utm_source=mmartinov.com&utm_medium=about-page&utm_campaign=personal-site-referral" },
+      link: {
+        text: "Camplight",
+        url:
+          "https://camplight.net?utm_source=mmartinov.com&utm_medium=about-page&utm_campaign=personal-site-referral",
+      },
     },
     "Either way, I focus on projects where automation provides clear ROI",
   ],

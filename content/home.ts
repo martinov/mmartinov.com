@@ -14,7 +14,11 @@ export const hero = {
 
 export const credibilityBand = [
   { text: "Building commercial systems since 2001" },
-  { text: "Co-owner @ Camplight", link: "https://camplight.net?utm_source=mmartinov.com&utm_medium=homepage-credibility&utm_campaign=personal-site-referral" },
+  {
+    text: "Co-owner @ Camplight",
+    link:
+      "https://camplight.net?utm_source=mmartinov.com&utm_medium=homepage-credibility&utm_campaign=personal-site-referral",
+  },
   {
     text: "Specializing in AI integration and process automation",
   },
@@ -47,4 +51,3 @@ export const whatIDo = {
     },
   ],
 };
-

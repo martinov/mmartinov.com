@@ -64,8 +64,19 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
         ? (
           <div class="text-center py-10 animate-fade-in">
             <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center animate-scale-in">
-              <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+              <svg
+                class="w-10 h-10 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="3"
+                  d="M5 13l4 4L19 7"
+                >
+                </path>
               </svg>
             </div>
             <h3
@@ -78,6 +89,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
               Thanks for reaching out. I'll get back to you soon.
             </p>
             <button
+              type="button"
               onClick={() => submitStatus.value = "idle"}
               class="text-teal-600 hover:text-teal-800 transition-colors duration-300 font-semibold underline decoration-teal-300 hover:decoration-teal-500 underline-offset-2"
             >
@@ -154,8 +166,16 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
 
             {submitStatus.value === "error" && (
               <div class="bg-red-50 border-2 border-red-200 text-red-700 px-5 py-4 rounded-lg flex items-start gap-3 animate-slide-down">
-                <svg class="w-5 h-5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                <svg
+                  class="w-5 h-5 mt-0.5 flex-shrink-0"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
                 <span>{errorMessage.value}</span>
               </div>

@@ -2,6 +2,7 @@ import { ComponentChildren } from "preact";
 
 interface SectionProps {
   children: ComponentChildren;
+  id?: string;
   class?: string;
   container?: boolean;
   width?: "default" | "narrow" | "wide" | "extraNarrow";
@@ -10,6 +11,7 @@ interface SectionProps {
 
 export default function Section({
   children,
+  id,
   class: className = "",
   container = true,
   width = "default",
@@ -31,7 +33,7 @@ export default function Section({
   };
 
   return (
-    <section class={`${spacingClasses[spacing]} ${className}`}>
+    <section id={id} class={`${spacingClasses[spacing]} ${className}`}>
       {container
         ? (
           <div class={`${widthClasses[width]} mx-auto px-4 sm:px-6 lg:px-8`}>

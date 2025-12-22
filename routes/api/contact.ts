@@ -108,8 +108,8 @@ export const handler = define.handlers({
                     <div class="field">
                       <div class="label">From:</div>
                       <div class="value"><strong>${
-              sanitizeHtml(data.name)
-            }</strong></div>
+            sanitizeHtml(data.name)
+          }</strong></div>
                     </div>
 
                     <div class="field">
@@ -118,28 +118,28 @@ export const handler = define.handlers({
                     </div>
 
                     ${
-              data.company
-                ? `
+            data.company
+              ? `
                     <div class="field">
                       <div class="label">Company:</div>
                       <div class="value">${sanitizeHtml(data.company)}</div>
                     </div>
                     `
-                : ""
-            }
+              : ""
+          }
 
                     ${
-              data.preferredTime
-                ? `
+            data.preferredTime
+              ? `
                     <div class="field">
                       <div class="label">Preferred Time for Call:</div>
                       <div class="value">${
-                  sanitizeHtml(data.preferredTime)
-                }</div>
+                sanitizeHtml(data.preferredTime)
+              }</div>
                     </div>
                     `
-                : ""
-            }
+              : ""
+          }
 
                     <div class="field">
                       <div class="label">Message:</div>
@@ -149,17 +149,17 @@ export const handler = define.handlers({
                     </div>
 
                     <a href="mailto:${data.email}" class="reply-button">Reply to ${
-              sanitizeHtml(data.name)
-            }</a>
+            sanitizeHtml(data.name)
+          }</a>
 
                     <div class="footer">
                       <p>Received: ${
-              new Date().toLocaleString("en-US", {
-                dateStyle: "full",
-                timeStyle: "short",
-                timeZone: "Europe/Sofia",
-              })
-            }</p>
+            new Date().toLocaleString("en-US", {
+              dateStyle: "full",
+              timeStyle: "short",
+              timeZone: "Europe/Sofia",
+            })
+          }</p>
                       <p>Submitted via mmartinov.com contact form</p>
                     </div>
                   </div>

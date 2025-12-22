@@ -61,7 +61,11 @@ export default define.page(async function Contact() {
         </Section>
 
         {/* Booking Options */}
-        <Section class="bg-gradient-to-br from-gray-50 to-gray-100/30" width="narrow" spacing="large">
+        <Section
+          class="bg-gradient-to-br from-gray-50 to-gray-100/30"
+          width="narrow"
+          spacing="large"
+        >
           <div>
             <h2
               class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-10 text-center text-gray-900"
@@ -107,7 +111,10 @@ export default define.page(async function Contact() {
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
               {contactMethods.methods.map((method, index) => (
-                <div key={index} class="text-center p-6 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100/50 border border-gray-200 hover:border-teal-300 transition-colors duration-300">
+                <div
+                  key={index}
+                  class="text-center p-6 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100/50 border border-gray-200 hover:border-teal-300 transition-colors duration-300"
+                >
                   <p class="text-sm font-semibold text-gray-500 mb-2 uppercase tracking-wider">
                     {method.label}
                   </p>
@@ -134,7 +141,10 @@ export default define.page(async function Contact() {
         </Section>
 
         {/* Camplight Note */}
-        <Section class="bg-gradient-to-br from-teal-50/60 to-blue-50/40 border-y border-teal-100/60" width="narrow">
+        <Section
+          class="bg-gradient-to-br from-teal-50/60 to-blue-50/40 border-y border-teal-100/60"
+          width="narrow"
+        >
           <div class="text-center">
             <p class="text-gray-700 text-lg leading-relaxed">
               {camplightNote.text}

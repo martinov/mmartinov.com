@@ -4,7 +4,8 @@ export default function Footer() {
   return (
     <footer class="relative bg-gradient-to-b from-gray-900 to-gray-950 text-gray-300 mt-20 border-t border-gray-800/50">
       {/* Decorative top gradient line */}
-      <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-500/30 to-transparent"></div>
+      <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-teal-500/30 to-transparent">
+      </div>
 
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-10">
@@ -33,7 +34,8 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   class="text-sm text-gray-400 hover:text-teal-400 transition-colors duration-300 inline-flex items-center gap-2 group"
                 >
-                  <span class="w-1 h-1 rounded-full bg-gray-600 group-hover:bg-teal-400 transition-colors duration-300"></span>
+                  <span class="w-1 h-1 rounded-full bg-gray-600 group-hover:bg-teal-400 transition-colors duration-300">
+                  </span>
                   LinkedIn
                 </a>
               </li>
@@ -44,7 +46,8 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   class="text-sm text-gray-400 hover:text-teal-400 transition-colors duration-300 inline-flex items-center gap-2 group"
                 >
-                  <span class="w-1 h-1 rounded-full bg-gray-600 group-hover:bg-teal-400 transition-colors duration-300"></span>
+                  <span class="w-1 h-1 rounded-full bg-gray-600 group-hover:bg-teal-400 transition-colors duration-300">
+                  </span>
                   GitHub
                 </a>
               </li>

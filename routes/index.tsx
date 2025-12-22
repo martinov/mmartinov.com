@@ -4,14 +4,14 @@ import Section from "../components/Section.tsx";
 import Button from "../components/Button.tsx";
 import SEO from "../components/SEO.tsx";
 import ServiceIcon from "../components/ServiceIcon.tsx";
-import { credibilityBand, hero, whatIDo } from "../content/home.ts";
+import { bottomCta, credibilityBand, hero, whatIDo } from "../content/home.ts";
 
 export default define.page(function Home() {
   return (
     <>
       <SEO
         title="Martin Martinov - Software Architect & Automation Consultant"
-        description="Software architect specializing in business process automation and AI integration. 22+ years building systems that work."
+        description="Software architect specializing in business process automation and AI integration. Two decades building systems that work."
         path="/"
       />
       <PageLayout currentPath="/">
@@ -45,10 +45,7 @@ export default define.page(function Home() {
               class="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-6 sm:mb-8 text-gray-900 leading-tight"
               style="font-family: var(--font-display); letter-spacing: -0.03em;"
             >
-              Software architect<br />
-              specializing in<br />
-              business process automation and<br />
-              AI integration
+              {hero.headline}
             </h1>
             <p class="text-lg sm:text-xl lg:text-2xl text-gray-600 mb-10 sm:mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in-up stagger-1">
               {hero.subheadline}
@@ -60,13 +57,6 @@ export default define.page(function Home() {
                 fullWidthMobile
               >
                 {hero.primaryCta.text}
-              </Button>
-              <Button
-                href={hero.secondaryCta.href}
-                variant="secondary"
-                fullWidthMobile
-              >
-                {hero.secondaryCta.text}
               </Button>
             </div>
           </div>
@@ -140,6 +130,27 @@ export default define.page(function Home() {
                 </div>
               </div>
             ))}
+          </div>
+        </Section>
+
+        {/* Bottom CTA Section */}
+        <Section spacing="large">
+          <div class="text-center max-w-2xl mx-auto">
+            <h2
+              class="text-3xl sm:text-4xl font-bold mb-8 text-gray-900"
+              style="font-family: var(--font-display);"
+            >
+              {bottomCta.heading}
+            </h2>
+            <div class="flex justify-center">
+              <Button
+                href={bottomCta.cta.href}
+                variant="primary"
+                fullWidthMobile
+              >
+                {bottomCta.cta.text}
+              </Button>
+            </div>
           </div>
         </Section>
       </PageLayout>

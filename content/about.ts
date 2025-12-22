@@ -8,7 +8,7 @@ export const story = {
   paragraphs: [
     "I wrote my first code in 1996 at age 11 on an 8-bit machine at a local computer club. Once I got my own PC - a 386 with 1MB of RAM - there was no turning back. In my late teens I was writing x86 assembly.",
     "As an introvert, I was drawn to programming because computers are predictable - they do exactly what you tell them. The irony is that software engineering is fundamentally about people: stakeholders, teammates, users. I've grown to enjoy that collaboration as much as the code.",
-    "Two decades of building software took me from Sofia to Copenhagen, Vienna, Munich, and London. I've shipped CRMs and ERPs, led teams, consulted for the IAEA, and learned that the best solutions come from understanding the problem deeply before writing any code.",
+    "Decades of building software took me from Sofia to Copenhagen, Vienna, Munich, and London. I've shipped CRMs and ERPs, led teams, consulted for the IAEA, and learned that the best solutions come from understanding the problem deeply before writing any code.",
     "Now I'm back home in Bulgaria with my family. Currently Solutions Architect and co-owner of Camplight cooperative, doing the work I love with clients across the US and Europe.",
   ],
 };

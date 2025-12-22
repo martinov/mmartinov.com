@@ -162,15 +162,12 @@ export default define.page(function About() {
 
         {/* CTA */}
         <Section
-          class="relative bg-gradient-to-br from-gray-900 via-gray-900 to-gray-950 text-white overflow-hidden"
+          class="bg-gradient-to-br from-teal-50/60 to-blue-50/40 border-y border-teal-100/60"
           spacing="large"
         >
-          <div class="absolute inset-0 bg-gradient-to-br from-teal-900/10 to-blue-900/10 pointer-events-none">
-          </div>
-
           <div class="relative max-w-3xl mx-auto text-center">
             <h2
-              class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 text-white"
+              class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 text-gray-900"
               style="font-family: var(--font-display);"
             >
               {aboutCta.text}

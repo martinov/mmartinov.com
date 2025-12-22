@@ -1,14 +1,11 @@
 // Homepage content
 export const hero = {
+  headline: "Software architect specializing in business process automation and AI integration",
   subheadline:
     "I help companies eliminate repetitive manual work so teams can focus on what actually matters. Two decades of experience building systems that work.",
   primaryCta: {
     text: "View My Work",
     href: "/work",
-  },
-  secondaryCta: {
-    text: "Book a Discovery Call",
-    href: "/contact",
   },
 };
 
@@ -50,4 +47,12 @@ export const whatIDo = {
       icon: "architecture",
     },
   ],
+};
+
+export const bottomCta = {
+  heading: "Ready to get started?",
+  cta: {
+    text: "Book a Discovery Call",
+    href: "/contact",
+  },
 };

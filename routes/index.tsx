@@ -42,7 +42,7 @@ export default define.page(function Home() {
 
           <div class="text-center max-w-4xl mx-auto px-4 animate-fade-in-up">
             <h1
-              class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-6 sm:mb-8 text-gray-900 leading-tight"
+              class="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-6 sm:mb-8 text-gray-900 leading-tight"
               style="font-family: var(--font-display); letter-spacing: -0.03em;"
             >
               Software architect<br />

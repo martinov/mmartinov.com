@@ -26,7 +26,7 @@ export default define.page(function About() {
         <Section class="pt-12 sm:pt-16" width="narrow" spacing="large">
           <div class="text-center mb-16">
             <h1
-              class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900"
+              class="text-4xl sm:text-5xl lg:text-5xl font-bold text-gray-900"
               style="font-family: var(--font-display);"
             >
               {aboutHero.heading}

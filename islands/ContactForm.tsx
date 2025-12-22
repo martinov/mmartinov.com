@@ -1,18 +1,25 @@
 import { useSignal } from "@preact/signals";
-import { useEffect } from "preact/hooks";
+import { useEffect, useRef } from "preact/hooks";
 import Button from "../components/Button.tsx";
 import { formFields } from "../content/contact.ts";
 
-export default function ContactForm() {
+interface ContactFormProps {
+  antispamToken?: string;
+}
+
+export default function ContactForm({ antispamToken }: ContactFormProps) {
   const isSubmitting = useSignal(false);
   const submitStatus = useSignal<"idle" | "success" | "error">("idle");
   const errorMessage = useSignal("");
-  const formLoadTime = useSignal(0);
+  const confirmEmailRef = useRef<HTMLInputElement>(null);
 
-  // Track when the form was loaded for anti-spam timing check
+  // Fill the confirm_email field with the antispam token via JavaScript
+  // Bots that don't execute JS won't have this field filled correctly
   useEffect(() => {
-    formLoadTime.value = Date.now();
-  }, []);
+    if (confirmEmailRef.current && antispamToken) {
+      confirmEmailRef.current.value = antispamToken;
+    }
+  }, [antispamToken]);
 
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
@@ -24,28 +31,7 @@ export default function ContactForm() {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    // Anti-spam checks
-    // 1. Check honeypot field (should be empty)
-    if (data.website) {
-      // Bot detected - fail silently
-      submitStatus.value = "error";
-      errorMessage.value = "Something went wrong. Please try again.";
-      isSubmitting.value = false;
-      return;
-    }
-
-    // 2. Check minimum time (humans take at least 3 seconds to fill a form)
-    const timeSpent = Date.now() - formLoadTime.value;
-    if (timeSpent < 3000) {
-      submitStatus.value = "error";
-      errorMessage.value = "Please take your time filling out the form.";
-      isSubmitting.value = false;
-      return;
-    }
-
-    // Remove honeypot from data before sending
-    delete data.website;
-
+    // Send all data to server for validation (including honeypot fields)
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -101,7 +87,8 @@ export default function ContactForm() {
         )
         : (
           <form onSubmit={handleSubmit} class="space-y-6">
-            {/* Honeypot field - hidden from humans, visible to bots */}
+            {/* Honeypot fields - hidden from humans, visible to bots */}
+            {/* Field 1: Simple honeypot - should remain empty */}
             <div
               style={{ position: "absolute", left: "-9999px" }}
               aria-hidden="true"
@@ -111,6 +98,22 @@ export default function ContactForm() {
                 type="text"
                 id="website"
                 name="website"
+                tabIndex={-1}
+                autoComplete="off"
+              />
+            </div>
+            {/* Field 2: JS-required field - filled via JavaScript with antispam token */}
+            {/* Bots that don't execute JS will leave this empty or fill it incorrectly */}
+            <div
+              style={{ position: "absolute", left: "-9999px" }}
+              aria-hidden="true"
+            >
+              <label htmlFor="confirm_email">Confirm email (required)</label>
+              <input
+                type="text"
+                id="confirm_email"
+                name="confirm_email"
+                ref={confirmEmailRef}
                 tabIndex={-1}
                 autoComplete="off"
               />

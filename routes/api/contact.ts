@@ -1,4 +1,5 @@
 import { define } from "../../utils.ts";
+import { validateSubmission } from "../../utils/antispam.ts";
 
 interface ContactFormData {
   name: string;
@@ -6,6 +7,9 @@ interface ContactFormData {
   company?: string;
   message: string;
   preferredTime?: string;
+  // Anti-spam fields
+  website?: string;
+  confirm_email?: string;
 }
 
 // Resend API configuration
@@ -16,6 +20,23 @@ export const handler = define.handlers({
   async POST(ctx) {
     try {
       const data: ContactFormData = await ctx.req.json();
+
+      // Anti-spam validation (server-side)
+      const spamCheck = await validateSubmission(
+        data.confirm_email,
+        data.website,
+      );
+
+      if (!spamCheck.valid) {
+        console.log("Anti-spam check failed:", spamCheck.reason);
+        return new Response(
+          JSON.stringify({ error: spamCheck.error }),
+          {
+            status: 400,
+            headers: { "Content-Type": "application/json" },
+          },
+        );
+      }
 
       // Validate required fields
       if (!data.name || !data.email || !data.message) {

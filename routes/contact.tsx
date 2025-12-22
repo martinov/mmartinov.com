@@ -11,8 +11,10 @@ import {
   contactMethods,
   whatToExpect,
 } from "../content/contact.ts";
+import { generateToken } from "../utils/antispam.ts";
 
-export default define.page(function Contact() {
+export default define.page(async function Contact() {
+  const antispamToken = await generateToken();
   return (
     <>
       <SEO
@@ -90,7 +92,7 @@ export default define.page(function Contact() {
               <p class="text-gray-600 text-lg">{bookingInfo.alternativeText}</p>
             </div>
 
-            <ContactForm />
+            <ContactForm antispamToken={antispamToken} />
           </div>
         </Section>
 

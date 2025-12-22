@@ -37,7 +37,6 @@ export const contactMethods = {
       value: "github.com/martinov",
       href: "https://github.com/martinov/",
     },
-    { label: "Location", value: "Pleven, Bulgaria 🇧🇬", href: null },
   ],
 };
 

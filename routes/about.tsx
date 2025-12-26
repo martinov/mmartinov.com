@@ -23,7 +23,7 @@ export default define.page(function About() {
       />
       <PageLayout currentPath="/about">
         {/* Hero */}
-        <Section class="pt-16 sm:pt-20" width="narrow" spacing="large">
+        <Section class="pt-16 sm:pt-20 pb-12 sm:pb-16" width="narrow" spacing="none">
           <div class="text-center mb-16">
             <h1
               class="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900"

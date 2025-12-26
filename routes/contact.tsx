@@ -24,7 +24,7 @@ export default define.page(async function Contact() {
       />
       <PageLayout currentPath="/contact">
         {/* Hero */}
-        <Section class="pt-16 sm:pt-20" width="narrow" spacing="large">
+        <Section class="pt-16 sm:pt-20 pb-12 sm:pb-16" width="narrow" spacing="none">
           <div class="text-center">
             <h1
               class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 text-slate-900"

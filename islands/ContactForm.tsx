@@ -148,7 +148,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
                       required={field.required}
                       placeholder={field.placeholder}
                       rows={field.rows || 5}
-                      class="w-full px-4 py-3.5 border-2 border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:border-cyan-700 transition-colors text-base"
+                      class="w-full px-4 py-3.5 border-2 border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:border-cyan-700 transition-colors text-base invalid:border-red-500 invalid:focus:ring-red-500 invalid:focus:border-red-500"
                     />
                   )
                   : (
@@ -158,7 +158,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
                       name={field.name}
                       required={field.required}
                       placeholder={field.placeholder}
-                      class="w-full px-4 py-3.5 border-2 border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:border-cyan-700 transition-colors text-base"
+                      class="w-full px-4 py-3.5 border-2 border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:border-cyan-700 transition-colors text-base invalid:border-red-500 invalid:focus:ring-red-500 invalid:focus:border-red-500"
                     />
                   )}
               </div>

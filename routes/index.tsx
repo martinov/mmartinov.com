@@ -30,10 +30,7 @@ export default define.page(function Home() {
               {hero.description}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button href={hero.primaryCta.href} variant="primary">
-                {hero.primaryCta.text}
-              </Button>
-              <Button href={hero.secondaryCta.href} variant="secondary">
+              <Button href={hero.secondaryCta.href} variant="primary">
                 {hero.secondaryCta.text}
               </Button>
             </div>
@@ -71,7 +68,7 @@ export default define.page(function Home() {
         {/* Services Section */}
         <Section spacing="large" width="narrow">
           <h2
-            class="text-3xl sm:text-4xl font-bold mb-16 text-slate-900 border-b-2 border-slate-900 pb-4"
+            class="text-3xl sm:text-4xl font-bold mb-16 text-slate-900"
             style="font-family: var(--font-display);"
           >
             {services.heading}

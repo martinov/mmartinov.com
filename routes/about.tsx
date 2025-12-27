@@ -6,6 +6,7 @@ import SEO from "../components/SEO.tsx";
 import {
   aboutCta,
   aboutHero,
+  aboutPhoto,
   beyondWork,
   howIWork,
   professionalJourney,
@@ -24,13 +25,39 @@ export default define.page(function About() {
       <PageLayout currentPath="/about">
         {/* Hero */}
         <Section class="pt-16 sm:pt-20 pb-12 sm:pb-16" width="narrow" spacing="none">
-          <div class="text-center mb-16">
-            <h1
-              class="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900"
-              style="font-family: var(--font-display);"
-            >
-              {aboutHero.heading}
-            </h1>
+          {/* Asymmetric Hero Grid with Photo */}
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16">
+            {/* Photo Column */}
+            <div class="order-2 lg:order-1 flex justify-center lg:justify-start">
+              <picture class="block rounded-lg shadow-lg border border-slate-200 overflow-hidden w-full max-w-md lg:max-w-none">
+                <source
+                  srcSet={aboutPhoto.webpSrcSet}
+                  type="image/webp"
+                />
+                <img
+                  src={aboutPhoto.src}
+                  srcSet={aboutPhoto.srcSet}
+                  alt={aboutPhoto.alt}
+                  width={aboutPhoto.width}
+                  height={aboutPhoto.height}
+                  class="w-full h-auto"
+                  style="animation: fadeSlideUp 0.6s ease-out;"
+                />
+              </picture>
+            </div>
+
+            {/* Content Column */}
+            <div class="order-1 lg:order-2">
+              <h1
+                class="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900"
+                style="font-family: var(--font-display);"
+              >
+                {aboutHero.heading}
+              </h1>
+              <p class="text-lg text-slate-700 leading-relaxed mt-6">
+                {story.paragraphs[0]}
+              </p>
+            </div>
           </div>
 
           {/* The Story */}
@@ -42,7 +69,7 @@ export default define.page(function About() {
               {story.heading}
             </h2>
             <div class="space-y-5">
-              {story.paragraphs.map((paragraph, index) => (
+              {story.paragraphs.slice(1).map((paragraph, index) => (
                 <p key={index} class="text-lg text-slate-700 leading-relaxed">
                   {paragraph}
                 </p>

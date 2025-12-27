@@ -24,7 +24,6 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
 
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
-    formAttempted.value = true;
     isSubmitting.value = true;
     submitStatus.value = "idle";
     errorMessage.value = "";
@@ -197,6 +196,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
               variant="primary"
               class="w-full"
               loading={isSubmitting.value}
+              onClick={() => formAttempted.value = true}
             >
               Send Message
             </Button>

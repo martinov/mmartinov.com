@@ -10,7 +10,7 @@ export const whatToExpect = {
   points: [
     "30-minute discovery call",
     "No sales pitch - just an honest conversation about your challenges",
-    "I'll tell you if I think I can help (and if I can't, I might know who can)",
+    "I'll assess your situation and recommend the best path forward",
   ],
 };
 

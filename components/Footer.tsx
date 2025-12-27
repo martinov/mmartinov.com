@@ -18,7 +18,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div>
+          <div class="md:text-right">
             <h3 class="text-sm font-semibold text-white mb-4 uppercase tracking-wider">
               Connect
             </h3>

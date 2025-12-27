@@ -23,14 +23,11 @@ export default define.page(function Work() {
         <Section class="pt-16 sm:pt-20 pb-12 sm:pb-16" width="narrow" spacing="none">
           <div class="text-center">
             <h1
-              class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 text-slate-900"
+              class="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900"
               style="font-family: var(--font-display);"
             >
               {workIntro.heading}
             </h1>
-            <p class="text-lg sm:text-xl text-slate-700 leading-relaxed">
-              {workIntro.intro}
-            </p>
           </div>
         </Section>
 

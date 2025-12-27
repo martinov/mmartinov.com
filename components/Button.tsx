@@ -22,13 +22,13 @@ export default function Button({
   fullWidthMobile = false,
 }: ButtonProps) {
   const baseStyles =
-    "inline-flex items-center justify-center px-6 py-3 sm:px-7 sm:py-3.5 text-base font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-600 shadow-sm hover:shadow-lg active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100";
+    "inline-flex items-center justify-center px-6 py-3 sm:px-8 sm:py-3.5 text-base font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed";
 
   const variantStyles = {
     primary:
-      "bg-gradient-to-br from-teal-600 to-teal-700 text-white hover:from-teal-700 hover:to-teal-800 border border-teal-800/20",
+      "bg-slate-900 text-white border-2 border-slate-900 hover:bg-white hover:text-slate-900",
     secondary:
-      "bg-white text-teal-700 border-2 border-teal-700 hover:bg-gradient-to-br hover:from-teal-50 hover:to-blue-50",
+      "bg-white text-slate-900 border-2 border-slate-900 hover:bg-slate-900 hover:text-white",
   };
 
   const mobileWidthClass = fullWidthMobile ? "w-full sm:w-auto" : "";

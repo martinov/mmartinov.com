@@ -3,8 +3,7 @@ import PageLayout from "../components/PageLayout.tsx";
 import Section from "../components/Section.tsx";
 import Button from "../components/Button.tsx";
 import SEO from "../components/SEO.tsx";
-import ServiceIcon from "../components/ServiceIcon.tsx";
-import { bottomCta, credibilityBand, hero, whatIDo } from "../content/home.ts";
+import { bottomCta, hero, metrics, services } from "../content/home.ts";
 
 export default define.page(function Home() {
   return (
@@ -16,117 +15,77 @@ export default define.page(function Home() {
       />
       <PageLayout currentPath="/">
         {/* Hero Section */}
-        <Section
-          class="relative pt-16 pb-12 sm:pt-20 sm:pb-16 lg:pt-24 lg:pb-20 overflow-hidden"
-          width="wide"
-          spacing="large"
-        >
-          {/* Enhanced Background Blobs */}
-          <div class="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
-            <div
-              class="absolute top-[-15%] right-[-8%] w-[35rem] h-[35rem] bg-gradient-to-br from-teal-200/40 to-teal-100/30 rounded-full blur-3xl animate-pulse"
-              style="animation-duration: 4s;"
-            >
-            </div>
-            <div
-              class="absolute top-[5%] left-[-12%] w-[32rem] h-[32rem] bg-gradient-to-br from-blue-200/35 to-blue-100/25 rounded-full blur-3xl animate-pulse"
-              style="animation-duration: 5s; animation-delay: 1s;"
-            >
-            </div>
-            <div
-              class="absolute bottom-[-10%] right-[15%] w-[28rem] h-[28rem] bg-gradient-to-br from-teal-100/20 to-blue-100/20 rounded-full blur-3xl animate-pulse"
-              style="animation-duration: 6s; animation-delay: 2s;"
-            >
-            </div>
-          </div>
-
-          <div class="text-center max-w-4xl mx-auto px-4 animate-fade-in-up">
+        <Section class="pt-20 pb-16" width="narrow" spacing="large">
+          <div class="text-center max-w-3xl mx-auto">
             <h1
-              class="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-6 sm:mb-8 text-gray-900 leading-tight"
-              style="font-family: var(--font-display); letter-spacing: -0.03em;"
+              class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 text-slate-900"
+              style="font-family: var(--font-display);"
             >
               {hero.headline}
             </h1>
-            <p class="text-lg sm:text-xl lg:text-2xl text-gray-600 mb-10 sm:mb-12 max-w-2xl mx-auto leading-relaxed animate-fade-in-up stagger-1">
-              {hero.subheadline}
+            <p class="text-xl sm:text-2xl text-slate-600 mb-8 font-medium">
+              {hero.subtitle}
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up stagger-2">
-              <Button
-                href={hero.primaryCta.href}
-                variant="primary"
-                fullWidthMobile
-              >
-                {hero.primaryCta.text}
+            <p class="text-lg sm:text-xl text-slate-700 mb-12 leading-relaxed max-w-2xl mx-auto">
+              {hero.description}
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button href={hero.secondaryCta.href} variant="primary">
+                {hero.secondaryCta.text}
               </Button>
             </div>
           </div>
         </Section>
 
-        {/* Credibility Band */}
-        <Section
-          class="bg-gradient-to-br from-teal-50/60 to-blue-50/40 border-y border-teal-100/60"
-          spacing="small"
-        >
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center">
-            {credibilityBand.map((item, index) => (
-              <div key={index} class="flex items-center justify-center h-full">
-                <div class="text-sm sm:text-base text-gray-700 font-medium">
-                  {item.link
-                    ? (
-                      <a
-                        href={item.link}
-                        target="_blank"
-                        rel="noopener"
-                        class="text-teal-700 hover:text-teal-900 transition-all duration-300 hover:underline decoration-teal-400 underline-offset-2 decoration-2"
-                      >
-                        {item.text}
-                      </a>
-                    )
-                    : <span>{item.text}</span>}
-                </div>
+        {/* Metrics Section */}
+        <Section width="wide" spacing="none">
+          <div class="metrics-grid">
+            {metrics.map((metric, index) => (
+              <div key={index} class="metric">
+                {metric.link
+                  ? (
+                    <a
+                      href={metric.link}
+                      target="_blank"
+                      rel="noopener"
+                      class="block hover:opacity-70 transition-opacity"
+                    >
+                      <div class="metric-value">{metric.value}</div>
+                      <div class="metric-label">{metric.label}</div>
+                    </a>
+                  )
+                  : (
+                    <>
+                      <div class="metric-value">{metric.value}</div>
+                      <div class="metric-label">{metric.label}</div>
+                    </>
+                  )}
               </div>
             ))}
           </div>
         </Section>
 
-        {/* What I Do Section */}
-        <Section spacing="large">
+        {/* Services Section */}
+        <Section spacing="large" width="narrow">
           <h2
-            class="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-12 sm:mb-16 text-gray-900"
+            class="text-3xl sm:text-4xl font-bold mb-16 text-slate-900"
             style="font-family: var(--font-display);"
           >
-            {whatIDo.heading}
+            {services.heading}
           </h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {whatIDo.services.map((service, index) => (
-              <div
-                key={index}
-                class="group bg-white rounded-2xl p-8 lg:p-10 shadow-sm border border-gray-100 hover:shadow-xl hover:border-teal-200/50 transition-all duration-500 hover:-translate-y-1"
-              >
-                <div class="mb-6">
-                  <ServiceIcon
-                    type={service.icon as "workflow" | "brain" | "architecture"}
-                  />
-                </div>
+          <div class="space-y-16">
+            {services.items.map((service, index) => (
+              <div key={index} class="border-l-4 border-slate-900 pl-8">
                 <h3
-                  class="text-xl lg:text-2xl font-bold text-gray-900 mb-5"
+                  class="text-2xl sm:text-3xl font-bold text-slate-900 mb-6"
                   style="font-family: var(--font-display);"
                 >
                   {service.title}
                 </h3>
-                <div class="space-y-4">
-                  <p class="text-gray-600 leading-relaxed">
-                    <span class="font-semibold text-teal-700 block mb-2 text-sm uppercase tracking-wider">
-                      Problem
-                    </span>
-                    {service.problem}
-                  </p>
-                  <p class="text-gray-600 leading-relaxed">
-                    <span class="font-semibold text-blue-600 block mb-2 text-sm uppercase tracking-wider">
-                      Solution
-                    </span>
-                    {service.solution}
-                  </p>
+                <div class="space-y-4 text-lg text-slate-700 leading-relaxed">
+                  <p>{service.problem}</p>
+                  <p class="text-slate-900 font-medium">→ {service.solution}</p>
+                  <p class="text-slate-600 italic">{service.outcome}</p>
                 </div>
               </div>
             ))}
@@ -134,23 +93,17 @@ export default define.page(function Home() {
         </Section>
 
         {/* Bottom CTA Section */}
-        <Section spacing="large">
+        <Section spacing="large" class="border-t-2 border-slate-900">
           <div class="text-center max-w-2xl mx-auto">
             <h2
-              class="text-3xl sm:text-4xl font-bold mb-8 text-gray-900"
+              class="text-4xl sm:text-5xl font-bold mb-10 text-slate-900"
               style="font-family: var(--font-display);"
             >
               {bottomCta.heading}
             </h2>
-            <div class="flex justify-center">
-              <Button
-                href={bottomCta.cta.href}
-                variant="primary"
-                fullWidthMobile
-              >
-                {bottomCta.cta.text}
-              </Button>
-            </div>
+            <Button href={bottomCta.cta.href} variant="primary">
+              {bottomCta.cta.text}
+            </Button>
           </div>
         </Section>
       </PageLayout>

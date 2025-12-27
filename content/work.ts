@@ -1,8 +1,7 @@
 // Work page content - Case studies
 export const workIntro = {
   heading: "Selected Projects",
-  intro:
-    "I focus on business process automation and AI integration. Most of my work is under NDA, but here are a few projects I can discuss.",
+  intro: "",
 };
 
 export const caseStudies = [
@@ -121,26 +120,6 @@ export const caseStudies = [
         "ROI comes from solving real operational pain points, not chasing AI hype",
       ],
     },
-  },
-  {
-    id: "iaea",
-    title: "IAEA - Centralized CMS Management",
-    challenge: {
-      heading: "The Challenge",
-      points: [
-        "International Atomic Energy Agency managing numerous internal and external websites",
-        "Needed centralized management and consistency across properties",
-      ],
-    },
-    solution: {
-      heading: "The Solution",
-      points: [
-        "Consulted on Drupal-based centralized website management architecture",
-        "Designed system for unified content management across multiple sites",
-        "Provided training to internal teams",
-      ],
-    },
-    outcome: null,
   },
 ];
 

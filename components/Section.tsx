@@ -6,7 +6,7 @@ interface SectionProps {
   class?: string;
   container?: boolean;
   width?: "default" | "narrow" | "wide" | "extraNarrow";
-  spacing?: "default" | "large" | "small";
+  spacing?: "default" | "large" | "small" | "none";
 }
 
 export default function Section({
@@ -30,6 +30,7 @@ export default function Section({
     default: "py-16 sm:py-20 lg:py-24",
     large: "py-20 sm:py-24 lg:py-32",
     small: "py-12 sm:py-16 lg:py-20",
+    none: "",
   };
 
   return (

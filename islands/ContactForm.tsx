@@ -12,7 +12,6 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
   const submitStatus = useSignal<"idle" | "success" | "error">("idle");
   const errorMessage = useSignal("");
   const confirmEmailRef = useRef<HTMLInputElement>(null);
-  const formAttempted = useSignal(false);
 
   // Fill the confirm_email field with the antispam token via JavaScript
   // Bots that don't execute JS won't have this field filled correctly
@@ -44,7 +43,6 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
 
       if (response.ok) {
         submitStatus.value = "success";
-        formAttempted.value = false;
         form.reset();
       } else {
         const result = await response.json();
@@ -150,11 +148,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
                       required={field.required}
                       placeholder={field.placeholder}
                       rows={field.rows || 5}
-                      class={`w-full px-4 py-3.5 border-2 focus:outline-none focus:ring-2 transition-colors text-base ${
-                        formAttempted.value
-                          ? "border-slate-300 focus:ring-cyan-700 focus:border-cyan-700 invalid:border-red-500 invalid:focus:ring-red-500 invalid:focus:border-red-500"
-                          : "border-slate-300 focus:ring-cyan-700 focus:border-cyan-700"
-                      }`}
+                      class="w-full px-4 py-3.5 border-2 border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:border-cyan-700 transition-colors text-base"
                     />
                   )
                   : (
@@ -164,11 +158,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
                       name={field.name}
                       required={field.required}
                       placeholder={field.placeholder}
-                      class={`w-full px-4 py-3.5 border-2 focus:outline-none focus:ring-2 transition-colors text-base ${
-                        formAttempted.value
-                          ? "border-slate-300 focus:ring-cyan-700 focus:border-cyan-700 invalid:border-red-500 invalid:focus:ring-red-500 invalid:focus:border-red-500"
-                          : "border-slate-300 focus:ring-cyan-700 focus:border-cyan-700"
-                      }`}
+                      class="w-full px-4 py-3.5 border-2 border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:border-cyan-700 transition-colors text-base"
                     />
                   )}
               </div>
@@ -196,7 +186,6 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
               variant="primary"
               class="w-full"
               loading={isSubmitting.value}
-              onClick={() => formAttempted.value = true}
             >
               Send Message
             </Button>

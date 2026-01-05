@@ -28,7 +28,7 @@ export const howIWork = {
     "For direct consulting and focused engagements: I work independently",
     {
       text:
-        "For larger or team-based projects: I work through Camplight cooperative",
+        "For larger, team-based projects: I work through Camplight cooperative",
       link: {
         text: "Camplight",
         url:
@@ -53,7 +53,7 @@ export const technicalApproach = {
     "I design systems that capture everything that happens - not just current state - so future AI/ML and analytics don't hit dead ends",
     "I prove value with small, focused implementations before scaling up",
     "I've seen too many projects fail from overbuilding - I keep things simple until complexity is earned",
-    "I design with open source, security, privacy, and sustainability in mind",
+    "I design with security, privacy, sustainability and open source in mind",
   ],
 };
 

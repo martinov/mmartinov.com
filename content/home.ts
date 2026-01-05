@@ -1,58 +1,68 @@
 // Homepage content
 export const hero = {
-  headline: "Software architect specializing in business process automation and AI integration",
-  subheadline:
-    "I help companies eliminate repetitive manual work so teams can focus on what actually matters. Two decades of experience building systems that work.",
+  headline: "Martin Martinov",
+  subtitle: "Software Architect",
+  description:
+    "I build automation systems that eliminate repetitive work and reduce operational costs.",
   primaryCta: {
-    text: "View My Work",
+    text: "Schedule a Call",
+    href: "/contact",
+  },
+  secondaryCta: {
+    text: "View Case Studies",
     href: "/work",
   },
 };
 
-export const credibilityBand = [
-  { text: "Building commercial systems since 2001" },
+export const metrics = [
   {
-    text: "Co-owner @ Camplight",
+    value: "Two Decades",
+    label: "Building Systems",
+  },
+  {
+    value: "300+",
+    label: "Projects Delivered",
+  },
+  {
+    value: "Co-owner",
+    label: "Camplight.net",
     link:
-      "https://camplight.net?utm_source=mmartinov.com&utm_medium=homepage-credibility&utm_campaign=personal-site-referral",
+      "https://camplight.net?utm_source=mmartinov.com&utm_medium=homepage-metrics&utm_campaign=personal-site-referral",
   },
   {
-    text: "Specializing in AI integration and process automation",
+    value: "Global",
+    label: "Europe, US, Asia",
   },
-  { text: "300+ projects delivered" },
 ];
 
-export const whatIDo = {
-  heading: "What I Actually Do",
-  services: [
+export const services = {
+  heading: "What I Do",
+  items: [
     {
-      title: "Process Automation That Works",
-      problem: "Manual processes eating your team's time",
-      solution:
-        "Build automation systems that handle the repetitive work reliably",
-      icon: "workflow",
+      title: "Process Automation",
+      problem: "Your team spends hours on repetitive tasks.",
+      solution: "I build systems that handle it automatically.",
+      outcome: "Designed for measurable time and cost reduction.",
     },
     {
-      title: "AI Integration for Real Business Problems",
-      problem: "AI hype vs actual value",
-      solution:
-        "Design and implement LLM agents and AI workflows that solve specific, measurable problems",
-      icon: "brain",
+      title: "AI Integration",
+      problem: "You need AI that solves real business problems.",
+      solution: "Custom LLM agents for specific workflows.",
+      outcome: "Built for concrete, trackable outcomes.",
     },
     {
-      title: "System Architecture & Technical Strategy",
-      problem: "Technical decisions that lock you in or slow you down",
-      solution:
-        "Design systems with Event Sourcing and modern patterns that adapt as your business grows",
-      icon: "architecture",
+      title: "System Architecture",
+      problem: "Technical decisions that lock you in or slow you down.",
+      solution: "Event-sourced systems that adapt as you grow.",
+      outcome: "Flexible architecture that evolves with your business.",
     },
   ],
 };
 
 export const bottomCta = {
-  heading: "Ready to get started?",
+  heading: "Ready to Talk?",
   cta: {
-    text: "Book a Discovery Call",
+    text: "Schedule a Call",
     href: "/contact",
   },
 };

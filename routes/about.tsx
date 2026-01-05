@@ -6,6 +6,7 @@ import SEO from "../components/SEO.tsx";
 import {
   aboutCta,
   aboutHero,
+  aboutPhoto,
   beyondWork,
   howIWork,
   professionalJourney,
@@ -23,27 +24,53 @@ export default define.page(function About() {
       />
       <PageLayout currentPath="/about">
         {/* Hero */}
-        <Section class="pt-12 sm:pt-16" width="narrow" spacing="large">
-          <div class="text-center mb-16">
-            <h1
-              class="text-4xl sm:text-5xl lg:text-5xl font-bold text-gray-900"
-              style="font-family: var(--font-display);"
-            >
-              {aboutHero.heading}
-            </h1>
+        <Section class="pt-16 sm:pt-20 pb-12 sm:pb-16" width="narrow" spacing="none">
+          {/* Asymmetric Hero Grid with Photo */}
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16">
+            {/* Photo Column */}
+            <div class="order-2 lg:order-1 flex justify-center lg:justify-start">
+              <picture class="block rounded-lg shadow-lg border border-slate-200 overflow-hidden w-full max-w-md lg:max-w-none">
+                <source
+                  srcSet={aboutPhoto.webpSrcSet}
+                  type="image/webp"
+                />
+                <img
+                  src={aboutPhoto.src}
+                  srcSet={aboutPhoto.srcSet}
+                  alt={aboutPhoto.alt}
+                  width={aboutPhoto.width}
+                  height={aboutPhoto.height}
+                  class="w-full h-auto"
+                  style="animation: fadeSlideUp 0.6s ease-out;"
+                />
+              </picture>
+            </div>
+
+            {/* Content Column */}
+            <div class="order-1 lg:order-2">
+              <h1
+                class="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900"
+                style="font-family: var(--font-display);"
+              >
+                {aboutHero.heading}
+              </h1>
+              <p class="text-lg text-slate-700 leading-relaxed mt-6">
+                {story.paragraphs[0]}
+              </p>
+            </div>
           </div>
 
           {/* The Story */}
           <div class="mb-16">
             <h2
-              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-teal-700"
+              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-slate-900"
               style="font-family: var(--font-display);"
             >
               {story.heading}
             </h2>
             <div class="space-y-5">
-              {story.paragraphs.map((paragraph, index) => (
-                <p key={index} class="text-lg text-gray-700 leading-relaxed">
+              {story.paragraphs.slice(1).map((paragraph, index) => (
+                <p key={index} class="text-lg text-slate-700 leading-relaxed">
                   {paragraph}
                 </p>
               ))}
@@ -51,13 +78,13 @@ export default define.page(function About() {
           </div>
 
           {/* Divider */}
-          <div class="h-px bg-gradient-to-r from-transparent via-teal-300 to-transparent mb-16">
+          <div class="h-px bg-slate-300 mb-16">
           </div>
 
           {/* Professional Journey */}
           <div class="mb-16">
             <h2
-              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-blue-600"
+              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-slate-900"
               style="font-family: var(--font-display);"
             >
               {professionalJourney.heading}
@@ -66,7 +93,7 @@ export default define.page(function About() {
               {professionalJourney.milestones.map((milestone, index) => (
                 <li
                   key={index}
-                  class="text-gray-700 text-lg pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-blue-600 before:font-bold leading-relaxed"
+                  class="text-slate-700 text-lg pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-slate-900 before:font-bold leading-relaxed"
                 >
                   {milestone}
                 </li>
@@ -75,13 +102,13 @@ export default define.page(function About() {
           </div>
 
           {/* Divider */}
-          <div class="h-px bg-gradient-to-r from-transparent via-blue-300 to-transparent mb-16">
+          <div class="h-px bg-slate-300 mb-16">
           </div>
 
           {/* How I Work */}
           <div class="mb-16">
             <h2
-              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-teal-700"
+              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-slate-900"
               style="font-family: var(--font-display);"
             >
               {howIWork.heading}
@@ -90,7 +117,7 @@ export default define.page(function About() {
               {howIWork.points.map((point, index) => (
                 <li
                   key={index}
-                  class="text-gray-700 text-lg pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-teal-600 before:font-bold leading-relaxed"
+                  class="text-slate-700 text-lg pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-slate-900 before:font-bold leading-relaxed"
                 >
                   {typeof point === "string" ? point : (
                     <>
@@ -99,7 +126,7 @@ export default define.page(function About() {
                         href={point.link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="text-teal-600 font-semibold hover:text-teal-800 transition-colors duration-300 underline decoration-teal-300 hover:decoration-teal-500 underline-offset-2"
+                        class="text-slate-900 font-semibold hover:text-cyan-700 transition-colors underline decoration-slate-300 hover:decoration-cyan-700 underline-offset-2"
                       >
                         {point.link.text}
                       </a>
@@ -112,13 +139,13 @@ export default define.page(function About() {
           </div>
 
           {/* Divider */}
-          <div class="h-px bg-gradient-to-r from-transparent via-teal-300 to-transparent mb-16">
+          <div class="h-px bg-slate-300 mb-16">
           </div>
 
           {/* Technical Approach */}
           <div class="mb-16">
             <h2
-              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-gray-800"
+              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-slate-900"
               style="font-family: var(--font-display);"
             >
               {technicalApproach.heading}
@@ -127,7 +154,7 @@ export default define.page(function About() {
               {technicalApproach.points.map((point, index) => (
                 <li
                   key={index}
-                  class="text-gray-700 text-lg pl-7 relative before:content-['✓'] before:absolute before:left-0 before:text-green-600 before:font-bold leading-relaxed"
+                  class="text-slate-700 text-lg pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-slate-900 before:font-bold leading-relaxed"
                 >
                   {point}
                 </li>
@@ -136,13 +163,13 @@ export default define.page(function About() {
           </div>
 
           {/* Divider */}
-          <div class="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent mb-16">
+          <div class="h-px bg-slate-300 mb-16">
           </div>
 
           {/* Beyond Work */}
           <div class="mb-8">
             <h2
-              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-blue-600"
+              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-6 text-slate-900"
               style="font-family: var(--font-display);"
             >
               {beyondWork.heading}
@@ -151,7 +178,7 @@ export default define.page(function About() {
               {beyondWork.interests.map((interest, index) => (
                 <li
                   key={index}
-                  class="text-gray-700 text-lg pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-blue-600 before:font-bold leading-relaxed"
+                  class="text-slate-700 text-lg pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-slate-900 before:font-bold leading-relaxed"
                 >
                   {interest}
                 </li>
@@ -161,13 +188,10 @@ export default define.page(function About() {
         </Section>
 
         {/* CTA */}
-        <Section
-          class="bg-gradient-to-br from-teal-50/60 to-blue-50/40 border-y border-teal-100/60"
-          spacing="large"
-        >
+        <Section class="border-t-2 border-slate-900" spacing="large">
           <div class="relative max-w-3xl mx-auto text-center">
             <h2
-              class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 text-gray-900"
+              class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 text-slate-900"
               style="font-family: var(--font-display);"
             >
               {aboutCta.text}

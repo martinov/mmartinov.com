@@ -24,15 +24,15 @@ export default define.page(async function Contact() {
       />
       <PageLayout currentPath="/contact">
         {/* Hero */}
-        <Section class="pt-12 sm:pt-16" width="narrow" spacing="large">
+        <Section class="pt-16 sm:pt-20 pb-12 sm:pb-16" width="narrow" spacing="none">
           <div class="text-center">
             <h1
-              class="text-4xl sm:text-5xl lg:text-5xl font-bold mb-6 sm:mb-8 text-gray-900"
+              class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 text-slate-900"
               style="font-family: var(--font-display);"
             >
               {contactHero.heading}
             </h1>
-            <p class="text-lg sm:text-xl text-gray-600 leading-relaxed">
+            <p class="text-lg sm:text-xl text-slate-700 leading-relaxed">
               {contactHero.intro}
             </p>
           </div>
@@ -42,7 +42,7 @@ export default define.page(async function Contact() {
         <Section width="narrow">
           <div>
             <h2
-              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-8 text-center text-teal-700"
+              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-8 text-center text-slate-900"
               style="font-family: var(--font-display);"
             >
               {whatToExpect.heading}
@@ -51,7 +51,7 @@ export default define.page(async function Contact() {
               {whatToExpect.points.map((point, index) => (
                 <li
                   key={index}
-                  class="text-gray-700 text-lg pl-7 relative before:content-['✓'] before:absolute before:left-0 before:text-teal-600 before:font-bold leading-relaxed"
+                  class="text-slate-700 text-lg pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-slate-900 before:font-bold leading-relaxed"
                 >
                   {point}
                 </li>
@@ -61,23 +61,19 @@ export default define.page(async function Contact() {
         </Section>
 
         {/* Booking Options */}
-        <Section
-          class="bg-gradient-to-br from-gray-50 to-gray-100/30"
-          width="narrow"
-          spacing="large"
-        >
+        <Section class="bg-slate-50" width="narrow" spacing="large">
           <div>
             <h2
-              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-10 text-center text-gray-900"
+              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-10 text-center text-slate-900"
               style="font-family: var(--font-display);"
             >
               {bookingInfo.heading}
             </h2>
 
             {/* Primary Booking - Google Calendar */}
-            <div class="bg-white border-2 border-teal-600 rounded-2xl p-8 lg:p-10 mb-10 text-center shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div class="bg-white border-2 border-slate-900 p-8 lg:p-10 mb-10 text-center">
               <h3
-                class="text-xl sm:text-2xl font-semibold mb-4 text-gray-900"
+                class="text-xl sm:text-2xl font-semibold mb-4 text-slate-900"
                 style="font-family: var(--font-display);"
               >
                 {bookingInfo.primaryBooking.text}
@@ -93,7 +89,7 @@ export default define.page(async function Contact() {
 
             {/* Alternative - Contact Form */}
             <div class="text-center mb-8">
-              <p class="text-gray-600 text-lg">{bookingInfo.alternativeText}</p>
+              <p class="text-slate-600 text-lg">{bookingInfo.alternativeText}</p>
             </div>
 
             <ContactForm antispamToken={antispamToken} />
@@ -104,7 +100,7 @@ export default define.page(async function Contact() {
         <Section width="narrow">
           <div>
             <h2
-              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-10 text-center text-gray-900"
+              class="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-10 text-center text-slate-900"
               style="font-family: var(--font-display);"
             >
               {contactMethods.heading}
@@ -113,9 +109,9 @@ export default define.page(async function Contact() {
               {contactMethods.methods.map((method, index) => (
                 <div
                   key={index}
-                  class="text-center p-6 rounded-xl bg-gradient-to-br from-gray-50 to-gray-100/50 border border-gray-200 hover:border-teal-300 transition-colors duration-300"
+                  class="text-center p-6 bg-slate-50 border-2 border-slate-200"
                 >
-                  <p class="text-sm font-semibold text-gray-500 mb-2 uppercase tracking-wider">
+                  <p class="text-sm font-semibold text-slate-500 mb-2 uppercase tracking-wider">
                     {method.label}
                   </p>
                   {method.href
@@ -128,12 +124,12 @@ export default define.page(async function Contact() {
                         rel={method.href.startsWith("http")
                           ? "noopener noreferrer"
                           : undefined}
-                        class="text-teal-600 font-medium hover:text-teal-800 transition-colors duration-300 underline decoration-teal-300 hover:decoration-teal-500 underline-offset-2"
+                        class="text-slate-900 font-medium hover:text-cyan-700 transition-colors underline decoration-slate-300 hover:decoration-cyan-700 underline-offset-2"
                       >
                         {method.value}
                       </a>
                     )
-                    : <p class="text-gray-900 font-medium">{method.value}</p>}
+                    : <p class="text-slate-900 font-medium">{method.value}</p>}
                 </div>
               ))}
             </div>
@@ -141,18 +137,15 @@ export default define.page(async function Contact() {
         </Section>
 
         {/* Camplight Note */}
-        <Section
-          class="bg-gradient-to-br from-teal-50/60 to-blue-50/40 border-y border-teal-100/60"
-          width="narrow"
-        >
+        <Section class="border-t-2 border-slate-900" width="narrow">
           <div class="text-center">
-            <p class="text-gray-700 text-lg leading-relaxed">
+            <p class="text-slate-700 text-lg leading-relaxed">
               {camplightNote.text}
               <a
                 href="https://camplight.net?utm_source=mmartinov.com&utm_medium=contact-page&utm_campaign=personal-site-referral"
                 target="_blank"
                 rel="noopener"
-                class="text-teal-600 font-semibold hover:text-teal-800 transition-colors duration-300 underline decoration-teal-300 hover:decoration-teal-500 underline-offset-2"
+                class="text-slate-900 font-semibold hover:text-cyan-700 transition-colors underline decoration-slate-300 hover:decoration-cyan-700 underline-offset-2"
               >
                 {camplightNote.link.text}
               </a>

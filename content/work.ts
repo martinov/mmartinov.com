@@ -1,18 +1,16 @@
 // Work page content - Case studies
 export const workIntro = {
   heading: "Selected Projects",
-  intro:
-    "I focus on business process automation and AI integration. Most of my work is under NDA, but here are a few projects I can discuss.",
 };
 
 export const caseStudies = [
   {
     id: "ecommerce",
-    title: "E-Commerce Order Processing with Agentic AI",
+    title: "Order Processing with Agentic AI",
     challenge: {
       heading: "The Challenge",
       points: [
-        "E-commerce company with multiple sales channels (web + physical stores)",
+        "E-commerce company with multiple sales channels (multiple web + physical stores)",
         "Order processing required significant manual operator intervention",
         "Operators spending time on routine decisions instead of complex cases",
       ],
@@ -77,7 +75,7 @@ export const caseStudies = [
       ],
     },
     solution: {
-      heading: "Phase 1 - Foundation (Completed)",
+      heading: "Phase 1 - Foundation",
       points: [
         "Built company website",
         "Established digital presence for lead generation",
@@ -85,7 +83,7 @@ export const caseStudies = [
       ],
     },
     roadmap: {
-      heading: "Phase 2 - Automation Roadmap (Planned)",
+      heading: "Phase 2 - Automation Roadmap (In progress)",
       items: [
         {
           title: "Maintenance Schedule Optimization",
@@ -107,7 +105,7 @@ export const caseStudies = [
     approach: {
       heading: "The Approach",
       points: [
-        "Start with digital foundation before automation",
+        "Start with digital strategy and foundation before automation",
         "Identify high-impact, low-risk automation opportunities",
         "Build systems that capture data for future AI use (Event Sourcing principles)",
         "Phased implementation aligned with business growth",
@@ -121,26 +119,6 @@ export const caseStudies = [
         "ROI comes from solving real operational pain points, not chasing AI hype",
       ],
     },
-  },
-  {
-    id: "iaea",
-    title: "IAEA - Centralized CMS Management",
-    challenge: {
-      heading: "The Challenge",
-      points: [
-        "International Atomic Energy Agency managing numerous internal and external websites",
-        "Needed centralized management and consistency across properties",
-      ],
-    },
-    solution: {
-      heading: "The Solution",
-      points: [
-        "Consulted on Drupal-based centralized website management architecture",
-        "Designed system for unified content management across multiple sites",
-        "Provided training to internal teams",
-      ],
-    },
-    outcome: null,
   },
 ];
 

@@ -59,11 +59,11 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
   };
 
   return (
-    <div class="bg-white border border-gray-200 rounded-2xl p-6 sm:p-8 lg:p-10 shadow-lg">
+    <div class="bg-white border-2 border-slate-900 p-6 sm:p-8 lg:p-10">
       {submitStatus.value === "success"
         ? (
-          <div class="text-center py-10 animate-fade-in">
-            <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center animate-scale-in">
+          <div class="text-center py-10">
+            <div class="w-20 h-20 mx-auto mb-6 bg-slate-900 flex items-center justify-center">
               <svg
                 class="w-10 h-10 text-white"
                 fill="none"
@@ -80,18 +80,18 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
               </svg>
             </div>
             <h3
-              class="text-2xl sm:text-3xl font-bold mb-3 text-gray-900"
+              class="text-2xl sm:text-3xl font-bold mb-3 text-slate-900"
               style="font-family: var(--font-display);"
             >
               Message Sent!
             </h3>
-            <p class="text-gray-600 text-lg mb-8 leading-relaxed">
+            <p class="text-slate-600 text-lg mb-8 leading-relaxed">
               Thanks for reaching out. I'll get back to you soon.
             </p>
             <button
               type="button"
               onClick={() => submitStatus.value = "idle"}
-              class="text-teal-600 hover:text-teal-800 transition-colors duration-300 font-semibold underline decoration-teal-300 hover:decoration-teal-500 underline-offset-2"
+              class="text-slate-900 hover:text-cyan-700 transition-colors font-semibold underline decoration-slate-300 hover:decoration-cyan-700 underline-offset-2"
             >
               Send another message
             </button>
@@ -135,7 +135,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
               <div key={field.name}>
                 <label
                   htmlFor={field.name}
-                  class="block text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wider"
+                  class="block text-sm font-semibold text-slate-700 mb-2 uppercase tracking-wider"
                 >
                   {field.label}{" "}
                   {field.required && <span class="text-red-500">*</span>}
@@ -148,7 +148,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
                       required={field.required}
                       placeholder={field.placeholder}
                       rows={field.rows || 5}
-                      class="w-full px-4 py-3.5 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-teal-600 transition-all duration-300 text-base"
+                      class="w-full px-4 py-3.5 border-2 border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:border-cyan-700 transition-colors text-base"
                     />
                   )
                   : (
@@ -158,14 +158,14 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
                       name={field.name}
                       required={field.required}
                       placeholder={field.placeholder}
-                      class="w-full px-4 py-3.5 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 focus:border-teal-600 transition-all duration-300 text-base"
+                      class="w-full px-4 py-3.5 border-2 border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:border-cyan-700 transition-colors text-base"
                     />
                   )}
               </div>
             ))}
 
             {submitStatus.value === "error" && (
-              <div class="bg-red-50 border-2 border-red-200 text-red-700 px-5 py-4 rounded-lg flex items-start gap-3 animate-slide-down">
+              <div class="bg-red-50 border-2 border-red-200 text-red-700 px-5 py-4 flex items-start gap-3">
                 <svg
                   class="w-5 h-5 mt-0.5 flex-shrink-0"
                   fill="currentColor"

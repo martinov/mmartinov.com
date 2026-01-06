@@ -35,10 +35,10 @@ export const professionalJourney = {
 export const howIWork = {
   heading: "How I Work",
   points: [
-    "For direct consulting and focused engagements: I work independently",
+    "Focused consulting engagements: Direct collaboration through my consultancy",
     {
       text:
-        "For larger, team-based projects: I work through Camplight cooperative",
+        "Larger or team-based projects: I assemble and lead a team through Camplight cooperative",
       link: {
         text: "Camplight",
         url:

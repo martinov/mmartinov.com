@@ -36,17 +36,17 @@ export const professionalJourney = {
 export const howIWork = {
   heading: "How I Work",
   points: [
-    "Focused consulting engagements: Direct collaboration through my consultancy",
+    "For fast and nimble, focused engagements: Direct collaboration through my consultancy",
     {
       text:
-        "Larger or team-based projects: I assemble and lead a team through Camplight cooperative",
+        "Larger projects: I assemble and lead a team through Camplight cooperative - we are a technical partner to dozen of established businesses",
       link: {
         text: "Camplight",
         url:
           "https://camplight.net?utm_source=mmartinov.com&utm_medium=about-page&utm_campaign=personal-site-referral",
       },
     },
-    "Either way, I focus on projects where automation provides clear ROI",
+    "Either way, I stay hands-on and focus on delivering clear automation ROI.",
   ],
 };
 

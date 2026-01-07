@@ -20,7 +20,11 @@ export default define.page(function Work() {
       />
       <PageLayout currentPath="/work">
         {/* Page Heading */}
-        <Section class="pt-16 sm:pt-20 pb-8 sm:pb-10" width="narrow" spacing="none">
+        <Section
+          class="pt-16 sm:pt-20 pb-8 sm:pb-10"
+          width="narrow"
+          spacing="none"
+        >
           <div class="text-center">
             <h1
               class="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900"

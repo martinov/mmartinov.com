@@ -7,7 +7,8 @@ export const aboutPhoto = {
   src: "/images/martin-portrait.jpg",
   srcSet: "/images/martin-portrait.jpg 1x, /images/martin-portrait@2x.jpg 2x",
   webpSrc: "/images/martin-portrait.webp",
-  webpSrcSet: "/images/martin-portrait.webp 1x, /images/martin-portrait@2x.webp 2x",
+  webpSrcSet:
+    "/images/martin-portrait.webp 1x, /images/martin-portrait@2x.webp 2x",
   alt: "Martin Martinov",
   width: 450,
   height: 563,

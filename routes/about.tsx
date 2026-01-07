@@ -21,10 +21,15 @@ export default define.page(function About() {
         title="About"
         description="22+ years of software development. From coding at age 11 to building systems across finance, insurance, healthcare, and e-commerce. Based in Bulgaria, working globally."
         path="/about"
+        image="/og-image-with-portrait.png"
       />
       <PageLayout currentPath="/about">
         {/* Hero */}
-        <Section class="pt-16 sm:pt-20 pb-12 sm:pb-16" width="narrow" spacing="none">
+        <Section
+          class="pt-16 sm:pt-20 pb-12 sm:pb-16"
+          width="narrow"
+          spacing="none"
+        >
           {/* Asymmetric Hero Grid with Photo */}
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16">
             {/* Photo Column */}

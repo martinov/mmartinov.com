@@ -15,6 +15,7 @@ export const siteConfig = {
 
 export const navigation = [
   { name: "Home", href: "/" },
+  { name: "Audit", href: "/audit" },
   { name: "Work", href: "/work" },
   { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },

@@ -8,7 +8,7 @@
     "update": "deno run -A -r jsr:@fresh/update ."
   },
   "lint": { "rules": { "tags": ["fresh", "recommended"] } },
-  "exclude": ["**/_fresh/*", "**/*.md"],
+  "exclude": ["**/_fresh/*", "**/*.md", ".claude/**", "static/**"],
   "imports": {
     "@/": "./",
     "fresh": "jsr:@fresh/core@^2.2.0",

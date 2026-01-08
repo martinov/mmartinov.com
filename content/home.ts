@@ -9,8 +9,8 @@ export const hero = {
     href: "/contact",
   },
   secondaryCta: {
-    text: "View Case Studies",
-    href: "/work",
+    text: "Book a Discovery Call",
+    href: "/audit",
   },
 };
 
@@ -60,9 +60,13 @@ export const services = {
 };
 
 export const bottomCta = {
-  heading: "Ready to Talk?",
+  heading: "Get clarity before you invest",
   cta: {
     text: "Schedule a Call",
     href: "/contact",
+  },
+  secondaryCta: {
+    text: "View Case Studies",
+    href: "/work",
   },
 };

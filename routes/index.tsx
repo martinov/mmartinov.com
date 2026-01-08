@@ -101,9 +101,14 @@ export default define.page(function Home() {
             >
               {bottomCta.heading}
             </h2>
-            <Button href={bottomCta.cta.href} variant="primary">
-              {bottomCta.cta.text}
-            </Button>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button href={bottomCta.cta.href} variant="primary">
+                {bottomCta.cta.text}
+              </Button>
+              <Button href={bottomCta.secondaryCta.href} variant="secondary">
+                {bottomCta.secondaryCta.text}
+              </Button>
+            </div>
           </div>
         </Section>
       </PageLayout>

@@ -15,7 +15,7 @@ export default define.page(function Work() {
     <>
       <SEO
         title="Work"
-        description="Selected projects: Business process automation and AI integration case studies from finance, e-commerce, HVAC, and international organizations."
+        description="Selected projects: Business process automation and AI integration case studies spanning travel, hiring, e-commerce, finance, and HVAC."
         path="/work"
       />
       <PageLayout currentPath="/work">
@@ -164,7 +164,19 @@ export default define.page(function Work() {
                         key={i}
                         class="text-slate-700 pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-slate-900 before:font-bold leading-relaxed"
                       >
-                        {point}
+                        {typeof point === "string" ? point : (
+                          <>
+                            {point.text}
+                            <a
+                              href={point.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="underline decoration-slate-400 hover:decoration-slate-900 hover:text-slate-900"
+                            >
+                              {point.label}
+                            </a>
+                          </>
+                        )}
                       </li>
                     ))}
                   </ul>

@@ -3,9 +3,9 @@
 ## Pre-Deployment Checklist
 
 ### 1. Environment Setup
-- [ ] Ensure Deno 2.5+ is installed
-- [ ] Run `deno task check` to verify code quality
-- [ ] Run `deno task dev` to test locally
+- [ ] Ensure Node.js 22.12+ and pnpm are installed
+- [ ] Run `pnpm check` to verify formatting and types
+- [ ] Run `pnpm dev` to test locally
 
 ### 2. Analytics Configuration
 - [ ] Set up Plausible Analytics account at https://plausible.io
@@ -41,70 +41,60 @@ The contact form uses Resend for email delivery. You just need to configure it:
 
 ### 5. Open Graph Image
 - [ ] Create an Open Graph image (1200x630px)
-- [ ] Save as `/static/og-image.png`
+- [ ] Save as `/public/og-image.png`
 - [ ] Preview on https://www.opengraph.xyz/
 
-## Deployment to Deno Deploy
+## Deployment to Cloudflare Workers
 
-### Step 1: Prepare Repository
+The site is an Astro app using `@astrojs/cloudflare`. Pages are prerendered and served as static
+assets. Only `/contact`, `/api/contact` and the Google verification file run in the Worker
+(`mmartinov-com`, configured in `wrangler.jsonc`).
+
+### Step 1: First deploy
+
 ```bash
-git add .
-git commit -m "Ready for deployment"
-git push origin main
+pnpm wrangler login
+pnpm deploy            # astro build && wrangler deploy
 ```
 
-### Step 2: Connect to Deno Deploy
-1. Go to https://dash.deno.com
-2. Click "New Project"
-3. Connect your GitHub repository
-4. Select the branch to deploy (main)
-5. Deno Deploy will auto-detect Fresh 2 configuration
+The site is now live at `https://mmartinov-com.<your-subdomain>.workers.dev`.
 
-### Step 3: Environment Variables
-Add these in Deno Deploy dashboard:
-- `RESEND_API_KEY` - Your Resend API key (if using Resend)
+### Step 2: Secrets
 
-### Step 4: Custom Domain
-1. In Deno Deploy project settings, go to "Domains"
-2. Add custom domain: mmartinov.com
-3. Update DNS records:
-   - Add CNAME record: `www` → `your-project.deno.dev`
-   - Add A record: `@` → Deno Deploy IP (provided in dashboard)
-   - Or use ALIAS record if your DNS provider supports it
+Both are required. Without them, the contact page and API fail at runtime.
 
-### Step 5: SSL Certificate
-- Deno Deploy automatically provisions SSL certificates
-- Wait 2-5 minutes for certificate to be active
-- Verify HTTPS is working
-
-## Alternative Deployment Options
-
-### Cloudflare Pages
 ```bash
-deno task build
-# Deploy _fresh directory to Cloudflare Pages
+pnpm wrangler secret put RESEND_API_KEY
+pnpm wrangler secret put ANTISPAM_SECRET_KEY
 ```
 
-### Vercel
-```bash
-# Install Vercel CLI
-npm i -g vercel
+Re-use the current production `ANTISPAM_SECRET_KEY` value so tokens issued just before the cutover
+still validate. A new value also works; it only invalidates contact forms that are open during the switch.
 
-# Deploy
-vercel
-```
+### Step 3: Automatic deploys from GitHub
 
-### Self-Hosted (VPS)
-```bash
-# Build the project
-deno task build
+In the Cloudflare dashboard: Workers & Pages → `mmartinov-com` → Settings → Builds → connect the
+GitHub repository, branch `main`.
 
-# Run in production
-deno task start
+- Build command: `pnpm build`
+- Deploy command: `pnpm wrangler deploy`
 
-# Or use PM2 for process management
-pm2 start "deno task start" --name mmartinov-com
-```
+### Step 4: Verify on workers.dev before switching DNS
+
+- All pages render; `/about` returns 200 (no redirect to `/about/`)
+- `/nope` returns 404 with the custom page
+- `/sitemap.xml` and `/robots.txt` load
+- `/google92c10cd669f85c37.html` returns 200
+- Submit the contact form once and confirm the email arrives
+
+### Step 5: Custom domain cutover
+
+1. The `mmartinov.com` zone must be on Cloudflare (add the site and switch nameservers at the registrar if it isn't).
+2. Worker → Settings → Domains & Routes → add custom domains `mmartinov.com` and `www.mmartinov.com`.
+   Cloudflare creates the DNS records and certificates.
+3. Remove the old A/CNAME records that point at Deno Deploy.
+4. Keep `analytics.mmartinov.com` and the Resend DNS records (`notifications.mmartinov.com`) unchanged.
+5. Once traffic is confirmed on Cloudflare, delete the Deno Deploy project (Deno Deploy shuts down around April 2027).
 
 ## Post-Deployment
 
@@ -164,22 +154,23 @@ Edit these files to update content without touching component code.
 ## Troubleshooting
 
 ### Build Fails
-- Check Deno version: `deno --version`
-- Clear lock file: `rm deno.lock`
-- Reinstall dependencies: `deno cache --reload main.ts`
+- Check Node version: `node --version` (22.12+)
+- Reinstall dependencies: `rm -rf node_modules && pnpm install`
+- Run `pnpm check` for type errors
 
 ### Contact Form Not Working
 - Check browser console for errors
 - Verify API endpoint is accessible: `/api/contact`
-- Check server logs for POST request errors
+- Check Worker logs: `pnpm wrangler tail`, or Observability in the Cloudflare dashboard
+- Confirm both secrets are set: `pnpm wrangler secret list`
 
 ### Styles Not Loading
-- Verify `assets/styles.css` is being imported in `client.ts`
-- Check Vite config includes Tailwind plugin
+- Verify `src/styles/global.css` is imported in `src/layouts/BaseLayout.astro`
+- Check `astro.config.ts` includes the Tailwind Vite plugin
 - Clear browser cache
 
 ## Support
 For issues or questions:
-- Check Fresh docs: https://fresh.deno.dev
-- Deno Deploy docs: https://docs.deno.com/deploy/
+- Astro Cloudflare adapter: https://docs.astro.build/en/guides/integrations-guide/cloudflare/
+- Cloudflare Workers docs: https://developers.cloudflare.com/workers/
 - Create an issue in the repository

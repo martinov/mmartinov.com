@@ -4,137 +4,132 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal portfolio website for Martin Martinov (mmartinov.com), built with Fresh 2.2 (Deno's full-stack web framework), Preact, and Tailwind CSS 4. The site is deployed on Deno Deploy with automatic deployments from the main branch.
+This is a personal portfolio website for Martin Martinov (mmartinov.com), built with Astro 7, Preact (for the one interactive island), and Tailwind CSS 4. It runs on Cloudflare Workers via the `@astrojs/cloudflare` adapter.
 
 ## Development Commands
 
 ```bash
 # Install dependencies
-deno install
+pnpm install
 
-# Development server with hot reload (runs Vite)
-deno task dev
+# Development server with hot reload (runs in workerd, the Workers runtime)
+pnpm dev
 
-# Production build (outputs to _fresh/ directory)
-deno task build
+# Production build (outputs to dist/)
+pnpm build
 
-# Run production server locally (serves built files)
-deno task start
+# Serve the production build locally in workerd
+pnpm preview
 
-# Format, lint, and type check
-deno task check
+# Format check + type check
+pnpm check
 
-# Update Fresh framework
-deno task update
+# Format all files
+pnpm format
+
+# Build and deploy to Cloudflare Workers
+pnpm deploy
 ```
 
 ## Architecture
 
-### Fresh Framework Patterns
+### Astro Patterns
 
-This project uses Fresh 2.2+ with Vite integration. Key architectural concepts:
+- **Pages**: File-based routing in `src/pages/`
+  - Page routes: `index.astro`, `about.astro`, `work.astro`, `audit.astro`, `contact.astro`, `404.astro`
+  - API routes: `src/pages/api/contact.ts` (POST handler for contact form)
+  - `sitemap.xml.ts`: generated at build time
+  - `google92c10cd669f85c37.ts`: Search Console verification file (see comment in file for why it isn't in `public/`)
 
-- **Routes**: File-based routing in `routes/` directory
-  - `_app.tsx`: Root layout with global HTML structure (fonts, analytics, meta tags)
-  - Page routes: `index.tsx`, `about.tsx`, `work.tsx`, `contact.tsx`
-  - API routes: `routes/api/contact.ts` (POST handler for contact form)
+- **Rendering**: Static by default. Pages are prerendered at build time and served as static assets.
+  - Only `contact.astro` (fresh anti-spam token per request), `api/contact.ts` and the verification route set `export const prerender = false` and run in the Worker.
 
-- **Islands**: Interactive client-side components in `islands/` directory
-  - Use `islands/` for components requiring interactivity
-  - Example: `ContactForm.tsx` handles form submission with signals
-  - Islands are hydrated on the client while the rest is server-rendered
+- **Layout**: `src/layouts/BaseLayout.astro` holds the HTML shell, SEO/OG meta tags, fonts, analytics, Schema.org data, header and footer. Every page wraps its content in it and passes `title`, `description`, `path`.
 
-- **Components**: Reusable server-rendered components in `components/`
-  - Pure presentational components (no client-side interactivity)
-  - Examples: `PageLayout.tsx`, `Header.tsx`, `Footer.tsx`, `SEO.tsx`
+- **Components**: `src/components/`
+  - `.astro` components are server-only and ship no JS (`Header`, `Footer`, `Section`, `Button`)
+  - `ContactForm.tsx` is the only Preact island, hydrated with `client:load`
+  - Button styles live in `src/lib/button.ts` (`buttonClass()`), shared by `Button.astro` and the island
 
-- **Content**: Structured content data in `content/` directory
-  - TypeScript files exporting content objects (not markdown)
+- **Content**: Structured content data in `src/content/`
+  - TypeScript files exporting content objects (not markdown, not content collections)
   - Each page has its own content file: `home.ts`, `about.ts`, `work.ts`, etc.
-  - Keeps content separate from presentation logic
-  - Import and use in route components
+  - Import and use in page components
 
-- **Utils**: Shared utilities in `utils.ts`
-  - `define` helper created with `createDefine<State>()` for type-safe route/handler definitions
-  - Use `define.page()` for route components and `define.handlers()` for API routes
+### Workers Runtime Gotchas
 
-### Build System
-
-- **Vite**: Build tool configured in `vite.config.ts`
-  - Fresh plugin handles SSR and islands
-  - Tailwind CSS v4 plugin for styling
-- **Output**: Builds to `_fresh/` directory (excluded from git)
-  - `_fresh/client/` - Client-side JavaScript and CSS bundles
-  - `_fresh/server/` - Server-side rendering code
-  - `_fresh/server.js` - Production server entry point
+- `Date` is frozen at the epoch while modules load. Never compute dates at module scope (e.g. a copyright year in a content file); compute them inside component frontmatter or request handlers.
+- With `build.format: "file"`, Astro strips `.html` from request paths before routing, and Cloudflare's asset routing redirects `*.html` to the extensionless path.
 
 ### Styling
 
-- Tailwind CSS 4 (latest version via `@tailwindcss/vite` plugin)
-- Custom CSS in `assets/styles.css`
+- Tailwind CSS 4 via the `@tailwindcss/vite` plugin
+- Global CSS in `src/styles/global.css` (imported by `BaseLayout.astro`)
 - Typography: Newsreader (display/headings), DM Sans (body text)
 - Design: Professional minimal aesthetic with generous whitespace
 
 ### Third-Party Services
 
 - **Analytics**: Self-hosted Plausible at `analytics.mmartinov.com`
-  - Script injected in `routes/_app.tsx` head
-  - Custom domain configuration with hash-based script path
+  - Script injected in `BaseLayout.astro` head
 
 - **Email**: Resend API for contact form submissions
-  - Direct REST API calls using native `fetch` (no SDK - avoided due to dependency issues)
+  - Direct REST API calls using native `fetch` (no SDK)
   - Uses verified domain: `contact@notifications.mmartinov.com`
-  - Environment variable: `RESEND_API_KEY` required in Deno Deploy
-  - API endpoint: `routes/api/contact.ts`
+  - API endpoint: `src/pages/api/contact.ts`
+
+### Secrets
+
+Declared with `astro:env` in `astro.config.ts` and imported from `astro:env/server`. Both are required; there is no fallback.
+
+- `RESEND_API_KEY` - Resend API key
+- `ANTISPAM_SECRET_KEY` - HMAC key for contact-form anti-spam tokens
+
+Locally they are read from `.env` (see `.env.example`). **`pnpm dev` and `pnpm preview` use the real keys in `.env`, so submitting the contact form locally sends a real email.** In production they are Worker secrets: `pnpm wrangler secret put <NAME>`.
 
 ## Important Conventions
 
 ### Dependency Management
 
-- **No Resend SDK**: Use Resend's REST API directly with fetch to avoid svix/uuid bundling issues
-- **Pruning dependencies**: When removing npm packages from `deno.json`, clean lock file:
-  ```bash
-  rm -rf node_modules deno.lock
-  deno install
-  ```
+- **No Resend SDK**: Use Resend's REST API directly with fetch
+- `@astrojs/preact` requires Preact 10.x, and `@astrojs/check` requires TypeScript ≤ 6. Check peer dependencies before bumping.
+- Native builds are allow-listed in `pnpm-workspace.yaml` (`esbuild`, `workerd`)
 - Always use latest stable versions when adding new dependencies
 
 ### Email Configuration
 
-When modifying email functionality in `routes/api/contact.ts`:
+When modifying email functionality in `src/pages/api/contact.ts`:
+
 - `from` field MUST use `@notifications.mmartinov.com` (verified domain in Resend)
 - `to` field: `me@mmartinov.com`
 - `reply_to` field: User's submitted email for direct replies
 
 ### Content Updates
 
-To update site content, edit the TypeScript files in `content/`:
+To update site content, edit the TypeScript files in `src/content/`:
+
 - Content is structured as exported objects/arrays
-- Import content in route components and map to UI components
+- Import content in page components and map to UI components
 - Keep content data separate from presentation logic
 
 ## Deployment
 
-Deployment is automatic via Deno Deploy:
-1. Push to `main` branch on GitHub
-2. Deno Deploy automatically builds and deploys
-3. Environment variables set in Deno Deploy dashboard:
-   - `RESEND_API_KEY` - Required for contact form
+Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`). See `docs/02-deployment.md`.
 
 ## Project Structure
 
 ```
-├── routes/          # File-based routing
-│   ├── _app.tsx     # Root layout (global HTML/head)
-│   ├── api/         # API endpoints
-│   └── *.tsx        # Page routes
-├── islands/         # Interactive client components
-├── components/      # Server-rendered components
-├── content/         # Structured content data (TS files)
-├── static/          # Static assets (favicon, etc.)
-├── assets/          # CSS and other build-time assets
-├── utils.ts         # Shared utilities and type definitions
-└── vite.config.ts   # Vite build configuration
+├── src/
+│   ├── pages/          # File-based routing (.astro pages, .ts endpoints)
+│   │   └── api/        # API endpoints
+│   ├── layouts/        # BaseLayout.astro (HTML shell, head, header/footer)
+│   ├── components/     # .astro components + ContactForm.tsx island
+│   ├── content/        # Structured content data (TS files)
+│   ├── lib/            # antispam.ts, button.ts
+│   └── styles/         # global.css
+├── public/             # Static assets (favicon, images, robots.txt)
+├── astro.config.ts     # Astro config (adapter, integrations, env schema)
+└── wrangler.jsonc      # Cloudflare Worker config
 ```
 
 ## Agent skills

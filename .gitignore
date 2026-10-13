@@ -1,13 +1,14 @@
-# dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+# build output
+dist/
+.astro/
+.wrangler/
 
-# Fresh build directory
-_fresh/
-# npm + other dependencies
+# dependencies
 node_modules/
-vendor/
 
+# environment variables / local secrets
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*

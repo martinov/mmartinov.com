@@ -1,0 +1,31 @@
+---
+import { type ButtonVariant, buttonClass } from "../lib/button.ts";
+
+interface Props {
+  href?: string;
+  variant?: ButtonVariant;
+  class?: string;
+  type?: "button" | "submit";
+  fullWidthMobile?: boolean;
+}
+
+const {
+  href,
+  variant = "primary",
+  class: className = "",
+  type = "button",
+  fullWidthMobile = false,
+} = Astro.props;
+
+const classes = buttonClass({ variant, fullWidthMobile, class: className });
+---
+
+{href ? (
+  <a href={href} class={classes}>
+    <slot />
+  </a>
+) : (
+  <button type={type} class={classes}>
+    <slot />
+  </button>
+)}

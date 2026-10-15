@@ -58,6 +58,8 @@ pnpm deploy            # astro build && wrangler deploy
 ```
 
 The site is now live at `https://mmartinov-com.<your-subdomain>.workers.dev`.
+`wrangler.jsonc` sets `"workers_dev": false` now that the custom domain is live; for a fresh
+setup, set it to `true` until the cutover in step 5 is done.
 
 ### Step 2: Secrets
 

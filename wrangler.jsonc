@@ -2,6 +2,8 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "mmartinov-com",
   "compatibility_date": "2026-10-01",
+  // Served only on mmartinov.com; the workers.dev copy would duplicate the site
+  "workers_dev": false,
   "observability": {
     "enabled": true,
   },

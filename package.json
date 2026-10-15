@@ -2,6 +2,7 @@
   "name": "mmartinov-com",
   "type": "module",
   "private": true,
+  "packageManager": "pnpm@12.11.2",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

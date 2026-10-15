@@ -74,9 +74,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
               ></path>
             </svg>
           </div>
-          <h3 class="text-2xl sm:text-3xl font-bold mb-3 text-slate-900">
-            Message Sent!
-          </h3>
+          <h3 class="text-2xl sm:text-3xl mb-3">Message Sent!</h3>
           <p class="text-slate-600 text-lg mb-8 leading-relaxed">
             Thanks for reaching out. I'll get back to you soon.
           </p>

@@ -31,51 +31,57 @@
   --transition-base: 150ms ease;
 }
 
-/* Smooth scrolling for anchor links */
-html {
-  scroll-behavior: smooth;
+/* Element defaults live in the base layer so Tailwind utilities override them */
+@layer base {
+  /* Smooth scrolling for anchor links */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Base Typography */
+  body {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    /* text-* size utilities read this before their own default line-height */
+    --tw-leading: 1.2;
+    color: var(--color-text);
+  }
+
+  /* Selection Styling */
+  ::selection {
+    background-color: var(--color-accent);
+    color: #ffffff;
+  }
+
+  /* Link Transitions */
+  a {
+    transition: color var(--transition-fast);
+  }
+
+  /* Smooth Scroll Offset for Sticky Header */
+  :target {
+    scroll-margin-top: 5rem;
+  }
 }
 
-/* Focus States */
+/* Focus States: deliberately unlayered so no utility (e.g. focus:outline-none)
+   can remove the keyboard focus outline */
 :focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
-}
-
-/* Base Typography */
-body {
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-  color: var(--color-text);
-}
-
-/* Selection Styling */
-::selection {
-  background-color: var(--color-accent);
-  color: #ffffff;
-}
-
-/* Link Transitions */
-a {
-  transition: color var(--transition-fast);
-}
-
-/* Smooth Scroll Offset for Sticky Header */
-:target {
-  scroll-margin-top: 5rem;
 }
 
 /* Horizontal Rule - Executive Brief Style */

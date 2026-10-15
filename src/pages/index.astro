@@ -12,9 +12,7 @@ import { bottomCta, hero, metrics, services } from "../content/home.ts";
   {/* Hero Section */}
   <Section class="pt-20 pb-16" width="narrow" spacing="large">
     <div class="text-center max-w-3xl mx-auto">
-      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 text-slate-900">
-        {hero.headline}
-      </h1>
+      <h1 class="text-5xl sm:text-6xl lg:text-7xl mb-4">{hero.headline}</h1>
       <p class="text-xl sm:text-2xl text-slate-600 mb-8 font-medium">
         {hero.subtitle}
       </p>
@@ -57,15 +55,11 @@ import { bottomCta, hero, metrics, services } from "../content/home.ts";
 
   {/* Services Section */}
   <Section spacing="large" width="narrow">
-    <h2 class="text-3xl sm:text-4xl font-bold mb-16 text-slate-900">
-      {services.heading}
-    </h2>
+    <h2 class="text-3xl sm:text-4xl mb-16">{services.heading}</h2>
     <div class="space-y-16">
       {services.items.map((service) => (
         <div class="border-l-4 border-slate-900 pl-8">
-          <h3 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-6">
-            {service.title}
-          </h3>
+          <h3 class="text-2xl sm:text-3xl mb-6">{service.title}</h3>
           <div class="space-y-4 text-lg text-slate-700 leading-relaxed">
             <p>{service.problem}</p>
             <p class="text-slate-900 font-medium">→ {service.solution}</p>
@@ -79,9 +73,7 @@ import { bottomCta, hero, metrics, services } from "../content/home.ts";
   {/* Bottom CTA Section */}
   <Section spacing="large" class="border-t-2 border-slate-900">
     <div class="text-center max-w-2xl mx-auto">
-      <h2 class="text-4xl sm:text-5xl font-bold mb-10 text-slate-900">
-        {bottomCta.heading}
-      </h2>
+      <h2 class="text-4xl sm:text-5xl mb-10">{bottomCta.heading}</h2>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <Button href={bottomCta.cta.href} variant="primary">
           {bottomCta.cta.text}

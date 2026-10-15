@@ -18,7 +18,7 @@ const linkPoint = z.strictObject({
 // Case studies on /work, one YAML file per case study; the file name is the
 // entry id and the section's anchor (/work#travel-chatbot)
 const work = defineCollection({
-  loader: glob({ pattern: "*.yaml", base: "./src/data/work" }),
+  loader: glob({ pattern: "*.yaml", base: "./src/content/case-studies" }),
   schema: z.strictObject({
     // Position on /work, ascending
     order: z.number().int(),

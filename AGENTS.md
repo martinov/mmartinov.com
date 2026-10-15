@@ -59,7 +59,7 @@ pnpm deploy
   - TypeScript files exporting content objects (not markdown, not content collections), except case studies (below)
   - Each page has its own content file: `home.ts`, `about.ts`, `work.ts`, etc.
   - Import and use in page components
-  - Exception: case studies are the `work` content collection, one YAML file per case study in `src/data/work/` (file name = id = `/work#<id>` anchor). `src/content.config.ts` holds the strict Zod schema, checked against every entry at build time; `work.astro` reads them with `getCollection("work")`, sorted by `order`. `src/content/` is not a collection folder.
+  - Exception: case studies are the `work` content collection, one YAML file per case study in `src/content/case-studies/` (file name = id = `/work#<id>` anchor). `src/content.config.ts` holds the strict Zod schema, checked against every entry at build time; `work.astro` reads them with `getCollection("work")`, sorted by `order`. The TS files beside it are not part of any collection.
 
 ### Workers Runtime Gotchas
 
@@ -118,7 +118,7 @@ To update site content, edit the TypeScript files in `src/content/`:
 - Content is structured as exported objects/arrays
 - Import content in page components and map to UI components
 - Keep content data separate from presentation logic
-- Case studies: add or edit a YAML file in `src/data/work/`; set `order` to place it on `/work`. A new section type needs a schema field in `src/content.config.ts` and markup in `work.astro`.
+- Case studies: add or edit a YAML file in `src/content/case-studies/`; set `order` to place it on `/work`. A new section type needs a schema field in `src/content.config.ts` and markup in `work.astro`.
 
 ## Deployment
 
@@ -134,7 +134,7 @@ Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`). See `docs/02
 │   ├── layouts/        # BaseLayout.astro (HTML shell, head, header/footer)
 │   ├── components/     # .astro components + ContactForm.tsx island
 │   ├── content/        # Structured content data (TS files)
-│   ├── data/work/      # Case studies (YAML entries of the `work` content collection)
+│   │   └── case-studies/ # Case studies (YAML entries of the `work` content collection)
 │   ├── lib/            # antispam.ts, button.ts, contact.ts (schema + email) + tests
 │   ├── styles/         # global.css
 │   └── content.config.ts # Content collections (the `work` schema)

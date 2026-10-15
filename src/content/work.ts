@@ -1,5 +1,5 @@
 // Work page content. Case studies are the `work` content collection
-// (src/data/work/*.yaml, schema in src/content.config.ts).
+// (case-studies/*.yaml, schema in src/content.config.ts).
 export const workIntro = {
   heading: "Selected Projects",
 };

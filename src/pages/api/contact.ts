@@ -181,7 +181,7 @@ export const POST: APIRoute = async ({ request }) => {
     } catch (emailSendError) {
       console.error("Error sending email via Resend:", emailSendError);
 
-      // Log the submission even if email fails
+      // With no storage, this log line is the only copy of the submission
       console.log("Contact form submission (email failed):", {
         timestamp: new Date().toISOString(),
         name: data.name,
@@ -191,15 +191,13 @@ export const POST: APIRoute = async ({ request }) => {
         preferredTime: data.preferredTime || "N/A",
       });
 
-      // Return success to user but log the error
-      // (User shouldn't be penalized for email service issues)
+      // Tell the visitor it wasn't sent so they can email directly (#19).
+      // 502 marks an upstream failure; the island shows the fallback address
+      // only for this status. Resend's details stay in the logs.
       return new Response(
-        JSON.stringify({
-          success: true,
-          message: "Message received. We'll get back to you soon.",
-        }),
+        JSON.stringify({ error: "Your message could not be sent" }),
         {
-          status: 200,
+          status: 502,
           headers: { "Content-Type": "application/json" },
         },
       );

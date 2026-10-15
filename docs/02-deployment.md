@@ -141,9 +141,10 @@ Consider setting up:
 ## Maintenance
 
 ### Content Updates
-Content is stored in `/content` directory:
+Content is stored in the `src/content/` directory:
 - `site.ts` - Global site config
 - `home.ts` - Homepage content
+- `audit.ts` - Audit page
 - `work.ts` - Case studies
 - `about.ts` - About page
 - `contact.ts` - Contact page
@@ -151,7 +152,7 @@ Content is stored in `/content` directory:
 Edit these files to update content without touching component code.
 
 ### Adding Case Studies
-1. Edit `content/work.ts`
+1. Edit `src/content/work.ts`
 2. Add new case study to `caseStudies` array
 3. Follow existing structure
 4. Commit and push changes

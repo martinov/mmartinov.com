@@ -18,10 +18,10 @@ export const caseStudies = [
     solution: {
       heading: "The Solution",
       points: [
-        "Built a conversational agent that extracts travel parameters (destination, dates, travellers, budget) from natural chat",
-        "Queries live tour-operator APIs in real time instead of indexing stale inventory, presenting offers as interactive cards",
-        "Captures leads and booking intent, handing qualified prospects directly to the sales team",
-        "Wired server-side conversion tracking so ad spend is attributable to real leads",
+        "Built an assistant that lets customers search with a simple form or by chatting in Bulgarian, the way they'd talk to a travel agent",
+        "Searches two tour operators' live offers, so prices and availability are always current, and shows them as clickable offer cards",
+        "Hands every interested customer to the sales team, together with what they were looking for",
+        "Tracks which ads bring real leads, so ad spend goes where it works",
       ],
     },
     outcome: {
@@ -32,7 +32,9 @@ export const caseStudies = [
           href: "https://search.pochivki-turcia.bg",
           label: "search.pochivki-turcia.bg",
         },
-        "Turns paid ad traffic into qualified, attributable leads",
+        "Never drops a lead: if a tour operator's search fails, the assistant asks for the customer's contact details instead",
+        "Hotel details load instantly instead of after a ten-second wait",
+        "Every mistake a customer or the sales team reports becomes an automated test, so it doesn't come back",
         "Sales team engages warm prospects instead of fielding repetitive first-contact questions",
       ],
     },
@@ -68,11 +70,11 @@ export const caseStudies = [
   },
   {
     id: "ecommerce",
-    title: "Order Processing with Agentic AI",
+    title: "Multi-Store Order Processing with Agentic AI",
     challenge: {
       heading: "The Challenge",
       points: [
-        "E-commerce company with multiple sales channels (multiple web + physical stores)",
+        "Power-tools retailer selling through six online stores, a physical shop and phone orders",
         "Order processing required significant manual operator intervention",
         "Operators spending time on routine decisions instead of complex cases",
       ],
@@ -80,15 +82,16 @@ export const caseStudies = [
     solution: {
       heading: "The Solution",
       points: [
-        "Built centralized, event-based order processing platform",
-        "Implemented agentic AI system to handle routine order decisions",
-        "Designed Event Sourcing architecture to capture decision context for AI training",
-        "Integrated multiple data sources for unified order management",
+        "Built one back office where operators see every order from every store and phone sale, updating live",
+        "Connected it to the accounting software and three courier services, so invoices, stock levels, shipping labels and delivery status don't need retyping",
+        "Implemented an agentic AI system that handles routine order decisions and leaves the unusual cases to people",
+        "Designing AI product suggestions that work from the product catalogue alone, so customer data never goes to an AI provider",
       ],
     },
     outcome: {
       heading: "The Outcome",
       points: [
+        "Running the business's daily operations for six years, with me as their engineer throughout",
         "Operators freed to focus on edge cases requiring human judgment",
         "Faster order fulfillment across all channels",
         "System captures data for continuous AI improvement",
@@ -186,7 +189,7 @@ export const caseStudies = [
 
 export const otherExperience = {
   heading: "Other Experience",
-  text: "Over the years, I've worked across various domains including FOREX trading automation with ML models, healthcare systems, and fintech backend infrastructure. Most projects involve complex integrations, API design, and distributed systems architecture.",
+  text: "Over the years, I've worked across various domains, including FOREX trading automation with ML models, seven years on a hospital and clinic platform that holds patient records, and backend systems for a consumer-lending company. I know what it takes to keep sensitive customer data safe. Most projects involve connecting systems that weren't built to talk to each other.",
   note: "If you're wondering whether I've solved a problem similar to yours, let's talk. Chances are I've encountered something close.",
 };
 

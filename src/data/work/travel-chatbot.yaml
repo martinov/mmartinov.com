@@ -10,7 +10,7 @@ solution:
   heading: The Solution
   points:
     - Built an assistant that lets customers search with a simple form or by chatting in Bulgarian, the way they'd talk to a travel agent
-    - Searches two tour operators' live offers, so prices and availability are always current, and shows them as clickable offer cards
+    - Searches multiple tour operators' live offers, so prices and availability are always current, and shows them as clickable offer cards
     - Hands every interested customer to the sales team, together with what they were looking for
     - Tracks which ads bring real leads, so ad spend goes where it works
 outcome:

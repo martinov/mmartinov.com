@@ -1,0 +1,2 @@
+# The sitemap moved to @astrojs/sitemap's index; keeps the old Search Console URL working
+/sitemap.xml /sitemap-index.xml 301

@@ -36,8 +36,7 @@ Note: local dev uses the real secrets in `.env`, so submitting the contact form 
 
 ```
 ├── src/
-│   ├── pages/          # Routes: index, about, work, audit, contact, 404, sitemap.xml
-│   │   └── api/        # contact.ts (POST endpoint)
+│   ├── pages/          # Routes: index, about, work, audit, contact, 404
 │   ├── layouts/        # BaseLayout.astro (head, SEO, analytics, header/footer)
 │   ├── components/     # Header, Footer, Section, Button, ContactForm (island)
 │   ├── content/        # Structured content data (TypeScript)

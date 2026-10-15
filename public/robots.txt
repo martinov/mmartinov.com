@@ -5,7 +5,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://mmartinov.com/sitemap.xml
+Sitemap: https://mmartinov.com/sitemap-index.xml
 
 # Crawl-delay (optional, helps prevent server overload)
 # Most modern bots ignore this, but it doesn't hurt

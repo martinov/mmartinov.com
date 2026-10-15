@@ -1,6 +1,7 @@
 import { defineConfig, envField, fontProviders } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import preact from "@astrojs/preact";
+import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
@@ -13,7 +14,12 @@ export default defineConfig({
   // redirecting to /about/, matching the canonical URLs and sitemap
   build: { format: "file" },
   trailingSlash: "never",
-  integrations: [preact()],
+  integrations: [
+    preact(),
+    // Lists every page route (404/500 excluded by the integration). No lastmod:
+    // the build date is all it would know, and that changes on every deploy.
+    sitemap(),
+  ],
   // Self-hosted from /_astro/ at build time; no requests to Google at runtime
   fonts: [
     {

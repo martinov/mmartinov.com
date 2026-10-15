@@ -86,7 +86,7 @@ GitHub repository, branch `main`.
 
 - All pages render; `/about` returns 200 (no redirect to `/about/`)
 - `/nope` returns 404 with the custom page
-- `/sitemap.xml` and `/robots.txt` load
+- `/sitemap-index.xml` and `/robots.txt` load; `/sitemap.xml` 301s to `/sitemap-index.xml`
 - Submit the contact form once and confirm the email arrives
 
 ### Step 5: Custom domain cutover
@@ -125,6 +125,7 @@ GitHub repository, branch `main`.
 ### SEO Setup
 - [x] Search Console: Domain property `mmartinov.com`, verified by the `google-site-verification` TXT record on the apex. Keep that record.
 - [x] Submit sitemap to Google Search Console
+- [ ] Resubmit it as `/sitemap-index.xml` (moved from `/sitemap.xml`, which now redirects)
 - [ ] Add site to Bing Webmaster Tools
 - [ ] Create Google My Business profile (optional)
 

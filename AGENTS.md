@@ -40,7 +40,7 @@ pnpm deploy
 
 - **Pages**: File-based routing in `src/pages/`
   - Page routes: `index.astro`, `about.astro`, `work.astro`, `audit.astro`, `contact.astro`, `404.astro`
-  - `sitemap.xml.ts`: generated at build time
+  - Sitemap: `@astrojs/sitemap` (`astro.config.ts`) lists every page route in `/sitemap-index.xml` (it drops `/404` itself); a new page needs no sitemap change. `public/_redirects` sends the old `/sitemap.xml` there.
 
 - **Rendering**: Static by default. Pages are prerendered at build time and served as static assets.
   - Every page is prerendered, `contact.astro` included. The only per-request rendering is the `ContactFormIsland` server island (`server:defer`, fetched from `/_server-islands/ContactFormIsland`), which mints a fresh anti-spam token per visit, plus the contact action. Both run in the Worker.
@@ -126,7 +126,7 @@ Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`). See `docs/02
 
 ```
 ├── src/
-│   ├── pages/          # File-based routing (.astro pages, .ts endpoints)
+│   ├── pages/          # File-based routing (.astro pages)
 │   ├── actions/        # Astro Actions (contact form submission)
 │   ├── assets/         # Source images, optimised by astro:assets at build time
 │   ├── layouts/        # BaseLayout.astro (HTML shell, head, header/footer)

@@ -1,0 +1,187 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { siteConfig } from "../content/site.ts";
+import { pagePath } from "../lib/page-path.ts";
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+}
+
+const defaultImage = "/og-image.png";
+
+const {
+  title,
+  description,
+  image = defaultImage,
+  type = "website",
+  noindex = false,
+} = Astro.props;
+
+const site = Astro.site;
+if (!site) throw new Error("`site` must be set in astro.config.ts");
+const path = pagePath(Astro.url);
+
+const fullTitle = path === "/" ? title : `${title} - Martin Martinov`;
+const url = new URL(path, site).href;
+const fullImage = new URL(image, site).href;
+const siteImage = new URL(defaultImage, site).href;
+
+// Schema.org Structured Data - Person & Professional Service
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Martin Martinov",
+  url: site.origin,
+  image: siteImage,
+  jobTitle: "Software Architect & Automation Consultant",
+  description:
+    "Software architect specializing in business process automation and AI integration. 22+ years building systems that work.",
+  knowsAbout: [
+    "Business Process Automation",
+    "AI Integration",
+    "Software Architecture",
+    "System Design",
+    "API Design",
+    "Distributed Systems",
+    "Machine Learning",
+  ],
+  sameAs: [
+    "https://www.linkedin.com/in/martinov/",
+    "https://github.com/martinov/",
+  ],
+  worksFor: {
+    "@type": "Organization",
+    name: "MMartinov Ltd.",
+    url: site.origin,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "28 Mur Str.",
+      addressLocality: "Sofia",
+      addressCountry: "BG",
+    },
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "28 Mur Str.",
+    addressLocality: "Sofia",
+    addressCountry: "BG",
+  },
+};
+
+// Schema.org - Professional Service (Consulting)
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Martin Martinov - Software Consulting",
+  url: site.origin,
+  image: siteImage,
+  description:
+    "Expert software consulting for business process automation and AI integration",
+  priceRange: "Contact for pricing",
+  areaServed: "Worldwide",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "28 Mur Str.",
+    addressLocality: "Sofia",
+    addressCountry: "BG",
+  },
+  provider: {
+    "@type": "Person",
+    name: "Martin Martinov",
+  },
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <!-- Primary Meta Tags -->
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={description} />
+    <meta name="author" content={siteConfig.author} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    {!noindex && <meta property="og:url" content={url} />}
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={fullImage} />
+    <meta property="og:site_name" content="Martin Martinov" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    {!noindex && <meta property="twitter:url" content={url} />}
+    <meta property="twitter:title" content={fullTitle} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={fullImage} />
+
+    <!-- Additional Meta Tags -->
+    {!noindex && <link rel="canonical" href={url} />}
+    <meta name="robots" content={noindex ? "noindex" : "index, follow"} />
+    <meta name="language" content="English" />
+
+    <!-- Preconnect to Google Fonts for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin="anonymous"
+    />
+
+    <!-- Google Fonts - Newsreader (display) and DM Sans (body) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Plausible Analytics - Privacy-focused, GDPR compliant -->
+    <script
+      is:inline
+      async
+      src="https://analytics.mmartinov.com/js/pa-_ee_5f_2lWSfTCCHibgKM.js"
+    ></script>
+    <script is:inline>
+      ((window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          }));
+      plausible.init();
+    </script>
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(personSchema)}
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(serviceSchema)}
+    />
+  </head>
+  <body class="bg-white text-gray-900 antialiased">
+    <div class="min-h-screen flex flex-col">
+      <Header />
+      <main class="flex-grow">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>

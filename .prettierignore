@@ -1,0 +1,7 @@
+dist/
+.astro/
+.wrangler/
+pnpm-lock.yaml
+docs/
+.claude/
+.agents/

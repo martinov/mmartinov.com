@@ -39,10 +39,9 @@ pnpm deploy
   - Page routes: `index.astro`, `about.astro`, `work.astro`, `audit.astro`, `contact.astro`, `404.astro`
   - API routes: `src/pages/api/contact.ts` (POST handler for contact form)
   - `sitemap.xml.ts`: generated at build time
-  - `google92c10cd669f85c37.ts`: Search Console verification file (see comment in file for why it isn't in `public/`)
 
 - **Rendering**: Static by default. Pages are prerendered at build time and served as static assets.
-  - Only `contact.astro` (fresh anti-spam token per request), `api/contact.ts` and the verification route set `export const prerender = false` and run in the Worker.
+  - Only `contact.astro` (fresh anti-spam token per request) and `api/contact.ts` set `export const prerender = false` and run in the Worker.
 
 - **Layout**: `src/layouts/BaseLayout.astro` holds the HTML shell, SEO/OG meta tags, fonts, analytics, Schema.org data, header and footer. Every page wraps its content in it and passes `title` and `description`; canonical/OG URLs and the active nav item come from `Astro.url` and `site` in `astro.config.ts`.
 

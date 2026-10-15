@@ -47,7 +47,7 @@ The contact form uses Resend for email delivery. You just need to configure it:
 ## Deployment to Cloudflare Workers
 
 The site is an Astro app using `@astrojs/cloudflare`. Pages are prerendered and served as static
-assets. Only `/contact`, `/api/contact` and the Google verification file run in the Worker
+assets. Only `/contact` and `/api/contact` run in the Worker
 (`mmartinov-com`, configured in `wrangler.jsonc`).
 
 ### Step 1: First deploy
@@ -87,7 +87,6 @@ GitHub repository, branch `main`.
 - All pages render; `/about` returns 200 (no redirect to `/about/`)
 - `/nope` returns 404 with the custom page
 - `/sitemap.xml` and `/robots.txt` load
-- `/google92c10cd669f85c37.html` returns 200
 - Submit the contact form once and confirm the email arrives
 
 ### Step 5: Custom domain cutover
@@ -124,7 +123,8 @@ GitHub repository, branch `main`.
 - [ ] Verify image optimization
 
 ### SEO Setup
-- [ ] Submit sitemap to Google Search Console
+- [x] Search Console: Domain property `mmartinov.com`, verified by the `google-site-verification` TXT record on the apex. Keep that record.
+- [x] Submit sitemap to Google Search Console
 - [ ] Add site to Bing Webmaster Tools
 - [ ] Create Google My Business profile (optional)
 

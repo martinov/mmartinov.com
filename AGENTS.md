@@ -92,7 +92,7 @@ Locally they are read from `.env` (see `.env.example`). **`pnpm dev` and `pnpm p
 ### Dependency Management
 
 - **No Resend SDK**: Use Resend's REST API directly with fetch
-- `@astrojs/preact` requires Preact 10.x, and `@astrojs/check` requires TypeScript ≤ 6. Check peer dependencies before bumping.
+- `@astrojs/preact` requires Preact 10.x, and `@astrojs/check` requires TypeScript ≤ 6. Check peer dependencies before bumping. `renovate.json` holds both at those majors; remove a hold once the integration's peer range allows the next major.
 - Native builds are allow-listed in `pnpm-workspace.yaml` (`esbuild`, `workerd`)
 - Always use latest stable versions when adding new dependencies
 

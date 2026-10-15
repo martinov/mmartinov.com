@@ -1,4 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"]
+  "extends": ["config:recommended"],
+  "packageRules": [
+    {
+      "description": "@astrojs/preact requires Preact 10.x; lift when its peer range allows 11 (#23)",
+      "matchPackageNames": ["preact"],
+      "allowedVersions": "<11"
+    },
+    {
+      "description": "@astrojs/check requires TypeScript <= 6; lift when its peer range allows 7 (#23)",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7"
+    }
+  ]
 }

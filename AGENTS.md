@@ -4,6 +4,10 @@ Martin Martinov's personal portfolio site, built with Astro 7, Preact (for the o
 
 Look up Astro 7, adapter and integration APIs in Context7 first; reading `node_modules` types is the fallback.
 
+Each issue gets its own branch, cut from a freshly fetched `origin/main`, and lands through a PR whose body says `Closes #N`. Check the current branch before committing: a branch whose PR is already merged is dead, and commits on it never reach `main`.
+
+Review rules live in `CODING_STANDARDS.md`.
+
 ## Architecture
 
 ### Astro Patterns
@@ -29,7 +33,7 @@ Look up Astro 7, adapter and integration APIs in Context7 first; reading `node_m
 
 ### Content
 
-All site content lives in `src/content/`, kept separate from presentation; pages import it and map it to components.
+All site content lives in `src/content/`, collection entries included, kept separate from presentation; pages import it and map it to components.
 
 - Page copy: one TypeScript file per page (`home.ts`, `about.ts`, `work.ts`, …) exporting plain objects/arrays.
 - Case studies: the `work` content collection, one YAML file per case study in `src/content/case-studies/` (file name = id = `/work#<id>` anchor). `src/content.config.ts` holds the strict Zod schema, checked against every entry at build time; `work.astro` reads them with `getCollection("work")`, sorted by `order`. A new section type needs a schema field in `src/content.config.ts` and markup in `work.astro`.
@@ -43,7 +47,7 @@ All site content lives in `src/content/`, kept separate from presentation; pages
 ### Styling
 
 - Tailwind CSS 4 via the `@tailwindcss/vite` plugin
-- Global CSS in `src/styles/global.css` (imported by `BaseLayout.astro`). Put element defaults (`body`, headings, `a`, …) inside `@layer base`: unlayered CSS beats every Tailwind utility, so a class like `text-white` on a heading would be silently ignored. `:focus-visible` is the one deliberate exception, so no utility can remove the focus outline. Headings take their font, weight (600), color and line-height (1.2, via `--tw-leading`, which `text-*` sizes read) from the base rule; add a class to a heading only to deviate from it.
+- Global CSS in `src/styles/global.css` (imported by `BaseLayout.astro`); element defaults sit in `@layer base` (see `CODING_STANDARDS.md`). Headings take their font, weight (600), color and line-height (1.2, via `--tw-leading`, which `text-*` sizes read) from the base rule; add a class to a heading only to deviate from it.
 - Typography: Newsreader (display/headings), DM Sans (body text), self-hosted via the Astro Fonts API (`fonts` in `astro.config.ts`, `<Font>` in `BaseLayout.astro`). `--font-display` / `--font-body` are registered in `@theme` in `global.css` (pointing at the generated variables), so `font-display` / `font-body` utilities exist. Headings get `--font-display` from the base rule; use the `font-display` class elsewhere, not inline `font-family` styles.
 - Design: Professional minimal aesthetic with generous whitespace
 
@@ -76,7 +80,6 @@ When modifying email functionality (`buildContactEmail()` in `src/lib/contact.ts
 - `from` field MUST use `@notifications.mmartinov.com` (verified domain in Resend)
 - `to` field: `me@mmartinov.com`
 - `reply_to` field: User's submitted email for direct replies
-- Escape every submitted value interpolated into the HTML, the email address included
 
 ## Deployment
 
@@ -86,7 +89,7 @@ Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`). See `docs/02
 
 ### Issue tracker
 
-Issues are tracked in this repo's GitHub Issues via the `gh` CLI. Read one with `gh issue view <n> --json title,body,labels,comments`; in a non-interactive shell `--comments` prints only the comments, without the body. See `docs/agents/issue-tracker.md`.
+Issues are tracked in this repo's GitHub Issues via the `gh` CLI. Check an issue's state label before implementing it: only `ready-for-agent` is yours to build. Read one with `gh issue view <n> --json title,body,labels,comments`; in a non-interactive shell `--comments` prints only the comments, without the body. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 

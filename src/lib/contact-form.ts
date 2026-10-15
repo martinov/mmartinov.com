@@ -22,7 +22,3 @@ export const toFormError = (error: ActionError): FormError => {
   }
   return { message: GENERIC_ERROR, sendFailed: false };
 };
-
-export type ServerResult =
-  | { status: "success" }
-  | (FormError & { status: "error"; values: Record<string, string> });

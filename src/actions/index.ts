@@ -1,5 +1,4 @@
 import { ActionError, defineAction } from "astro:actions";
-import { ANTISPAM_SECRET_KEY, RESEND_API_KEY } from "astro:env/server";
 import { validateSubmission } from "../lib/antispam.ts";
 import { buildContactEmail, contactInput } from "../lib/contact.ts";
 
@@ -10,6 +9,10 @@ export const server = {
     accept: "form",
     input: contactInput,
     handler: async (input) => {
+      // Imported lazily: ContactForm imports astro:actions, which loads this
+      // module while /contact is prerendered, where the secrets don't exist
+      const { ANTISPAM_SECRET_KEY, RESEND_API_KEY } =
+        await import("astro:env/server");
       const spamCheck = await validateSubmission(
         input.confirm_email,
         input.website,

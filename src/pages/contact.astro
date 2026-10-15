@@ -3,39 +3,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Section from "../components/Section.astro";
 import Button from "../components/Button.astro";
 import ContactForm from "../components/ContactForm.tsx";
-import { toFormError, type ServerResult } from "../lib/contact-form.ts";
-import { actions } from "astro:actions";
-import { ANTISPAM_SECRET_KEY } from "astro:env/server";
-import { generateToken } from "../lib/antispam.ts";
+import ContactFormIsland from "../components/ContactFormIsland.astro";
+import { siteConfig } from "../content/site.ts";
 import {
   bookingInfo,
   camplightNote,
   contactHero,
   contactMethods,
-  formFields,
   whatToExpect,
 } from "../content/contact.ts";
-
-// Rendered per request so every visitor gets a fresh anti-spam token
-export const prerender = false;
-
-const antispamToken = await generateToken(ANTISPAM_SECRET_KEY);
-
-const actionResult = Astro.getActionResult(actions.contact);
-let serverResult: ServerResult | undefined;
-if (actionResult?.error) {
-  const formData = await Astro.request.formData();
-  const values = Object.fromEntries(
-    formFields.map(({ name }) => [name, String(formData.get(name) ?? "")]),
-  );
-  serverResult = {
-    status: "error",
-    ...toFormError(actionResult.error),
-    values,
-  };
-} else if (actionResult) {
-  serverResult = { status: "success" };
-}
 ---
 
 <BaseLayout
@@ -108,11 +84,32 @@ if (actionResult?.error) {
         <p class="text-slate-600 text-lg">{bookingInfo.alternativeText}</p>
       </div>
 
-      <ContactForm
-        client:load
-        antispamToken={antispamToken}
-        serverResult={serverResult}
-      />
+      {/* The island renders per request so every visitor gets a fresh
+           anti-spam token; the page around it is static. The fallback is the
+           same form markup (no layout shift), inert so nothing typed into it
+           is lost when the island replaces it. */}
+      <ContactFormIsland server:defer>
+        <div slot="fallback" class="contact-form-fallback" inert>
+          <ContactForm />
+        </div>
+      </ContactFormIsland>
+      <noscript>
+        <style>
+          .contact-form-fallback {
+            display: none;
+          }
+        </style>
+        <p class="bg-white border-2 border-slate-900 p-6 sm:p-8 text-center text-slate-700 text-lg">
+          {bookingInfo.noScriptText}{" "}
+          <a
+            href={`mailto:${siteConfig.email}`}
+            class="text-slate-900 font-semibold underline decoration-slate-300 underline-offset-2"
+          >
+            {siteConfig.email}
+          </a>
+          .
+        </p>
+      </noscript>
     </div>
   </Section>
 

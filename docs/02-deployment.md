@@ -44,7 +44,8 @@ The contact form uses Resend for email delivery. You just need to configure it:
 ## Deployment to Cloudflare Workers
 
 The site is an Astro app using `@astrojs/cloudflare`. Pages are prerendered and served as static
-assets. Only `/contact` and the `contact` Astro Action (`/_actions/contact`) run in the Worker
+assets. Only the contact form server island (`/_server-islands/ContactFormIsland`) and the
+`contact` Astro Action (`/_actions/contact`) run in the Worker
 (`mmartinov-com`, configured in `wrangler.jsonc`).
 
 ### Step 1: First deploy
@@ -60,7 +61,7 @@ setup, set it to `true` until the cutover in step 5 is done.
 
 ### Step 2: Secrets
 
-Both are required. Without them, the contact page and API fail at runtime.
+Both are required. Without them, the contact form island and the contact action fail at runtime.
 
 ```bash
 pnpm wrangler secret put RESEND_API_KEY

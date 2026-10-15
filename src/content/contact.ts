@@ -22,6 +22,8 @@ export const bookingInfo = {
     ctaText: "Book a Call",
   },
   alternativeText: "Or send me a message using the form below",
+  noScriptText:
+    "The contact form needs JavaScript. Book a call above, or email me at",
 };
 
 export const contactMethods = {

@@ -277,7 +277,7 @@ curl -s -o /dev/null -w "%{http_code}\n" http://localhost:4321/_actions/contact 
 
 **⚠️ Potential issues:**
 - Users filling form in <3 seconds (rare)
-- Users with JavaScript disabled (timing check skipped)
+- Users with JavaScript disabled (the form needs JS; they see a notice pointing to booking and email)
 
 **💡 Solutions:**
 - Friendly error messages

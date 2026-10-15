@@ -43,15 +43,16 @@ pnpm deploy
   - `sitemap.xml.ts`: generated at build time
 
 - **Rendering**: Static by default. Pages are prerendered at build time and served as static assets.
-  - Only `contact.astro` (fresh anti-spam token per request) sets `export const prerender = false` and runs in the Worker, along with the contact action.
+  - Every page is prerendered, `contact.astro` included. The only per-request rendering is the `ContactFormIsland` server island (`server:defer`, fetched from `/_server-islands/ContactFormIsland`), which mints a fresh anti-spam token per visit, plus the contact action. Both run in the Worker.
+  - The island's fallback slot is the same `ContactForm` markup, `inert`, so loading causes no layout shift. Server islands need JS, so a `<noscript>` block hides the fallback and points to booking/email instead.
 
-- **Actions**: `src/actions/index.ts` defines the `contact` Astro Action (`accept: "form"`, Zod schema `contactInput` from `src/lib/contact.ts`). The island calls it via `actions.contact(formData)`; without JS the form POSTs natively to `/contact?_action=contact` and `contact.astro` renders the result from `Astro.getActionResult()`, refilling the fields on error. A Resend failure throws `BAD_GATEWAY`, the only code that shows the "email me directly" fallback.
+- **Actions**: `src/actions/index.ts` defines the `contact` Astro Action (`accept: "form"`, Zod schema `contactInput` from `src/lib/contact.ts`). The island calls it via `actions.contact(formData)`; there is no native-form fallback, since `/contact` is static and a POST to it returns 405. A Resend failure throws `BAD_GATEWAY`, the only code that shows the "email me directly" fallback.
 
 - **Layout**: `src/layouts/BaseLayout.astro` holds the HTML shell, SEO/OG meta tags, fonts, analytics, Schema.org data, header and footer. Every page wraps its content in it and passes `title` and `description`; canonical/OG URLs and the active nav item come from `Astro.url` and `site` in `astro.config.ts`.
 
 - **Components**: `src/components/`
   - `.astro` components are server-only and ship no JS (`Header`, `Footer`, `Section`, `Button`)
-  - `ContactForm.tsx` is the only Preact island, hydrated with `client:load`
+  - `ContactForm.tsx` is the only Preact island, hydrated with `client:load` inside the `ContactFormIsland.astro` server island, which passes it the anti-spam token
   - Button styles live in `src/lib/button.ts` (`buttonClass()`), shared by `Button.astro` and the island
 
 - **Content**: Structured content data in `src/content/`
@@ -62,6 +63,7 @@ pnpm deploy
 ### Workers Runtime Gotchas
 
 - `Date` is frozen at the epoch while modules load. Never compute dates at module scope (e.g. a copyright year in a content file); compute them inside component frontmatter or request handlers.
+- `astro:env/server` reads every secret when the module loads, and builds (Cloudflare Workers Builds included) have no secrets. Anything reachable from a prerendered page must import it lazily, inside a handler or component frontmatter: `const { X } = await import("astro:env/server")`. `/contact` reaches it through `ContactFormIsland` and through `ContactForm`'s `astro:actions` import of `src/actions/index.ts`. Check with a build in a checkout that has no `.env`.
 - With `build.format: "file"`, Astro strips `.html` from request paths before routing, and Cloudflare's asset routing redirects `*.html` to the extensionless path.
 
 ### Styling
@@ -83,7 +85,7 @@ pnpm deploy
 
 ### Secrets
 
-Declared with `astro:env` in `astro.config.ts` and imported from `astro:env/server`. Both are required; there is no fallback.
+Declared with `astro:env` in `astro.config.ts` and imported lazily from `astro:env/server` (see Workers Runtime Gotchas). Both are required; there is no fallback.
 
 - `RESEND_API_KEY` - Resend API key
 - `ANTISPAM_SECRET_KEY` - HMAC key for contact-form anti-spam tokens

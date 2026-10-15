@@ -1,4 +1,4 @@
-import { defineConfig, envField } from "astro/config";
+import { defineConfig, envField, fontProviders } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import preact from "@astrojs/preact";
 import tailwindcss from "@tailwindcss/vite";
@@ -13,6 +13,34 @@ export default defineConfig({
   build: { format: "file" },
   trailingSlash: "never",
   integrations: [preact()],
+  // Self-hosted from /_astro/ at build time; no requests to Google at runtime
+  fonts: [
+    {
+      provider: fontProviders.google(),
+      name: "Newsreader",
+      cssVariable: "--font-newsreader",
+      weights: [400, 600, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      fallbacks: ["Georgia", "Times New Roman", "serif"],
+      options: { experimental: { variableAxis: { opsz: [["6", "72"]] } } },
+    },
+    {
+      provider: fontProviders.google(),
+      name: "DM Sans",
+      cssVariable: "--font-dm-sans",
+      weights: [400, 500, 600, 700],
+      styles: ["normal", "italic"],
+      subsets: ["latin", "latin-ext"],
+      fallbacks: [
+        "-apple-system",
+        "BlinkMacSystemFont",
+        "Segoe UI",
+        "sans-serif",
+      ],
+      options: { experimental: { variableAxis: { opsz: [["9", "40"]] } } },
+    },
+  ],
   vite: {
     plugins: [tailwindcss()],
     // In dev, @preact/preset-vite injects `import "preact/devtools"` into hook

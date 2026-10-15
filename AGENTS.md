@@ -69,8 +69,8 @@ pnpm deploy
 ### Styling
 
 - Tailwind CSS 4 via the `@tailwindcss/vite` plugin
-- Global CSS in `src/styles/global.css` (imported by `BaseLayout.astro`)
-- Typography: Newsreader (display/headings), DM Sans (body text)
+- Global CSS in `src/styles/global.css` (imported by `BaseLayout.astro`). Put element defaults (`body`, headings, `a`, …) inside `@layer base`: unlayered CSS beats every Tailwind utility, so a class like `text-white` on a heading would be silently ignored. `:focus-visible` is the one deliberate exception, so no utility can remove the focus outline. Headings take their font, weight (600), color and line-height (1.2, via `--tw-leading`, which `text-*` sizes read) from the base rule; add a class to a heading only to deviate from it.
+- Typography: Newsreader (display/headings), DM Sans (body text), self-hosted via the Astro Fonts API (`fonts` in `astro.config.ts`, `<Font>` in `BaseLayout.astro`). `--font-display` / `--font-body` are registered in `@theme` in `global.css` (pointing at the generated variables), so `font-display` / `font-body` utilities exist. Headings get `--font-display` from the base rule; use the `font-display` class elsewhere, not inline `font-family` styles.
 - Design: Professional minimal aesthetic with generous whitespace
 
 ### Third-Party Services

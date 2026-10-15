@@ -3,6 +3,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Section from "../components/Section.astro";
 import Button from "../components/Button.astro";
 import ContactForm from "../components/ContactForm.tsx";
+import { toFormError, type ServerResult } from "../lib/contact-form.ts";
+import { actions } from "astro:actions";
 import { ANTISPAM_SECRET_KEY } from "astro:env/server";
 import { generateToken } from "../lib/antispam.ts";
 import {
@@ -10,6 +12,7 @@ import {
   camplightNote,
   contactHero,
   contactMethods,
+  formFields,
   whatToExpect,
 } from "../content/contact.ts";
 
@@ -17,6 +20,24 @@ import {
 export const prerender = false;
 
 const antispamToken = await generateToken(ANTISPAM_SECRET_KEY);
+
+// A native POST (JS off or not yet hydrated) lands back here with the action
+// result. Refill the visible fields on error so the message isn't lost.
+const actionResult = Astro.getActionResult(actions.contact);
+let serverResult: ServerResult | undefined;
+if (actionResult?.error) {
+  const formData = await Astro.request.formData();
+  const values = Object.fromEntries(
+    formFields.map(({ name }) => [name, String(formData.get(name) ?? "")]),
+  );
+  serverResult = {
+    status: "error",
+    ...toFormError(actionResult.error),
+    values,
+  };
+} else if (actionResult) {
+  serverResult = { status: "success" };
+}
 ---
 
 <BaseLayout
@@ -89,7 +110,11 @@ const antispamToken = await generateToken(ANTISPAM_SECRET_KEY);
         <p class="text-slate-600 text-lg">{bookingInfo.alternativeText}</p>
       </div>
 
-      <ContactForm client:load antispamToken={antispamToken} />
+      <ContactForm
+        client:load
+        antispamToken={antispamToken}
+        serverResult={serverResult}
+      />
     </div>
   </Section>
 

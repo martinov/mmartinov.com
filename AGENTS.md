@@ -27,6 +27,9 @@ pnpm check
 # Format all files
 pnpm format
 
+# Unit tests (Vitest)
+pnpm test
+
 # Build and deploy to Cloudflare Workers
 pnpm deploy
 ```
@@ -37,11 +40,12 @@ pnpm deploy
 
 - **Pages**: File-based routing in `src/pages/`
   - Page routes: `index.astro`, `about.astro`, `work.astro`, `audit.astro`, `contact.astro`, `404.astro`
-  - API routes: `src/pages/api/contact.ts` (POST handler for contact form)
   - `sitemap.xml.ts`: generated at build time
 
 - **Rendering**: Static by default. Pages are prerendered at build time and served as static assets.
-  - Only `contact.astro` (fresh anti-spam token per request) and `api/contact.ts` set `export const prerender = false` and run in the Worker.
+  - Only `contact.astro` (fresh anti-spam token per request) sets `export const prerender = false` and runs in the Worker, along with the contact action.
+
+- **Actions**: `src/actions/index.ts` defines the `contact` Astro Action (`accept: "form"`, Zod schema `contactInput` from `src/lib/contact.ts`). The island calls it via `actions.contact(formData)`; without JS the form POSTs natively to `/contact?_action=contact` and `contact.astro` renders the result from `Astro.getActionResult()`, refilling the fields on error. A Resend failure throws `BAD_GATEWAY`, the only code that shows the "email me directly" fallback.
 
 - **Layout**: `src/layouts/BaseLayout.astro` holds the HTML shell, SEO/OG meta tags, fonts, analytics, Schema.org data, header and footer. Every page wraps its content in it and passes `title` and `description`; canonical/OG URLs and the active nav item come from `Astro.url` and `site` in `astro.config.ts`.
 
@@ -75,7 +79,7 @@ pnpm deploy
 - **Email**: Resend API for contact form submissions
   - Direct REST API calls using native `fetch` (no SDK)
   - Uses verified domain: `contact@notifications.mmartinov.com`
-  - API endpoint: `src/pages/api/contact.ts`
+  - Sent from the `contact` action in `src/actions/index.ts`; the payload is built by `buildContactEmail()` in `src/lib/contact.ts`
 
 ### Secrets
 
@@ -97,11 +101,12 @@ Locally they are read from `.env` (see `.env.example`). **`pnpm dev` and `pnpm p
 
 ### Email Configuration
 
-When modifying email functionality in `src/pages/api/contact.ts`:
+When modifying email functionality (`buildContactEmail()` in `src/lib/contact.ts`, sent from `src/actions/index.ts`):
 
 - `from` field MUST use `@notifications.mmartinov.com` (verified domain in Resend)
 - `to` field: `me@mmartinov.com`
 - `reply_to` field: User's submitted email for direct replies
+- Escape every submitted value interpolated into the HTML, the email address included
 
 ### Content Updates
 
@@ -120,11 +125,11 @@ Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`). See `docs/02
 ```
 ├── src/
 │   ├── pages/          # File-based routing (.astro pages, .ts endpoints)
-│   │   └── api/        # API endpoints
+│   ├── actions/        # Astro Actions (contact form submission)
 │   ├── layouts/        # BaseLayout.astro (HTML shell, head, header/footer)
 │   ├── components/     # .astro components + ContactForm.tsx island
 │   ├── content/        # Structured content data (TS files)
-│   ├── lib/            # antispam.ts, button.ts
+│   ├── lib/            # antispam.ts, button.ts, contact.ts (schema + email) + tests
 │   └── styles/         # global.css
 ├── public/             # Static assets (favicon, images, robots.txt)
 ├── astro.config.ts     # Astro config (adapter, integrations, env schema)

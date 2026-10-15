@@ -44,7 +44,7 @@ The contact form uses Resend for email delivery. You just need to configure it:
 ## Deployment to Cloudflare Workers
 
 The site is an Astro app using `@astrojs/cloudflare`. Pages are prerendered and served as static
-assets. Only `/contact` and `/api/contact` run in the Worker
+assets. Only `/contact` and the `contact` Astro Action (`/_actions/contact`) run in the Worker
 (`mmartinov-com`, configured in `wrangler.jsonc`).
 
 ### Step 1: First deploy
@@ -168,7 +168,7 @@ Edit these files to update content without touching component code.
 
 ### Contact Form Not Working
 - Check browser console for errors
-- Verify API endpoint is accessible: `/api/contact`
+- Verify the action endpoint is accessible: `/_actions/contact`
 - Check Worker logs: `pnpm wrangler tail`, or Observability in the Cloudflare dashboard
 - Confirm both secrets are set: `pnpm wrangler secret list`
 

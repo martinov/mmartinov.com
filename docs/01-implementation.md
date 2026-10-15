@@ -65,7 +65,7 @@ All content stored in `/content` directory for easy editing:
 - Client-side validation
 - Loading states
 - Success/error feedback
-- API endpoint at `/api/contact`
+- Astro Action `contact` (`src/actions/index.ts`)
 - Email integration ready (needs configuration)
 
 #### Design

@@ -3,7 +3,7 @@ export const hero = {
   headline: "Martin Martinov",
   subtitle: "Software Architect",
   description:
-    "I build automation systems that eliminate repetitive work and reduce operational costs.",
+    "I build automation systems that eliminate repetitive work and reduce operational costs - and I keep them running for years.",
   primaryCta: {
     text: "Schedule a Call",
     href: "/contact",
@@ -54,6 +54,13 @@ export const services = {
       problem: "Technical decisions that lock you in or slow you down.",
       solution: "Event-sourced systems that adapt as you grow.",
       outcome: "Flexible architecture that evolves with your business.",
+    },
+    {
+      title: "Ongoing Support",
+      problem: "Your software needs someone after launch.",
+      solution:
+        "I keep it running: updates, fixes, new features, and changes like the switch to the euro.",
+      outcome: "Some clients have worked with me for six years and counting.",
     },
   ],
 };

@@ -1,19 +1,35 @@
 import { useSignal } from "@preact/signals";
 import { useEffect, useRef } from "preact/hooks";
+import { actions } from "astro:actions";
 import { buttonClass } from "../lib/button.ts";
+import {
+  GENERIC_ERROR,
+  toFormError,
+  type ServerResult,
+} from "../lib/contact-form.ts";
 import { formFields } from "../content/contact.ts";
 import { siteConfig } from "../content/site.ts";
 
 interface ContactFormProps {
   antispamToken?: string;
+  serverResult?: ServerResult;
 }
 
-export default function ContactForm({ antispamToken }: ContactFormProps) {
+export default function ContactForm({
+  antispamToken,
+  serverResult,
+}: ContactFormProps) {
   const isSubmitting = useSignal(false);
-  const submitStatus = useSignal<"idle" | "success" | "error">("idle");
-  const errorMessage = useSignal("");
-  // Email delivery failed upstream (502): offer the direct address instead
-  const sendFailed = useSignal(false);
+  const submitStatus = useSignal<"idle" | "success" | "error">(
+    serverResult?.status ?? "idle",
+  );
+  const errorMessage = useSignal(
+    serverResult?.status === "error" ? serverResult.message : "",
+  );
+  const sendFailed = useSignal(
+    serverResult?.status === "error" && serverResult.sendFailed,
+  );
+  const values = serverResult?.status === "error" ? serverResult.values : {};
   const confirmEmailRef = useRef<HTMLInputElement>(null);
 
   // Fill the confirm_email field with the antispam token via JavaScript
@@ -32,36 +48,23 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
     sendFailed.value = false;
 
     const form = e.target as HTMLFormElement;
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
 
     // Send all data to server for validation (including honeypot fields)
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const { error } = await actions.contact(new FormData(form));
 
-      if (response.ok) {
+      if (error) {
+        const formError = toFormError(error);
+        submitStatus.value = "error";
+        errorMessage.value = formError.message;
+        sendFailed.value = formError.sendFailed;
+      } else {
         submitStatus.value = "success";
         form.reset();
-      } else if (response.status === 502) {
-        // Keep the typed fields so the visitor can copy them into an email
-        submitStatus.value = "error";
-        sendFailed.value = true;
-      } else {
-        const result = await response.json();
-        throw new Error(result.error || "Failed to send message");
       }
-    } catch (error) {
+    } catch {
       submitStatus.value = "error";
-      errorMessage.value =
-        error instanceof Error
-          ? error.message
-          : "Something went wrong. Please try again.";
+      errorMessage.value = GENERIC_ERROR;
     } finally {
       isSubmitting.value = false;
     }
@@ -104,7 +107,13 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
           </button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} class="space-y-6">
+        <form
+          method="post"
+          // Preact drops function-valued attributes; the string is "?_action=contact"
+          action={actions.contact.toString()}
+          onSubmit={handleSubmit}
+          class="space-y-6"
+        >
           {/* Honeypot fields - hidden from humans, visible to bots */}
           {/* Field 1: Simple honeypot - should remain empty */}
           <div
@@ -153,6 +162,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
                   required={field.required}
                   placeholder={field.placeholder}
                   rows={field.rows || 5}
+                  defaultValue={values[field.name]}
                   class="w-full px-4 py-3.5 border-2 border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:border-cyan-700 transition-colors text-base"
                 />
               ) : (
@@ -162,6 +172,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
                   name={field.name}
                   required={field.required}
                   placeholder={field.placeholder}
+                  defaultValue={values[field.name]}
                   class="w-full px-4 py-3.5 border-2 border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:border-cyan-700 transition-colors text-base"
                 />
               )}

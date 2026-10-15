@@ -10,7 +10,8 @@
     "check": "prettier --check . && astro check",
     "deploy": "astro build && wrangler deploy",
     "cf-typegen": "wrangler types",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test": "vitest run"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.3.4",
@@ -26,6 +27,7 @@
     "prettier": "^3.9.10",
     "prettier-plugin-astro": "^1.1.1",
     "typescript": "^6.0.3",
+    "vitest": "^5.0.4",
     "wrangler": "^4.149.0"
   }
 }

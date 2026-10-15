@@ -239,9 +239,8 @@ import { verifyCaptcha } from "captcha-service";
 **Test Honeypot:**
 ```bash
 # Fill honeypot field (should be rejected)
-curl -X POST https://mmartinov.com/api/contact \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Test","email":"test@test.com","message":"Test","website":"http://spam.com"}'
+curl -X POST https://mmartinov.com/_actions/contact \
+  -d name=Test -d email=test@test.com -d message=Test -d website=http://spam.com
 
 # Expected: Error response
 ```
@@ -262,9 +261,8 @@ curl -X POST https://mmartinov.com/api/contact \
 
 With `pnpm dev` running, a filled honeypot must be rejected with 400 before any email is sent:
 ```bash
-curl -s -o /dev/null -w "%{http_code}\n" http://localhost:4321/api/contact \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Spammer","email":"spam@spam.com","message":"Spam message","website":"http://spam.com"}'
+curl -s -o /dev/null -w "%{http_code}\n" http://localhost:4321/_actions/contact \
+  -d name=Spammer -d email=spam@spam.com -d "message=Spam message" -d website=http://spam.com
 # 400
 ```
 

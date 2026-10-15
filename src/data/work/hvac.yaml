@@ -1,0 +1,37 @@
+order: 5
+title: HVAC Systems Company - Digital Foundation
+challenge:
+  heading: The Challenge
+  points:
+    - B2B/commercial HVAC company managing projects manually
+    - Customer inquiries, quotes, and maintenance schedules handled via email and phone
+    - No centralized system for tracking equipment installations or maintenance cycles
+    - Inventory management largely manual
+solution:
+  heading: The Solution
+  points:
+    - Built and launched the company's first website
+    - Established a digital presence and lead-generation channel where there was none
+    - Structured the foundation so future automation can plug in cleanly (Event Sourcing principles for capturing operational data)
+roadmap:
+  heading: What the Foundation Enables
+  items:
+    - title: Maintenance Schedule Optimization
+      description: Automate client maintenance reminders based on system installation dates and usage patterns
+    - title: Inventory Management
+      description: Track parts across job sites, predict needs based on upcoming projects, automated reorder triggers
+    - title: Customer Portal
+      description: Self-service for maintenance requests, documentation access, system history
+approach:
+  heading: The Approach
+  points:
+    - Start with digital strategy and foundation before automation
+    - Identify high-impact, low-risk automation opportunities
+    - Build systems that capture data for future AI use (Event Sourcing principles)
+    - Sequence work to match the business's real operational pain, not AI hype
+insight:
+  heading: Key Insight
+  points:
+    - Most small B2B companies need digital infrastructure before AI automation
+    - The right foundation makes future automation straightforward
+    - ROI comes from solving real operational pain points, not chasing AI hype

@@ -1,0 +1,21 @@
+order: 4
+title: Insurance Broker AI Assistant
+challenge:
+  heading: The Challenge
+  points:
+    - Insurance broker needed to automate customer inquiry handling
+    - Complex product catalog requiring contextual understanding
+    - High volume of repetitive questions preventing focus on complex cases
+solution:
+  heading: The Solution
+  points:
+    - Designed LLM-powered agent to handle initial customer inquiries
+    - Built system to understand insurance products and route appropriately
+    - Integrated with existing CRM for seamless handoff to human agents
+    - Created conversation templates for common inquiry patterns
+outcome:
+  heading: The Outcome
+  points:
+    - Reduced response time for initial customer inquiries
+    - Freed brokers to focus on complex cases requiring expertise
+    - System learns from broker responses to improve over time

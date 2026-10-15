@@ -2,12 +2,13 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Section from "../components/Section.astro";
 import Button from "../components/Button.astro";
-import {
-  caseStudies,
-  otherExperience,
-  workCta,
-  workIntro,
-} from "../content/work.ts";
+import { getCollection } from "astro:content";
+import { otherExperience, workCta, workIntro } from "../content/work.ts";
+
+const caseStudies = (await getCollection("work"))
+  // Tiebreak on id so a duplicated order can't reshuffle /work between builds
+  .toSorted((a, b) => a.data.order - b.data.order || a.id.localeCompare(b.id))
+  .map(({ id, data }) => ({ id, ...data }));
 ---
 
 <BaseLayout
@@ -35,36 +36,32 @@ import {
         </h2>
 
         {/* Challenge */}
-        {caseStudy.challenge && (
-          <div class="mb-10">
-            <h3 class="text-xl sm:text-2xl mb-5 uppercase">
-              {caseStudy.challenge.heading}
-            </h3>
-            <ul class="space-y-3">
-              {caseStudy.challenge.points.map((point) => (
-                <li class="text-slate-700 pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-slate-900 before:font-bold leading-relaxed">
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        <div class="mb-10">
+          <h3 class="text-xl sm:text-2xl mb-5 uppercase">
+            {caseStudy.challenge.heading}
+          </h3>
+          <ul class="space-y-3">
+            {caseStudy.challenge.points.map((point) => (
+              <li class="text-slate-700 pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-slate-900 before:font-bold leading-relaxed">
+                {point}
+              </li>
+            ))}
+          </ul>
+        </div>
 
         {/* Solution */}
-        {caseStudy.solution && (
-          <div class="mb-10">
-            <h3 class="text-xl sm:text-2xl mb-5 uppercase">
-              {caseStudy.solution.heading}
-            </h3>
-            <ul class="space-y-3">
-              {caseStudy.solution.points.map((point) => (
-                <li class="text-slate-700 pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-slate-900 before:font-bold leading-relaxed">
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        <div class="mb-10">
+          <h3 class="text-xl sm:text-2xl mb-5 uppercase">
+            {caseStudy.solution.heading}
+          </h3>
+          <ul class="space-y-3">
+            {caseStudy.solution.points.map((point) => (
+              <li class="text-slate-700 pl-7 relative before:content-['→'] before:absolute before:left-0 before:text-slate-900 before:font-bold leading-relaxed">
+                {point}
+              </li>
+            ))}
+          </ul>
+        </div>
 
         {/* Roadmap (for HVAC case study) */}
         {caseStudy.roadmap && (
@@ -121,7 +118,7 @@ import {
         {caseStudy.outcome && (
           <div>
             <h3 class="text-xl sm:text-2xl mb-5 uppercase">
-              {caseStudy.outcome.heading || "The Outcome"}
+              {caseStudy.outcome.heading}
             </h3>
             <ul class="space-y-3">
               {caseStudy.outcome.points.map((point) => (

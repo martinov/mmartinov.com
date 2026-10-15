@@ -56,9 +56,10 @@ pnpm deploy
   - Button styles live in `src/lib/button.ts` (`buttonClass()`), shared by `Button.astro` and the island
 
 - **Content**: Structured content data in `src/content/`
-  - TypeScript files exporting content objects (not markdown, not content collections)
+  - TypeScript files exporting content objects (not markdown, not content collections), except case studies (below)
   - Each page has its own content file: `home.ts`, `about.ts`, `work.ts`, etc.
   - Import and use in page components
+  - Exception: case studies are the `work` content collection, one YAML file per case study in `src/data/work/` (file name = id = `/work#<id>` anchor). `src/content.config.ts` holds the strict Zod schema, checked against every entry at build time; `work.astro` reads them with `getCollection("work")`, sorted by `order`. `src/content/` is not a collection folder.
 
 ### Workers Runtime Gotchas
 
@@ -117,6 +118,7 @@ To update site content, edit the TypeScript files in `src/content/`:
 - Content is structured as exported objects/arrays
 - Import content in page components and map to UI components
 - Keep content data separate from presentation logic
+- Case studies: add or edit a YAML file in `src/data/work/`; set `order` to place it on `/work`. A new section type needs a schema field in `src/content.config.ts` and markup in `work.astro`.
 
 ## Deployment
 
@@ -132,8 +134,10 @@ Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`). See `docs/02
 │   ├── layouts/        # BaseLayout.astro (HTML shell, head, header/footer)
 │   ├── components/     # .astro components + ContactForm.tsx island
 │   ├── content/        # Structured content data (TS files)
+│   ├── data/work/      # Case studies (YAML entries of the `work` content collection)
 │   ├── lib/            # antispam.ts, button.ts, contact.ts (schema + email) + tests
-│   └── styles/         # global.css
+│   ├── styles/         # global.css
+│   └── content.config.ts # Content collections (the `work` schema)
 ├── public/             # Static assets served as-is (favicon, OG images, robots.txt)
 ├── astro.config.ts     # Astro config (adapter, integrations, env schema)
 └── wrangler.jsonc      # Cloudflare Worker config

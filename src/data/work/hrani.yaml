@@ -1,0 +1,21 @@
+order: 2
+title: Automated Take-Home Review Assistant
+challenge:
+  heading: The Challenge
+  points:
+    - Engineering teams running take-home assignments burn senior time on submissions that don't warrant a second look
+    - Review quality and consistency drift over time and between reviewers
+    - Running candidate-submitted code safely is a genuine security problem
+solution:
+  heading: The Solution
+  points:
+    - Built HRANI, an AI agent that reviews candidate take-home submissions and writes structured verdicts back into the team's existing Notion workflow
+    - "Treats candidate code as untrusted: read-only local tools, with any execution forced through an isolated, secretless sandbox"
+    - Produces schema-validated output (scores, strengths, weaknesses, hire/maybe/reject) instead of free-form prose, so verdicts are comparable and hard to game
+    - Event-driven serverless pipeline triggered by a status change in Notion, with no always-on infrastructure to maintain
+outcome:
+  heading: The Outcome
+  points:
+    - Live in production, giving every submission a consistent first-pass review
+    - Reviewers' time goes to candidates that genuinely warrant a deeper look
+    - Structured, comparable verdicts keep the hiring bar steady across reviewers

@@ -1,0 +1,22 @@
+order: 3
+title: Multi-Store Order Processing with Agentic AI
+challenge:
+  heading: The Challenge
+  points:
+    - Power-tools retailer selling through six online stores, a physical shop and phone orders
+    - Order processing required significant manual operator intervention
+    - Operators spending time on routine decisions instead of complex cases
+solution:
+  heading: The Solution
+  points:
+    - Built one back office where operators see every order from every store and phone sale, updating live
+    - Connected it to the accounting software and three courier services, so invoices, stock levels, shipping labels and delivery status don't need retyping
+    - Implemented an agentic AI system that handles routine order decisions and leaves the unusual cases to people
+    - Designing AI product suggestions that work from the product catalogue alone, so customer data never goes to an AI provider
+outcome:
+  heading: The Outcome
+  points:
+    - Running the business's daily operations for six years, with me as their engineer throughout
+    - Operators freed to focus on edge cases requiring human judgment
+    - Faster order fulfillment across all channels
+    - System captures data for continuous AI improvement

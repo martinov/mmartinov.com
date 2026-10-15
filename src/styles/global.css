@@ -1,12 +1,15 @@
 @import "tailwindcss";
 
-/* Design System Variables */
-:root {
-  /* Typography */
-  /* Defined by <Font> in BaseLayout.astro, fallbacks in astro.config.ts */
+/* Typography: also generates the font-display / font-body utilities.
+   --font-newsreader / --font-dm-sans are defined by <Font> in BaseLayout.astro,
+   fallbacks in astro.config.ts */
+@theme {
   --font-display: var(--font-newsreader);
   --font-body: var(--font-dm-sans);
+}
 
+/* Design System Variables */
+:root {
   /* Professional Color Palette */
   --color-primary: #0f172a; /* slate-900 - deep navy */
   --color-primary-light: #1e293b; /* slate-800 */

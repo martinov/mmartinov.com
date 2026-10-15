@@ -125,7 +125,7 @@ GitHub repository, branch `main`.
 ### SEO Setup
 - [x] Search Console: Domain property `mmartinov.com`, verified by the `google-site-verification` TXT record on the apex. Keep that record.
 - [x] Submit sitemap to Google Search Console
-- [ ] Resubmit it as `/sitemap-index.xml` (moved from `/sitemap.xml`, which now redirects)
+- [x] Resubmit it as `/sitemap-index.xml` (moved from `/sitemap.xml`, which now redirects)
 - [ ] Add site to Bing Webmaster Tools
 - [ ] Create Google My Business profile (optional)
 

@@ -61,7 +61,7 @@ setup, set it to `true` until the cutover in step 5 is done.
 
 ### Step 2: Secrets
 
-Both are required. Without them, the contact page and API fail at runtime.
+Both are required. Without them, the contact form island and the contact action fail at runtime.
 
 ```bash
 pnpm wrangler secret put RESEND_API_KEY

@@ -4,6 +4,8 @@ import { ANTISPAM_SECRET_KEY } from "astro:env/server";
 import { generateToken } from "../lib/antispam.ts";
 
 const antispamToken = await generateToken(ANTISPAM_SECRET_KEY);
+// The token is timestamped, so a cached copy would expire or be shared
+Astro.response.headers.set("Cache-Control", "no-store");
 ---
 
 <ContactForm client:load antispamToken={antispamToken} />

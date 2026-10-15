@@ -41,7 +41,7 @@ All site content lives in `src/content/`, collection entries included, kept sepa
 ### Workers Runtime Gotchas
 
 - `Date` is frozen at the epoch while modules load. Never compute dates at module scope (e.g. a copyright year in a content file); compute them inside component frontmatter or request handlers.
-- `astro:env/server` reads every secret when the module loads, and builds (Cloudflare Workers Builds included) have no secrets. Anything reachable from a prerendered page must import it lazily, inside a handler or component frontmatter: `const { X } = await import("astro:env/server")`. `/contact` reaches it through `ContactFormIsland` and through `ContactForm`'s `astro:actions` import of `src/actions/index.ts`. Check with a build in a checkout that has no `.env`.
+- `astro:env/server` reads every secret when the module loads, and builds (Cloudflare Workers Builds included) have no secrets. Anything reachable from a prerendered page must import it lazily, inside a handler or component frontmatter: `const { X } = await import("astro:env/server")`. `/contact` reaches it through `ContactFormIsland` and through `ContactForm`'s `astro:actions` import of `src/actions/index.ts`. CI (`.github/workflows/ci.yml`) builds without `.env`, so a top-level import fails the PR check.
 - With `build.format: "file"`, Astro strips `.html` from request paths before routing, and Cloudflare's asset routing redirects `*.html` to the extensionless path.
 
 ### Styling

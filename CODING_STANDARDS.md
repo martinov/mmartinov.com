@@ -1,6 +1,6 @@
 # Coding Standards
 
-Rules the review agent checks a diff against. `pnpm check` (Prettier + `astro check`) and `pnpm test` enforce formatting, types and the tested behaviour; these are the calls tooling can't make. Facts about how the site works live in `AGENTS.md`.
+Rules the review agent checks a diff against. CI (`.github/workflows/ci.yml`: `pnpm check`, `pnpm test`, and `pnpm build` without `.env`) enforces formatting, types, the tested behaviour and lazy secret imports; these are the calls tooling can't make. Facts about how the site works live in `AGENTS.md`.
 
 ## Comments
 
@@ -13,10 +13,6 @@ A diff that moves, renames or removes a file, route, script, env var or componen
 ## CSS layering
 
 Element defaults in `src/styles/global.css` (`body`, headings, `a`, …) go inside `@layer base`. Unlayered CSS beats every Tailwind utility, so an unlayered element rule silently overrides classes like `text-white` or `font-bold` on that element. `:focus-visible` is the one deliberate exception, so no utility can remove the focus outline.
-
-## Secrets in prerendered code
-
-A module reachable from a prerendered page imports `astro:env/server` lazily, inside a handler or component frontmatter (`const { X } = await import("astro:env/server")`). A top-level import there fails the build in Cloudflare Workers Builds, which has no secrets, while passing locally where `.env` exists. Trace the imports of every changed module back to its pages.
 
 ## Contact email
 

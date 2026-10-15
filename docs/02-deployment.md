@@ -90,11 +90,16 @@ GitHub repository, branch `main`.
 ### Step 5: Custom domain cutover
 
 1. The `mmartinov.com` zone must be on Cloudflare (add the site and switch nameservers at the registrar if it isn't).
-2. Worker → Settings → Domains & Routes → add custom domains `mmartinov.com` and `www.mmartinov.com`.
-   Cloudflare creates the DNS records and certificates.
-3. Remove the old A/CNAME records that point at Deno Deploy.
-4. Keep `analytics.mmartinov.com` and the Resend DNS records (`notifications.mmartinov.com`) unchanged.
-5. Once traffic is confirmed on Cloudflare, delete the Deno Deploy project (Deno Deploy shuts down around April 2027).
+2. Worker → Settings → Domains & Routes → add custom domain `mmartinov.com`.
+   Cloudflare creates the DNS record and certificate.
+3. Remove the old A/CNAME records that point at Deno Deploy, including `www`.
+4. `www` redirects to the apex at Cloudflare's edge and never reaches the Worker:
+   - DNS: `A` record `www` → `192.0.2.1`, **proxied**. The address is a reserved dummy that is never contacted.
+   - Rules → Redirect Rules → template "Redirect from WWW to root" (301, keeps path and query string).
+     The dashboard may warn that `www` isn't proxied; if `dig +short www.mmartinov.com` returns
+     Cloudflare IPs rather than `192.0.2.1`, it is, and the warning can be ignored.
+5. Keep `analytics.mmartinov.com` and the Resend DNS records (`notifications.mmartinov.com`) unchanged.
+6. Once traffic is confirmed on Cloudflare, delete the Deno Deploy project. Done: it was deleted in October 2026.
 
 ## Post-Deployment
 

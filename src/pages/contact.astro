@@ -21,8 +21,6 @@ export const prerender = false;
 
 const antispamToken = await generateToken(ANTISPAM_SECRET_KEY);
 
-// A native POST (JS off or not yet hydrated) lands back here with the action
-// result. Refill the visible fields on error so the message isn't lost.
 const actionResult = Astro.getActionResult(actions.contact);
 let serverResult: ServerResult | undefined;
 if (actionResult?.error) {

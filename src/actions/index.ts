@@ -24,12 +24,8 @@ export const server = {
         });
       }
 
-      // Passed the anti-spam checks: this is now a Contact Submission
-      const submission = input;
-      const email = buildContactEmail(submission, new Date());
+      const email = buildContactEmail(input, new Date());
 
-      // Only a failed Resend request maps to BAD_GATEWAY; anything else
-      // thrown here surfaces as INTERNAL_SERVER_ERROR
       let response: Response;
       try {
         response = await fetch(RESEND_API_URL, {
@@ -51,23 +47,19 @@ export const server = {
         // With no storage, this log line is the only copy of the submission
         console.log("Contact form submission (email failed):", {
           timestamp: new Date().toISOString(),
-          name: submission.name,
-          email: submission.email,
-          company: submission.company || "N/A",
-          message: submission.message,
-          preferredTime: submission.preferredTime || "N/A",
+          name: input.name,
+          email: input.email,
+          company: input.company || "N/A",
+          message: input.message,
+          preferredTime: input.preferredTime || "N/A",
         });
 
-        // Tell the visitor it wasn't sent so they can email directly (#19).
-        // The form shows the fallback address only for BAD_GATEWAY. Resend's
-        // details stay in the logs.
         throw new ActionError({
           code: "BAD_GATEWAY",
           message: "Your message could not be sent",
         });
       }
 
-      // The email went out; a body we can't parse only affects this log line
       const emailData = await response.json().catch(() => null);
       console.log("Contact form email sent successfully:", emailData);
     },

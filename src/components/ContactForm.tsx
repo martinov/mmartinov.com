@@ -54,8 +54,6 @@ export default function ContactForm({
       const { error } = await actions.contact(new FormData(form));
 
       if (error) {
-        // Keep the typed fields so the visitor can fix them or copy them
-        // into an email
         const formError = toFormError(error);
         submitStatus.value = "error";
         errorMessage.value = formError.message;

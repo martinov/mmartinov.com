@@ -6,7 +6,6 @@ export const contactInput = z.object({
   company: z.string().trim().optional(),
   message: z.string().trim().min(1),
   preferredTime: z.string().trim().optional(),
-  // Anti-spam fields, checked by validateSubmission in antispam.ts
   website: z.string().optional(),
   confirm_email: z.string().optional(),
 });
@@ -21,15 +20,12 @@ const escapeHtml = (text: string) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 
-// Keep line breaks from multi-line fields like the message
 const escapeMultiline = (text: string) =>
   escapeHtml(text).replace(/\n/g, "<br>");
 
-/** Resend payload for the notification email about a Contact Submission. */
 export const buildContactEmail = (input: ContactInput, receivedAt: Date) => {
   const { name, email, company, message, preferredTime } = input;
-  // Encode each side of the "@" so the address can't add mailto parameters;
-  // the "@" itself stays literal (RFC 6068)
+  // RFC 6068: the "@" must stay literal
   const mailto = `mailto:${email.split("@").map(encodeURIComponent).join("@")}`;
 
   return {

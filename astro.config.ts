@@ -15,6 +15,16 @@ export default defineConfig({
   integrations: [preact()],
   vite: {
     plugins: [tailwindcss()],
+    // In dev, @preact/preset-vite injects `import "preact/devtools"` into hook
+    // components but only pre-bundles it for the client. Without this, SSR
+    // discovers it mid-request on a cold cache, re-optimizes, and the reload
+    // leaves two Preact instances: "Cannot read properties of undefined
+    // (reading '__H')".
+    environments: {
+      ssr: {
+        optimizeDeps: { include: ["preact/devtools"] },
+      },
+    },
   },
   env: {
     schema: {

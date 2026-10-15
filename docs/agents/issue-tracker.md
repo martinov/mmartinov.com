@@ -14,6 +14,18 @@ Issues and specs for this repo live as GitHub issues. Use the `gh` CLI for all o
 
 Infer the repo from `git remote -v`; `gh` does this automatically when run inside a clone.
 
+## Before implementing an issue
+
+Read its state label (see `triage-labels.md`). An issue with no state label counts as `needs-triage`.
+
+- `ready-for-agent`: build it.
+- `ready-for-human`, `needs-triage`, `needs-info`: stop. The open decisions in it are Martin's: lay out the options with a recommendation and wait for his answer.
+- An issue whose acceptance criteria start with a decision ("Decision recorded", "decide on…") is a decision first: the build waits on the answer, even when one option looks obvious.
+
+Record each decision as a comment on the issue before building on it, starting `## Decision`. When it is hard to reverse (a storage choice, a public URL scheme, a content model), also write an ADR in `docs/adr/` (see `domain.md`).
+
+When filing an issue, give it one category label and one state label.
+
 ## Pull requests as a triage surface
 
 **PRs as a request surface: no.** _(Set to `yes` if this repo treats external PRs as feature requests; `/triage` reads this flag.)_

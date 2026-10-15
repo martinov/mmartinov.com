@@ -78,6 +78,9 @@ GitHub repository, branch `main`.
 
 - Build command: `pnpm build`
 - Deploy command: `pnpm wrangler deploy`
+- Build variable `PNPM_VERSION` = the local `pnpm --version` (currently `12.11.2`). The build image
+  defaults to pnpm 10.11.1, which fails on `pnpm-workspace.yaml` ("packages field missing or empty")
+  and ignores `allowBuilds`. Update the variable when upgrading pnpm locally.
 
 ### Step 4: Verify on workers.dev before switching DNS
 

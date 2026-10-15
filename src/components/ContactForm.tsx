@@ -2,6 +2,7 @@ import { useSignal } from "@preact/signals";
 import { useEffect, useRef } from "preact/hooks";
 import { buttonClass } from "../lib/button.ts";
 import { formFields } from "../content/contact.ts";
+import { siteConfig } from "../content/site.ts";
 
 interface ContactFormProps {
   antispamToken?: string;
@@ -11,6 +12,8 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
   const isSubmitting = useSignal(false);
   const submitStatus = useSignal<"idle" | "success" | "error">("idle");
   const errorMessage = useSignal("");
+  // Email delivery failed upstream (502): offer the direct address instead
+  const sendFailed = useSignal(false);
   const confirmEmailRef = useRef<HTMLInputElement>(null);
 
   // Fill the confirm_email field with the antispam token via JavaScript
@@ -26,6 +29,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
     isSubmitting.value = true;
     submitStatus.value = "idle";
     errorMessage.value = "";
+    sendFailed.value = false;
 
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
@@ -44,6 +48,10 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
       if (response.ok) {
         submitStatus.value = "success";
         form.reset();
+      } else if (response.status === 502) {
+        // Keep the typed fields so the visitor can copy them into an email
+        submitStatus.value = "error";
+        sendFailed.value = true;
       } else {
         const result = await response.json();
         throw new Error(result.error || "Failed to send message");
@@ -173,7 +181,20 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
                   clip-rule="evenodd"
                 />
               </svg>
-              <span>{errorMessage.value}</span>
+              {sendFailed.value ? (
+                <span>
+                  Your message couldn't be sent. Please email me directly at{" "}
+                  <a
+                    href={`mailto:${siteConfig.email}`}
+                    class="font-semibold underline underline-offset-2"
+                  >
+                    {siteConfig.email}
+                  </a>
+                  .
+                </span>
+              ) : (
+                <span>{errorMessage.value}</span>
+              )}
             </div>
           )}
 

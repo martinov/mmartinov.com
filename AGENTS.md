@@ -85,7 +85,7 @@ Declared with `astro:env` in `astro.config.ts` and imported from `astro:env/serv
 - `RESEND_API_KEY` - Resend API key
 - `ANTISPAM_SECRET_KEY` - HMAC key for contact-form anti-spam tokens
 
-Locally they are read from `.env` (see `.env.example`). **`pnpm dev` and `pnpm preview` use the real keys in `.env`, so submitting the contact form locally sends a real email.** In production they are Worker secrets: `pnpm wrangler secret put <NAME>`.
+Locally they are read from `.env` (see `.env.example`). **`pnpm dev` and `pnpm preview` use the real keys in `.env`, so submitting the contact form locally sends a real email.** Shell env vars do not override `.env` in the worker unless `CLOUDFLARE_INCLUDE_PROCESS_ENV=true` is set, so to exercise the send-failure path run `CLOUDFLARE_INCLUDE_PROCESS_ENV=true RESEND_API_KEY=invalid pnpm dev`. In production they are Worker secrets: `pnpm wrangler secret put <NAME>`.
 
 ## Important Conventions
 

@@ -63,6 +63,7 @@ pnpm deploy
 ### Workers Runtime Gotchas
 
 - `Date` is frozen at the epoch while modules load. Never compute dates at module scope (e.g. a copyright year in a content file); compute them inside component frontmatter or request handlers.
+- `astro:env/server` reads every secret when the module loads, and builds (Cloudflare Workers Builds included) have no secrets. Anything reachable from a prerendered page must import it lazily, inside a handler or component frontmatter: `const { X } = await import("astro:env/server")`. `/contact` reaches it through `ContactFormIsland` and through `ContactForm`'s `astro:actions` import of `src/actions/index.ts`. Check with a build in a checkout that has no `.env`.
 - With `build.format: "file"`, Astro strips `.html` from request paths before routing, and Cloudflare's asset routing redirects `*.html` to the extensionless path.
 
 ### Styling
@@ -84,7 +85,7 @@ pnpm deploy
 
 ### Secrets
 
-Declared with `astro:env` in `astro.config.ts` and imported from `astro:env/server`. Both are required; there is no fallback.
+Declared with `astro:env` in `astro.config.ts` and imported lazily from `astro:env/server` (see Workers Runtime Gotchas). Both are required; there is no fallback.
 
 - `RESEND_API_KEY` - Resend API key
 - `ANTISPAM_SECRET_KEY` - HMAC key for contact-form anti-spam tokens

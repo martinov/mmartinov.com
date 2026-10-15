@@ -1,0 +1,9 @@
+---
+import ContactForm from "./ContactForm.tsx";
+import { ANTISPAM_SECRET_KEY } from "astro:env/server";
+import { generateToken } from "../lib/antispam.ts";
+
+const antispamToken = await generateToken(ANTISPAM_SECRET_KEY);
+---
+
+<ContactForm client:load antispamToken={antispamToken} />

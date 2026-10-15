@@ -2,34 +2,19 @@ import { useSignal } from "@preact/signals";
 import { useEffect, useRef } from "preact/hooks";
 import { actions } from "astro:actions";
 import { buttonClass } from "../lib/button.ts";
-import {
-  GENERIC_ERROR,
-  toFormError,
-  type ServerResult,
-} from "../lib/contact-form.ts";
+import { GENERIC_ERROR, toFormError } from "../lib/contact-form.ts";
 import { formFields } from "../content/contact.ts";
 import { siteConfig } from "../content/site.ts";
 
 interface ContactFormProps {
   antispamToken?: string;
-  serverResult?: ServerResult;
 }
 
-export default function ContactForm({
-  antispamToken,
-  serverResult,
-}: ContactFormProps) {
+export default function ContactForm({ antispamToken }: ContactFormProps) {
   const isSubmitting = useSignal(false);
-  const submitStatus = useSignal<"idle" | "success" | "error">(
-    serverResult?.status ?? "idle",
-  );
-  const errorMessage = useSignal(
-    serverResult?.status === "error" ? serverResult.message : "",
-  );
-  const sendFailed = useSignal(
-    serverResult?.status === "error" && serverResult.sendFailed,
-  );
-  const values = serverResult?.status === "error" ? serverResult.values : {};
+  const submitStatus = useSignal<"idle" | "success" | "error">("idle");
+  const errorMessage = useSignal("");
+  const sendFailed = useSignal(false);
   const confirmEmailRef = useRef<HTMLInputElement>(null);
 
   // Fill the confirm_email field with the antispam token via JavaScript
@@ -108,9 +93,8 @@ export default function ContactForm({
         </div>
       ) : (
         <form
+          // Keeps fields out of the URL if submitted before hydration
           method="post"
-          // Preact drops function-valued attributes; the string is "?_action=contact"
-          action={actions.contact.toString()}
           onSubmit={handleSubmit}
           class="space-y-6"
         >
@@ -162,7 +146,6 @@ export default function ContactForm({
                   required={field.required}
                   placeholder={field.placeholder}
                   rows={field.rows || 5}
-                  defaultValue={values[field.name]}
                   class="w-full px-4 py-3.5 border-2 border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:border-cyan-700 transition-colors text-base"
                 />
               ) : (
@@ -172,7 +155,6 @@ export default function ContactForm({
                   name={field.name}
                   required={field.required}
                   placeholder={field.placeholder}
-                  defaultValue={values[field.name]}
                   class="w-full px-4 py-3.5 border-2 border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:border-cyan-700 transition-colors text-base"
                 />
               )}

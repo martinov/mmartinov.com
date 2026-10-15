@@ -8,8 +8,7 @@
 - [ ] Run `pnpm dev` to test locally
 
 ### 2. Analytics Configuration
-- [ ] Set up Plausible Analytics account at https://plausible.io
-- [ ] Add mmartinov.com to your Plausible dashboard
+- [ ] Plausible is self-hosted at `analytics.mmartinov.com`; mmartinov.com is added as a site there
 - [ ] Verify analytics script is loading (check Network tab in browser DevTools)
 
 ### 3. Email Integration (Contact Form)
@@ -20,11 +19,9 @@ The contact form uses Resend for email delivery. You just need to configure it:
 **Quick Setup:**
 1. Sign up at https://resend.com (free tier: 3,000 emails/month)
 2. Get your API key from https://resend.com/api-keys
-3. Add domain mmartinov.com and verify DNS records
-4. Add `RESEND_API_KEY` to environment variables
-5. Done!
-
-**📖 Detailed Instructions:** See [RESEND_SETUP.md](./RESEND_SETUP.md) for complete setup guide
+3. Add and verify the sending domain `notifications.mmartinov.com` (DNS records in Cloudflare)
+4. Put `RESEND_API_KEY` and `ANTISPAM_SECRET_KEY` in `.env` locally (see `.env.example`) and set
+   them as Worker secrets for production (Step 2 below)
 
 **Features Included:**
 - ✅ Professional HTML email template

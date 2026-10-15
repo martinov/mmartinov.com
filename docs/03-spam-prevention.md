@@ -123,7 +123,7 @@ if (!data.name || !data.email || !data.message) {
 ### ✅ HTTPS Only
 - All form data encrypted in transit
 - Prevents man-in-the-middle attacks
-- Fresh/Deno Deploy enforces HTTPS
+- Cloudflare serves the site over HTTPS only
 
 ### ✅ Environment Variables
 - API keys stored securely
@@ -258,27 +258,14 @@ curl -X POST https://mmartinov.com/api/contact \
 # Should succeed and send email
 ```
 
-### Automated Testing
+### Honeypot Check
 
-Create test script:
-```typescript
-// test_spam_prevention.ts
-import { assertEquals } from "std/testing/asserts.ts";
-
-Deno.test("Honeypot blocks spam", async () => {
-  const response = await fetch("http://localhost:5173/api/contact", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: "Spammer",
-      email: "spam@spam.com",
-      message: "Spam message",
-      website: "http://spam.com" // Honeypot filled
-    })
-  });
-
-  assertEquals(response.status, 400);
-});
+With `pnpm dev` running, a filled honeypot must be rejected with 400 before any email is sent:
+```bash
+curl -s -o /dev/null -w "%{http_code}\n" http://localhost:4321/api/contact \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Spammer","email":"spam@spam.com","message":"Spam message","website":"http://spam.com"}'
+# 400
 ```
 
 ## User Experience Impact

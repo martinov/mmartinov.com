@@ -1,38 +1,8 @@
-# CLAUDE.md
+# mmartinov.com
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Martin Martinov's personal portfolio site, built with Astro 7, Preact (for the one interactive island), and Tailwind CSS 4. It runs on Cloudflare Workers via the `@astrojs/cloudflare` adapter. Commands are the `package.json` scripts; `pnpm dev` and `pnpm preview` run in workerd, the Workers runtime.
 
-## Project Overview
-
-This is a personal portfolio website for Martin Martinov (mmartinov.com), built with Astro 7, Preact (for the one interactive island), and Tailwind CSS 4. It runs on Cloudflare Workers via the `@astrojs/cloudflare` adapter.
-
-## Development Commands
-
-```bash
-# Install dependencies
-pnpm install
-
-# Development server with hot reload (runs in workerd, the Workers runtime)
-pnpm dev
-
-# Production build (outputs to dist/)
-pnpm build
-
-# Serve the production build locally in workerd
-pnpm preview
-
-# Format check + type check
-pnpm check
-
-# Format all files
-pnpm format
-
-# Unit tests (Vitest)
-pnpm test
-
-# Build and deploy to Cloudflare Workers
-pnpm deploy
-```
+Look up Astro 7, adapter and integration APIs in Context7 first; reading `node_modules` types is the fallback.
 
 ## Architecture
 
@@ -55,11 +25,14 @@ pnpm deploy
   - `ContactForm.tsx` is the only Preact island, hydrated with `client:load` inside the `ContactFormIsland.astro` server island, which passes it the anti-spam token
   - Button styles live in `src/lib/button.ts` (`buttonClass()`), shared by `Button.astro` and the island
 
-- **Content**: Structured content data in `src/content/`
-  - TypeScript files exporting content objects (not markdown, not content collections), except case studies (below)
-  - Each page has its own content file: `home.ts`, `about.ts`, `work.ts`, etc.
-  - Import and use in page components
-  - Exception: case studies are the `work` content collection, one YAML file per case study in `src/content/case-studies/` (file name = id = `/work#<id>` anchor). `src/content.config.ts` holds the strict Zod schema, checked against every entry at build time; `work.astro` reads them with `getCollection("work")`, sorted by `order`. The TS files beside it are not part of any collection.
+- **Images**: source images live in `src/assets/` and are optimised by `astro:assets` at build time. `public/` is for files that need a stable URL, such as the OG images.
+
+### Content
+
+All site content lives in `src/content/`, kept separate from presentation; pages import it and map it to components.
+
+- Page copy: one TypeScript file per page (`home.ts`, `about.ts`, `work.ts`, …) exporting plain objects/arrays.
+- Case studies: the `work` content collection, one YAML file per case study in `src/content/case-studies/` (file name = id = `/work#<id>` anchor). `src/content.config.ts` holds the strict Zod schema, checked against every entry at build time; `work.astro` reads them with `getCollection("work")`, sorted by `order`. A new section type needs a schema field in `src/content.config.ts` and markup in `work.astro`.
 
 ### Workers Runtime Gotchas
 
@@ -76,13 +49,8 @@ pnpm deploy
 
 ### Third-Party Services
 
-- **Analytics**: Self-hosted Plausible at `analytics.mmartinov.com`
-  - Script injected in `BaseLayout.astro` head
-
-- **Email**: Resend API for contact form submissions
-  - Direct REST API calls using native `fetch` (no SDK)
-  - Uses verified domain: `contact@notifications.mmartinov.com`
-  - Sent from the `contact` action in `src/actions/index.ts`; the payload is built by `buildContactEmail()` in `src/lib/contact.ts`
+- **Analytics**: Self-hosted Plausible at `analytics.mmartinov.com`, script injected in `BaseLayout.astro` head
+- **Email**: Resend REST API via native `fetch` (no SDK), from the verified domain `contact@notifications.mmartinov.com`. Sent from the `contact` action in `src/actions/index.ts`; the payload is built by `buildContactEmail()` in `src/lib/contact.ts`
 
 ### Secrets
 
@@ -97,7 +65,6 @@ Locally they are read from `.env` (see `.env.example`). **`pnpm dev` and `pnpm p
 
 ### Dependency Management
 
-- **No Resend SDK**: Use Resend's REST API directly with fetch
 - `@astrojs/preact` requires Preact 10.x, and `@astrojs/check` requires TypeScript ≤ 6. Check peer dependencies before bumping. `renovate.json` holds both at those majors; remove a hold once the integration's peer range allows the next major.
 - Native builds are allow-listed in `pnpm-workspace.yaml` (`esbuild`, `workerd`)
 - Always use latest stable versions when adding new dependencies
@@ -111,43 +78,15 @@ When modifying email functionality (`buildContactEmail()` in `src/lib/contact.ts
 - `reply_to` field: User's submitted email for direct replies
 - Escape every submitted value interpolated into the HTML, the email address included
 
-### Content Updates
-
-To update site content, edit the TypeScript files in `src/content/`:
-
-- Content is structured as exported objects/arrays
-- Import content in page components and map to UI components
-- Keep content data separate from presentation logic
-- Case studies: add or edit a YAML file in `src/content/case-studies/`; set `order` to place it on `/work`. A new section type needs a schema field in `src/content.config.ts` and markup in `work.astro`.
-
 ## Deployment
 
 Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`). See `docs/02-deployment.md`.
-
-## Project Structure
-
-```
-├── src/
-│   ├── pages/          # File-based routing (.astro pages)
-│   ├── actions/        # Astro Actions (contact form submission)
-│   ├── assets/         # Source images, optimised by astro:assets at build time
-│   ├── layouts/        # BaseLayout.astro (HTML shell, head, header/footer)
-│   ├── components/     # .astro components + ContactForm.tsx island
-│   ├── content/        # Structured content data (TS files)
-│   │   └── case-studies/ # Case studies (YAML entries of the `work` content collection)
-│   ├── lib/            # antispam.ts, button.ts, contact.ts (schema + email) + tests
-│   ├── styles/         # global.css
-│   └── content.config.ts # Content collections (the `work` schema)
-├── public/             # Static assets served as-is (favicon, OG images, robots.txt)
-├── astro.config.ts     # Astro config (adapter, integrations, env schema)
-└── wrangler.jsonc      # Cloudflare Worker config
-```
 
 ## Agent skills
 
 ### Issue tracker
 
-Issues are tracked in this repo's GitHub Issues via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+Issues are tracked in this repo's GitHub Issues via the `gh` CLI. Read one with `gh issue view <n> --json title,body,labels,comments`; in a non-interactive shell `--comments` prints only the comments, without the body. See `docs/agents/issue-tracker.md`.
 
 ### Triage labels
 

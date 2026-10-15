@@ -1,4 +1,5 @@
 ---
+import { Font } from "astro:assets";
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
@@ -133,18 +134,16 @@ const serviceSchema = {
     <meta name="robots" content={noindex ? "noindex" : "index, follow"} />
     <meta name="language" content="English" />
 
-    <!-- Preconnect to Google Fonts for performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin="anonymous"
+    <!-- Self-hosted fonts (astro.config.ts) - Newsreader (display) and DM Sans (body).
+         Each style is one variable file covering every weight, so preload by style
+         (upright, latin only). -->
+    <Font
+      cssVariable="--font-newsreader"
+      preload={[{ style: "normal", subset: "latin" }]}
     />
-
-    <!-- Google Fonts - Newsreader (display) and DM Sans (body) -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap"
-      rel="stylesheet"
+    <Font
+      cssVariable="--font-dm-sans"
+      preload={[{ style: "normal", subset: "latin" }]}
     />
 
     <!-- Plausible Analytics - Privacy-focused, GDPR compliant -->

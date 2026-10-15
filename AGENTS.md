@@ -70,7 +70,7 @@ pnpm deploy
 
 - Tailwind CSS 4 via the `@tailwindcss/vite` plugin
 - Global CSS in `src/styles/global.css` (imported by `BaseLayout.astro`)
-- Typography: Newsreader (display/headings), DM Sans (body text)
+- Typography: Newsreader (display/headings), DM Sans (body text), self-hosted via the Astro Fonts API (`fonts` in `astro.config.ts`, `<Font>` in `BaseLayout.astro`). `--font-display` / `--font-body` in `global.css` point at the generated variables.
 - Design: Professional minimal aesthetic with generous whitespace
 
 ### Third-Party Services

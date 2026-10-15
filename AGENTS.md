@@ -128,12 +128,13 @@ Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`). See `docs/02
 ├── src/
 │   ├── pages/          # File-based routing (.astro pages, .ts endpoints)
 │   ├── actions/        # Astro Actions (contact form submission)
+│   ├── assets/         # Source images, optimised by astro:assets at build time
 │   ├── layouts/        # BaseLayout.astro (HTML shell, head, header/footer)
 │   ├── components/     # .astro components + ContactForm.tsx island
 │   ├── content/        # Structured content data (TS files)
 │   ├── lib/            # antispam.ts, button.ts, contact.ts (schema + email) + tests
 │   └── styles/         # global.css
-├── public/             # Static assets (favicon, images, robots.txt)
+├── public/             # Static assets served as-is (favicon, OG images, robots.txt)
 ├── astro.config.ts     # Astro config (adapter, integrations, env schema)
 └── wrangler.jsonc      # Cloudflare Worker config
 ```

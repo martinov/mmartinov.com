@@ -5,8 +5,9 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   site: "https://mmartinov.com",
-  // No Astro sessions or astro:assets here, so skip the SESSION KV and IMAGES bindings
-  adapter: cloudflare({ imageService: "passthrough" }),
+  // Images are only used on prerendered pages, so sharp optimises them at build
+  // time and no IMAGES binding is needed. No Astro sessions, so no SESSION KV.
+  adapter: cloudflare({ imageService: "compile" }),
   session: false,
   // Emit about.html (not about/index.html) so Cloudflare serves /about without
   // redirecting to /about/, matching the canonical URLs and sitemap

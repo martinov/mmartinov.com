@@ -1,17 +1,14 @@
 // About page content
+import portrait from "../assets/martin-portrait.jpg";
+
 export const aboutHero = {
   heading: "Hi, I'm Martin",
 };
 
 export const aboutPhoto = {
-  src: "/images/martin-portrait.jpg",
-  srcSet: "/images/martin-portrait.jpg 1x, /images/martin-portrait@2x.jpg 2x",
-  webpSrc: "/images/martin-portrait.webp",
-  webpSrcSet:
-    "/images/martin-portrait.webp 1x, /images/martin-portrait@2x.webp 2x",
+  src: portrait,
   alt: "Martin Martinov",
   width: 450,
-  height: 563,
 };
 
 export const story = {

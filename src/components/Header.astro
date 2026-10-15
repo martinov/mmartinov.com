@@ -1,11 +1,8 @@
 ---
 import { navigation } from "../content/site.ts";
+import { pagePath } from "../lib/page-path.ts";
 
-interface Props {
-  currentPath?: string;
-}
-
-const { currentPath = "/" } = Astro.props;
+const currentPath = pagePath(Astro.url);
 ---
 
 <header class="sticky top-0 z-50 w-full border-b-2 border-slate-900 bg-white">

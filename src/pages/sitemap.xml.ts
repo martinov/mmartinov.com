@@ -1,12 +1,10 @@
 import type { APIRoute } from "astro";
-import { navigation, siteConfig } from "../content/site.ts";
+import { navigation } from "../content/site.ts";
 
 // Generated at build time and served as a static asset (GET and HEAD)
 export const prerender = true;
 
-function generateSitemap() {
-  const baseUrl = siteConfig.url;
-
+function generateSitemap(site: URL) {
   // Get current date in ISO format for lastmod
   const lastModified = new Date().toISOString().split("T")[0];
 
@@ -26,7 +24,7 @@ function generateSitemap() {
       }
 
       return `  <url>
-    <loc>${baseUrl}${item.href}</loc>
+    <loc>${new URL(item.href, site).href}</loc>
     <lastmod>${lastModified}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
@@ -40,7 +38,9 @@ ${urls}
 </urlset>`;
 }
 
-export const GET: APIRoute = () =>
-  new Response(generateSitemap(), {
+export const GET: APIRoute = ({ site }) => {
+  if (!site) throw new Error("`site` must be set in astro.config.ts");
+  return new Response(generateSitemap(site), {
     headers: { "Content-Type": "application/xml" },
   });
+};

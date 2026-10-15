@@ -44,7 +44,7 @@ pnpm deploy
 - **Rendering**: Static by default. Pages are prerendered at build time and served as static assets.
   - Only `contact.astro` (fresh anti-spam token per request), `api/contact.ts` and the verification route set `export const prerender = false` and run in the Worker.
 
-- **Layout**: `src/layouts/BaseLayout.astro` holds the HTML shell, SEO/OG meta tags, fonts, analytics, Schema.org data, header and footer. Every page wraps its content in it and passes `title`, `description`, `path`.
+- **Layout**: `src/layouts/BaseLayout.astro` holds the HTML shell, SEO/OG meta tags, fonts, analytics, Schema.org data, header and footer. Every page wraps its content in it and passes `title` and `description`; canonical/OG URLs and the active nav item come from `Astro.url` and `site` in `astro.config.ts`.
 
 - **Components**: `src/components/`
   - `.astro` components are server-only and ship no JS (`Header`, `Footer`, `Section`, `Button`)

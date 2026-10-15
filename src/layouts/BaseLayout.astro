@@ -3,38 +3,42 @@ import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { siteConfig } from "../content/site.ts";
+import { pagePath } from "../lib/page-path.ts";
 
 interface Props {
   title: string;
   description: string;
-  path: string;
   image?: string;
   type?: "website" | "article";
   noindex?: boolean;
 }
 
+const defaultImage = "/og-image.png";
+
 const {
   title,
   description,
-  path,
-  image = "/og-image.png",
+  image = defaultImage,
   type = "website",
   noindex = false,
 } = Astro.props;
 
+const site = Astro.site;
+if (!site) throw new Error("`site` must be set in astro.config.ts");
+const path = pagePath(Astro.url);
+
 const fullTitle = path === "/" ? title : `${title} - Martin Martinov`;
-const url = `${siteConfig.url}${path}`;
-const fullImage = image.startsWith("http")
-  ? image
-  : `${siteConfig.url}${image}`;
+const url = new URL(path, site).href;
+const fullImage = new URL(image, site).href;
+const siteImage = new URL(defaultImage, site).href;
 
 // Schema.org Structured Data - Person & Professional Service
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Martin Martinov",
-  url: "https://mmartinov.com",
-  image: "https://mmartinov.com/og-image.png",
+  url: site.origin,
+  image: siteImage,
   jobTitle: "Software Architect & Automation Consultant",
   description:
     "Software architect specializing in business process automation and AI integration. 22+ years building systems that work.",
@@ -54,7 +58,7 @@ const personSchema = {
   worksFor: {
     "@type": "Organization",
     name: "MMartinov Ltd.",
-    url: "https://mmartinov.com",
+    url: site.origin,
     address: {
       "@type": "PostalAddress",
       streetAddress: "28 Mur Str.",
@@ -75,8 +79,8 @@ const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: "Martin Martinov - Software Consulting",
-  url: "https://mmartinov.com",
-  image: "https://mmartinov.com/og-image.png",
+  url: site.origin,
+  image: siteImage,
   description:
     "Expert software consulting for business process automation and AI integration",
   priceRange: "Contact for pricing",
@@ -173,7 +177,7 @@ const serviceSchema = {
   </head>
   <body class="bg-white text-gray-900 antialiased">
     <div class="min-h-screen flex flex-col">
-      <Header currentPath={path} />
+      <Header />
       <main class="flex-grow">
         <slot />
       </main>

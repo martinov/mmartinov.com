@@ -2,8 +2,6 @@ import { ActionError, defineAction } from "astro:actions";
 import { validateSubmission } from "../lib/antispam.ts";
 import { buildContactEmail, contactInput } from "../lib/contact.ts";
 
-const RESEND_API_URL = "https://api.resend.com/emails";
-
 export const server = {
   contact: defineAction({
     accept: "form",
@@ -11,7 +9,7 @@ export const server = {
     handler: async (input) => {
       // Imported lazily: ContactForm imports astro:actions, which loads this
       // module while /contact is prerendered, where the secrets don't exist
-      const { ANTISPAM_SECRET_KEY, RESEND_API_KEY } =
+      const { ANTISPAM_SECRET_KEY, RESEND_API_KEY, RESEND_API_URL } =
         await import("astro:env/server");
       const spamCheck = await validateSubmission(
         input.confirm_email,
@@ -31,14 +29,17 @@ export const server = {
 
       let response: Response;
       try {
-        response = await fetch(RESEND_API_URL, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${RESEND_API_KEY}`,
-            "Content-Type": "application/json",
+        response = await fetch(
+          RESEND_API_URL ?? "https://api.resend.com/emails",
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${RESEND_API_KEY}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(email),
           },
-          body: JSON.stringify(email),
-        });
+        );
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
           console.error("Resend API error:", response.status, errorData);

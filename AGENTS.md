@@ -78,7 +78,7 @@ Locally they are read from `.env` (see `.env.example`). **`pnpm dev` and `pnpm p
 
 - `@astrojs/preact` requires Preact 10.x, and `@astrojs/check` requires TypeScript ≤ 6. Check peer dependencies before bumping. `renovate.json` holds both at those majors; remove a hold once the integration's peer range allows the next major.
 - Native builds are allow-listed in `pnpm-workspace.yaml` (`esbuild`, `workerd`)
-- Always use latest stable versions when adding new dependencies
+- Pin dependencies to exact versions; Renovate proposes upgrades. For new dependencies, use the latest stable release allowed by the supply-chain cooldown.
 
 ### Email Configuration
 

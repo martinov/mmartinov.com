@@ -29,3 +29,6 @@ jobs:
       # No .env here, like Cloudflare Workers Builds: catches top-level
       # astro:env/server imports reachable from prerendered pages
       - run: pnpm build
+      - run: pnpm --filter mmartinov-tests exec playwright install --with-deps chromium
+      # The suite starts a local Worker with dummy secrets and a Resend stub.
+      - run: pnpm test:e2e

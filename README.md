@@ -27,10 +27,26 @@ pnpm build     # Production build (outputs to dist/)
 pnpm preview   # Serve the production build locally in workerd
 pnpm check     # Format check + type check
 pnpm format    # Format all files
+pnpm test      # Unit tests (Vitest)
+pnpm test:e2e  # Playwright suite against the build (run pnpm build first)
 pnpm deploy    # Build and deploy to Cloudflare Workers
 ```
 
-Note: local dev uses the real secrets in `.env`, so submitting the contact form locally sends a real email.
+Note: local dev and preview use the real secrets in `.env`, so submitting the contact form locally sends a real email.
+
+### Testing
+
+Before the first e2e run, install Chromium:
+
+```bash
+pnpm --filter mmartinov-tests exec playwright install chromium
+pnpm build
+pnpm test:e2e
+```
+
+The Playwright workspace in `tests/` checks routes, navigation and contact-form success/failure on desktop and mobile. It starts the built Worker on port 8781 with dummy secrets and a local Resend stub on port 8782 (`RESEND_STUB_PORT` overrides the stub port). It never reuses a running site or accepts a deployed `BASE_URL`, so contact tests cannot accidentally use a production site's email credentials.
+
+`RESEND_API_URL` is an optional server secret used by the tests to redirect email to the stub. Leave it unset in production; the default is Resend's API. CI builds without `.env` and runs both Vitest and Playwright; neither needs repository secrets.
 
 ## Project Structure
 
@@ -42,6 +58,7 @@ Note: local dev uses the real secrets in `.env`, so submitting the contact form 
 │   ├── content/        # Structured content data (TypeScript)
 │   ├── lib/            # antispam.ts, button.ts
 │   └── styles/         # global.css
+├── tests/              # Playwright workspace and local Resend stub
 ├── public/             # Static assets (favicon, images, og-image, robots.txt)
 ├── astro.config.ts
 └── wrangler.jsonc

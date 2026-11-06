@@ -58,12 +58,19 @@ All site content lives in `src/content/`, collection entries included, kept sepa
 
 ### Secrets
 
-Declared with `astro:env` in `astro.config.ts` and imported lazily from `astro:env/server` (see Workers Runtime Gotchas). Both are required; there is no fallback.
+Declared with `astro:env` in `astro.config.ts` and imported lazily from `astro:env/server` (see Workers Runtime Gotchas). The API key and anti-spam key are required.
 
 - `RESEND_API_KEY` - Resend API key
 - `ANTISPAM_SECRET_KEY` - HMAC key for contact-form anti-spam tokens
+- `RESEND_API_URL` - Optional email endpoint for the e2e stub; leave unset in production to use Resend
 
 Locally they are read from `.env` (see `.env.example`). **`pnpm dev` and `pnpm preview` use the real keys in `.env`, so submitting the contact form locally sends a real email.** Shell env vars do not override `.env` in the worker unless `CLOUDFLARE_INCLUDE_PROCESS_ENV=true` is set, so to exercise the send-failure path run `CLOUDFLARE_INCLUDE_PROCESS_ENV=true RESEND_API_KEY=invalid pnpm dev`. In production they are Worker secrets: `pnpm wrangler secret put <NAME>`.
+
+## Testing
+
+- Vitest (`pnpm test`) covers `src/**/*.test.ts`; Playwright lives in the `tests/` workspace. Run `pnpm build` before `pnpm test:e2e`.
+- E2E tests cover routes, navigation and contact-form success/failure on desktop and mobile. They start the built Worker with dummy secrets through `wrangler dev --var` and a local Resend stub. Never switch them to real credentials or reuse a manually started server: local `.env` contains real email keys.
+- CI builds without `.env`, then runs Playwright with no repository secrets. The suite only targets its own local Worker; it does not accept `BASE_URL`.
 
 ## Important Conventions
 

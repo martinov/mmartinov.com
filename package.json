@@ -7,11 +7,12 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "prettier --check . && astro check",
+    "check": "prettier --check . && astro check && pnpm --filter mmartinov-tests check",
     "deploy": "astro build && wrangler deploy",
     "cf-typegen": "wrangler types",
     "format": "prettier --write .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:e2e": "pnpm --filter mmartinov-tests test"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.3.4",

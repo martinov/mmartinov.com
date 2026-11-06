@@ -64,6 +64,12 @@ export default defineConfig({
   env: {
     schema: {
       RESEND_API_KEY: envField.string({ context: "server", access: "secret" }),
+      // E2E tests point at a local stub; production leaves this unset.
+      RESEND_API_URL: envField.string({
+        context: "server",
+        access: "secret",
+        optional: true,
+      }),
       ANTISPAM_SECRET_KEY: envField.string({
         context: "server",
         access: "secret",

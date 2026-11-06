@@ -3,6 +3,13 @@
   "extends": ["config:recommended"],
   "packageRules": [
     {
+      "description": "Match pnpm's 24-hour supply-chain cooldown",
+      "matchDatasources": ["npm"],
+      "minimumReleaseAge": "1 day",
+      "minimumReleaseAgeBuffer": "1 hour",
+      "internalChecksFilter": "strict"
+    },
+    {
       "description": "@astrojs/preact requires Preact 10.x; lift when its peer range allows 11 (#23)",
       "matchPackageNames": ["preact"],
       "allowedVersions": "<11"

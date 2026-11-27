@@ -90,7 +90,7 @@ When modifying email functionality (`buildContactEmail()` in `src/lib/contact.ts
 
 ## Deployment
 
-Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`). See `docs/02-deployment.md`.
+Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`). Read `docs/02-deployment.md` before changing the deploy workflow, secrets or Workers Builds settings; `docs/04-deployment-history.md` is history only.
 
 ## Agent skills
 

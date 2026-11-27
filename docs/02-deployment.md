@@ -1,186 +1,154 @@
 # Deployment Guide - mmartinov.com
 
-## Pre-Deployment Checklist
+The site is an Astro app using `@astrojs/cloudflare`, deployed as the Cloudflare Worker
+`mmartinov-com` (`wrangler.jsonc`) on the domain `mmartinov.com`. Every page is prerendered and
+served as a static asset. Only the contact form server island (`/_server-islands/ContactFormIsland`)
+and the `contact` Astro Action (`/_actions/contact`) run in the Worker.
 
-### 1. Environment Setup
-- [ ] Ensure Node.js 22.12+ and pnpm are installed
-- [ ] Run `pnpm check` to verify formatting and types
-- [ ] Run `pnpm dev` to test locally
+This guide is the operational entry point. Its structure matches the sibling Klimsyst guide
+(`martinov/klimsyst`, `docs/02-deployment.md`); site-specific values and differences are noted where
+they occur.
 
-### 2. Analytics Configuration
-- [ ] Plausible is self-hosted at `analytics.mmartinov.com`; mmartinov.com is added as a site there
-- [ ] Verify analytics script is loading (check Network tab in browser DevTools)
+## 1. Local development and testing
 
-### 3. Email Integration (Contact Form)
-**✅ Resend is already integrated!**
+Five things are easy to confuse:
 
-The contact form uses Resend for email delivery. You just need to configure it:
+| What                      | Command                      | Runs                                             | Email                                            |
+| ------------------------- | ---------------------------- | ------------------------------------------------ | ------------------------------------------------ |
+| Local hot reload          | `pnpm dev`                   | Astro dev server in workerd                      | **Real**: reads `.env`                           |
+| Local production build    | `pnpm build && pnpm preview` | The built output in workerd                      | **Real**: reads `.env`                           |
+| Stubbed browser tests     | `pnpm build && pnpm test:e2e` | The built Worker via `wrangler dev` on port 8781 | Stubbed: dummy secrets, Resend stub on port 8782 |
+| Cloudflare branch preview | `pnpm wrangler preview`      | A Worker Preview on Cloudflare                   | Not configured for this Worker (section 2)       |
+| Production                | merge to `main`              | Worker `mmartinov-com` on `mmartinov.com`        | Real: production Worker secrets                  |
 
-**Quick Setup:**
-1. Sign up at https://resend.com (free tier: 3,000 emails/month)
-2. Get your API key from https://resend.com/api-keys
-3. Add and verify the sending domain `notifications.mmartinov.com` (DNS records in Cloudflare)
-4. Put `RESEND_API_KEY` and `ANTISPAM_SECRET_KEY` in `.env` locally (see `.env.example`) and set
-   them as Worker secrets for production (Step 2 below)
+**Real-email warning.** `pnpm dev` and `pnpm preview` read the real keys in `.env`, so submitting the
+contact form locally sends a real email to `me@mmartinov.com`. To exercise the failure path, run
+`CLOUDFLARE_INCLUDE_PROCESS_ENV=true RESEND_API_KEY=invalid pnpm dev`.
 
-**Features Included:**
-- ✅ Professional HTML email template
-- ✅ Spam prevention (honeypot + timing validation)
-- ✅ Reply-to sender's email for easy responses
-- ✅ Error handling and fallback logging
-- ✅ XSS protection and input sanitization
+### Setup
 
-### 4. Content Review
-- [ ] Verify all case study information is accurate
-- [ ] Confirm client permissions for case studies mentioned
-- [ ] Check all links (LinkedIn, GitHub, Camplight, Google Calendar)
-- [ ] Review all text for typos and accuracy
+- Node.js `>=22.23.4` (the `engines` range of the installed Astro; `wrangler` needs `>=22.12.0`).
+  CI runs Node 26.
+- pnpm: the version in the `packageManager` field of `package.json` is the single source. Corepack
+  and `pnpm/action-setup` in CI read it.
+- `pnpm install`, then copy `.env.example` to `.env` and fill in the secrets (section 3).
 
-### 5. Open Graph Image
-- [ ] Create an Open Graph image (1200x630px)
-- [ ] Save as `/public/og-image.png`
-- [ ] Preview on https://www.opengraph.xyz/
+### Checks
 
-## Deployment to Cloudflare Workers
+- `pnpm check`: Prettier, `astro check` and the type check of the `tests/` workspace.
+- `pnpm test`: Vitest unit tests (`src/**/*.test.ts`).
+- `pnpm test:e2e`: Playwright suite in `tests/` (routes, navigation, contact-form success and
+  failure; desktop and mobile). Run `pnpm build` first, and install the browser once with
+  `pnpm --filter mmartinov-tests exec playwright install chromium`.
 
-The site is an Astro app using `@astrojs/cloudflare`. Pages are prerendered and served as static
-assets. Only the contact form server island (`/_server-islands/ContactFormIsland`) and the
-`contact` Astro Action (`/_actions/contact`) run in the Worker
-(`mmartinov-com`, configured in `wrangler.jsonc`).
+The e2e suite is stubbed by construction (`tests/playwright.config.ts`): it starts its own
+`wrangler dev --port 8781` with `--var` dummy values for `ANTISPAM_SECRET_KEY`, `RESEND_API_KEY` and
+`RESEND_API_URL`, pointing the Action at a local Resend stub (`tests/src/resend-stub.ts`). It never
+reuses a running server and does not accept a `BASE_URL`, so it cannot be aimed at a deployed site.
+Keep it that way: there is no supported way to run the contact tests against production or a
+preview. A real-email check of a deployed site is a manual, explicitly authorised single submission.
 
-### Step 1: First deploy
+## 2. Branch → PR → CI/preview → merge → production
 
-```bash
-pnpm wrangler login
-pnpm deploy            # astro build && wrangler deploy
-```
+1. Cut a short-lived branch from a freshly fetched `origin/main` (one branch per issue).
+2. Open a PR into `main`.
+3. **CI** (`.github/workflows/ci.yml`, GitHub Actions) runs on every pull request and on pushes to
+   `main`: `pnpm install --frozen-lockfile`, `pnpm check`, `pnpm test`, `pnpm build`, then
+   `pnpm test:e2e`. It builds without `.env`, as Workers Builds does, so a top-level
+   `astro:env/server` import reachable from a prerendered page fails the PR check. CI needs no
+   repository secrets and does not deploy.
+4. Merge when CI is green. There is no release branch.
+5. **Workers Builds** (Cloudflare, separate from CI) builds and deploys `main` to production on every
+   push to it: build command `pnpm build`, deploy command `pnpm wrangler deploy` (dashboard: Workers
+   & Pages → `mmartinov-com` → Settings → Builds; not independently verified here). A green CI does
+   not mean the deploy succeeded; check the Builds tab.
+6. Delete the merged branch. Renovate targets `main`.
 
-The site is now live at `https://mmartinov-com.<your-subdomain>.workers.dev`.
-`wrangler.jsonc` sets `"workers_dev": false` now that the custom domain is live; for a fresh
-setup, set it to `true` until the cutover in step 5 is done.
+`pnpm deploy` (`astro build && wrangler deploy`) deploys from a local machine straight to
+production. It is a manual fallback, not the normal path, and needs `pnpm wrangler login`.
 
-### Step 2: Secrets
+### Preview deployments: not configured
 
-Both are required. Without them, the contact form island and the contact action fail at runtime.
+`wrangler.jsonc` sets `"workers_dev": false` and no `preview_urls`, and nothing in this repository
+documents a branch-preview domain or Preview secrets. Per the current Cloudflare docs,
+`pnpm wrangler preview` creates or updates a Worker Preview for the current branch under the same
+Worker, with its own settings and secrets, and Workers Builds runs it for non-production branches
+once "Builds for Preview branches" is enabled. Whether the dashboard has that enabled is **not
+independently verified**. Do not rely on a Preview for this site until an issue sets it up,
+including preview secrets that cannot mail a real recipient. Klimsyst has this configured; this
+Worker does not.
 
-```bash
-pnpm wrangler secret put RESEND_API_KEY
-pnpm wrangler secret put ANTISPAM_SECRET_KEY
-```
+### Workers Builds `PNPM_VERSION`
 
-Re-use the current production `ANTISPAM_SECRET_KEY` value so tokens issued just before the cutover
-still validate. A new value also works; it only invalidates contact forms that are open during the switch.
+The Workers Builds image defaults to pnpm 10.11.1, which fails on `pnpm-workspace.yaml` ("packages
+field missing or empty") and ignores `allowBuilds`. The build variable `PNPM_VERSION` must equal the
+version after `pnpm@` in `package.json`'s `packageManager`. When Renovate bumps `packageManager`,
+update the variable too. It is a dashboard-only setting and **not independently verified** here;
+read its current value in Settings → Builds → Build variables.
 
-### Step 3: Automatic deploys from GitHub
+## 3. Secrets and preview configuration
 
-In the Cloudflare dashboard: Workers & Pages → `mmartinov-com` → Settings → Builds → connect the
-GitHub repository, branch `main`.
+Runtime secrets are declared with `astro:env` in `astro.config.ts` and read lazily from
+`astro:env/server` (see `AGENTS.md`, Workers Runtime Gotchas).
 
-- Build command: `pnpm build`
-- Deploy command: `pnpm wrangler deploy`
-- Build variable `PNPM_VERSION` = the local `pnpm --version` (currently `12.11.2`). The build image
-  defaults to pnpm 10.11.1, which fails on `pnpm-workspace.yaml` ("packages field missing or empty")
-  and ignores `allowBuilds`. Update the variable when upgrading pnpm locally.
+| Name                  | Required | Purpose                                                                |
+| --------------------- | -------- | ---------------------------------------------------------------------- |
+| `RESEND_API_KEY`      | yes      | Resend API key                                                         |
+| `ANTISPAM_SECRET_KEY` | yes      | HMAC key for contact-form anti-spam tokens (`openssl rand -base64 32`) |
+| `RESEND_API_URL`      | no       | Email endpoint for the e2e stub. **Leave unset in production.**        |
 
-### Step 4: Verify on workers.dev before switching DNS
+- **Locally**: `.env` (see `.env.example`). It holds real keys; the e2e suite overrides it with
+  dummy `--var` values.
+- **Production runtime secrets** are Worker secrets: `pnpm wrangler secret put <NAME>`; list names
+  with `pnpm wrangler secret list`. Without the two required ones the contact island and action
+  fail. Do not rotate them as routine maintenance.
+- **Build variables** are a separate store (Workers Builds → Settings → Builds), invisible to the
+  running Worker. The only one this guide documents is `PNPM_VERSION` (section 2). No `ASTRO_KEY` is
+  set; Astro generates a server-island encryption key per build.
+- **Preview secrets**: none documented, since previews are not configured (section 2). If they are
+  set up later they must be separate from production.
+- Email: `from` stays on the verified sender domain `notifications.mmartinov.com`
+  (`contact@notifications.mmartinov.com`), `to` is `me@mmartinov.com`, `reply_to` is the visitor.
+  See `AGENTS.md`, Email Configuration.
 
-- All pages render; `/about` returns 200 (no redirect to `/about/`)
-- `/nope` returns 404 with the custom page
-- `/sitemap-index.xml` and `/robots.txt` load; `/sitemap.xml` 301s to `/sitemap-index.xml`
-- Submit the contact form once and confirm the email arrives
+## 4. Troubleshooting
 
-### Step 5: Custom domain cutover
+### Build fails
 
-1. The `mmartinov.com` zone must be on Cloudflare (add the site and switch nameservers at the registrar if it isn't).
-2. Worker → Settings → Domains & Routes → add custom domain `mmartinov.com`.
-   Cloudflare creates the DNS record and certificate.
-3. Remove the old A/CNAME records that point at Deno Deploy, including `www`.
-4. `www` redirects to the apex at Cloudflare's edge and never reaches the Worker:
-   - DNS: `A` record `www` → `192.0.2.1`, **proxied**. The address is a reserved dummy that is never contacted.
-   - Rules → Redirect Rules → template "Redirect from WWW to root" (301, keeps path and query string).
-     The dashboard may warn that `www` isn't proxied; if `dig +short www.mmartinov.com` returns
-     Cloudflare IPs rather than `192.0.2.1`, it is, and the warning can be ignored.
-5. Keep `analytics.mmartinov.com` and the Resend DNS records (`notifications.mmartinov.com`) unchanged.
-6. Once traffic is confirmed on Cloudflare, delete the Deno Deploy project. Done: it was deleted in October 2026.
+- Locally: check `node --version` against section 1, reinstall with
+  `rm -rf node_modules && pnpm install`, run `pnpm check`.
+- In Workers Builds only: compare `PNPM_VERSION` with `packageManager` (section 2). A build with no
+  `.env` that fails on `astro:env/server` means a top-level import of it; make it lazy.
 
-## Post-Deployment
+### Contact form not working
 
-### Verify Functionality
-- [ ] Homepage loads correctly
-- [ ] All navigation links work
-- [ ] Work page case studies display properly
-- [ ] About page renders correctly
-- [ ] Contact form submits successfully
-- [ ] Google Calendar link works
-- [ ] Analytics are tracking (check Plausible dashboard)
-- [ ] Mobile responsive design works
-- [ ] SEO meta tags are present (view source)
-- [ ] Open Graph preview looks good (test on social media)
+- Check the browser console, and that `/_actions/contact` and `/_server-islands/ContactFormIsland`
+  respond.
+- Check Worker logs: `pnpm wrangler tail`, or Observability in the Cloudflare dashboard.
+- Confirm both required secrets exist: `pnpm wrangler secret list`.
+- A Resend failure shows the "email me directly" fallback; check the sending domain
+  `notifications.mmartinov.com` in Resend.
 
-### Performance Check
-- [ ] Run Lighthouse audit (aim for 90+ scores)
-- [ ] Test page load speed on https://pagespeed.web.dev/
-- [ ] Verify image optimization
+### Styles not loading
 
-### SEO Setup
-- [x] Search Console: Domain property `mmartinov.com`, verified by the `google-site-verification` TXT record on the apex. Keep that record.
-- [x] Submit sitemap to Google Search Console
-- [x] Resubmit it as `/sitemap-index.xml` (moved from `/sitemap.xml`, which now redirects)
-- [ ] Add site to Bing Webmaster Tools
-- [ ] Create Google My Business profile (optional)
+- `src/styles/global.css` must be imported by `src/layouts/BaseLayout.astro`, and `astro.config.ts`
+  must include the Tailwind Vite plugin.
 
-## Monitoring
+### Routing and sitemap
 
-### Analytics
-- Track page views, bounce rate, time on site via Plausible
-- Monitor booking clicks and form submissions
-- Review case study engagement
+- With `build.format: "file"`, `/about` returns 200 with no redirect to `/about/`, `/nope` returns
+  the custom 404, and `/sitemap.xml` 301s to `/sitemap-index.xml` (`public/_redirects`). The e2e
+  routing spec covers these.
 
-### Uptime Monitoring
-Consider setting up:
-- UptimeRobot (free tier available)
-- Pingdom
-- StatusCake
+## 5. Historical migration notes
 
-## Maintenance
-
-### Content Updates
-Content is stored in the `src/content/` directory:
-- `site.ts` - Global site config
-- `home.ts` - Homepage content
-- `audit.ts` - Audit page
-- `work.ts` - Case studies
-- `about.ts` - About page
-- `contact.ts` - Contact page
-
-Edit these files to update content without touching component code.
-
-### Adding Case Studies
-1. Edit `src/content/work.ts`
-2. Add new case study to `caseStudies` array
-3. Follow existing structure
-4. Commit and push changes
-
-## Troubleshooting
-
-### Build Fails
-- Check Node version: `node --version` (22.12+)
-- Reinstall dependencies: `rm -rf node_modules && pnpm install`
-- Run `pnpm check` for type errors
-
-### Contact Form Not Working
-- Check browser console for errors
-- Verify the action endpoint is accessible: `/_actions/contact`
-- Check Worker logs: `pnpm wrangler tail`, or Observability in the Cloudflare dashboard
-- Confirm both secrets are set: `pnpm wrangler secret list`
-
-### Styles Not Loading
-- Verify `src/styles/global.css` is imported in `src/layouts/BaseLayout.astro`
-- Check `astro.config.ts` includes the Tailwind Vite plugin
-- Clear browser cache
+The Deno Deploy to Cloudflare Workers migration is finished. Its first-deploy and DNS cutover steps,
+the initial-service checklists and the cautions worth keeping are in
+[`04-deployment-history.md`](04-deployment-history.md). They are records, not maintenance
+procedures: do not repeat them.
 
 ## Support
-For issues or questions:
+
 - Astro Cloudflare adapter: https://docs.astro.build/en/guides/integrations-guide/cloudflare/
 - Cloudflare Workers docs: https://developers.cloudflare.com/workers/
 - Create an issue in the repository

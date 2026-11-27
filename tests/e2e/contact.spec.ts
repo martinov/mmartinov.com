@@ -106,25 +106,40 @@ test("turns away a visitor's third Contact Submission within a minute", async ({
   ).toBe(false);
 });
 
-for (const invalid of ["empty name", "invalid email"] as const) {
-  test(`rejects ${invalid} on the server`, async ({ page }) => {
+const invalidFields = [
+  {
+    label: /^Name/,
+    value: " ",
+    error: "Please enter your name.",
+    errorId: "name-error",
+  },
+  {
+    label: /^Email/,
+    value: "invalid-email",
+    error: "Please enter a valid email address.",
+    errorId: "email-error",
+  },
+] as const;
+
+for (const invalid of invalidFields) {
+  test(`shows "${invalid.error}" on the field the server rejects`, async ({
+    page,
+  }) => {
     await openContact(page);
     const name = await fillContact(page);
     // Exercise server validation rather than the browser's constraint checks.
     await page.locator("form").evaluate((form: HTMLFormElement) => {
       form.noValidate = true;
     });
-    if (invalid === "empty name") {
-      await page.getByLabel(/^Name/).fill(" ");
-    } else {
-      await page.getByLabel(/^Email/).fill("invalid-email");
-    }
+    const field = page.getByLabel(invalid.label);
+    await field.fill(invalid.value);
     await submit(page);
 
-    await expect(page.locator("form")).toContainText(
-      "Please fill in your name, a valid email and a message.",
-    );
-    await expect(directEmailLink(page)).toHaveCount(0);
+    await expect(page.locator(`#${invalid.errorId}`)).toHaveText(invalid.error);
+    await expect(field).toHaveAttribute("aria-invalid", "true");
+    await expect(field).toHaveAttribute("aria-describedby", invalid.errorId);
+    await expect(field).toBeFocused();
+    await expect(page.locator("form").getByRole("alert")).toHaveCount(0);
     expect(
       (await sentEmails()).some((entry) =>
         entry.payload.subject?.toString().includes(name),
@@ -132,6 +147,45 @@ for (const invalid of ["empty name", "invalid email"] as const) {
     ).toBe(false);
   });
 }
+
+test("flags an invalid email on leaving the field and clears it once corrected", async ({
+  page,
+}) => {
+  await openContact(page);
+  const email = page.getByLabel(/^Email/);
+  await email.fill("invalid-email");
+  await page.getByLabel("Company").focus();
+
+  await expect(page.locator("#email-error")).toHaveText(
+    "Please enter a valid email address.",
+  );
+  await expect(email).toHaveAttribute("aria-invalid", "true");
+
+  await email.fill("visitor@example.test");
+
+  await expect(page.locator("#email-error")).toHaveCount(0);
+  await expect(email).not.toHaveAttribute("aria-invalid");
+});
+
+test("accepts a second Contact Submission after the first", async ({
+  page,
+}) => {
+  await openContact(page);
+  await fillContact(page);
+  await submit(page);
+  await page.getByRole("button", { name: "Send another message" }).click();
+  const name = await fillContact(page);
+  await submit(page);
+
+  await expect(
+    page.getByRole("heading", { name: "Message Sent!" }),
+  ).toBeVisible();
+  expect(
+    (await sentEmails()).some((entry) =>
+      entry.payload.subject?.toString().includes(name),
+    ),
+  ).toBe(true);
+});
 
 test("rejects a tampered anti-spam token without sending email", async ({
   page,

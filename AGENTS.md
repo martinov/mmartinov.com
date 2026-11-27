@@ -4,9 +4,9 @@ Martin Martinov's personal portfolio site, built with Astro 7, Preact (for the o
 
 Look up Astro 7, adapter and integration APIs in Context7 first; reading `node_modules` types is the fallback.
 
-Each issue gets its own branch, cut from a freshly fetched `origin/main`, and lands through a PR whose body says `Closes #N`. Check the current branch before committing: a branch whose PR is already merged is dead, and commits on it never reach `main`.
+Each issue gets its own short-lived branch, cut from a freshly fetched `origin/main`, and lands through a PR into `main` whose body says `Closes #N`. Check the current branch before committing: a branch whose PR is already merged is dead, and commits on it never reach `main`. Before merging, check that CI is green and look at any preview the PR gets when the change is visible; both are advisory, since nothing technically blocks a merge. Pushes to `main` deploy to production (`docs/02-deployment.md`), so merge only what you would ship. Delete the branch after the merge.
 
-Review rules live in `CODING_STANDARDS.md`.
+Review rules live in `CODING_STANDARDS.md`; issue readiness and decisions in `docs/agents/issue-tracker.md`.
 
 ## Architecture
 
@@ -94,7 +94,7 @@ When modifying email functionality (`buildContactEmail()` in `src/lib/contact.ts
 
 ## Deployment
 
-Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`). See `docs/02-deployment.md`.
+Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`). Read `docs/02-deployment.md` before changing the deploy workflow, secrets or Workers Builds settings; `docs/04-deployment-history.md` is history only.
 
 ## Agent skills
 

@@ -15,7 +15,7 @@ Personal portfolio website for Martin Martinov - Software Architect & Automation
 
 ### Prerequisites
 
-- Node.js 22.12+ and [pnpm](https://pnpm.io/)
+- Node.js 22.23.4+ and [pnpm](https://pnpm.io/)
 - Copy `.env.example` to `.env` and fill in the secrets
 
 ### Commands
@@ -84,7 +84,7 @@ All content is managed through TypeScript files in the `src/content/` directory:
 
 ## Deployment
 
-Hosted on Cloudflare Workers. See `docs/02-deployment.md` for setup, secrets and the domain cutover.
+Hosted on Cloudflare Workers. See [`docs/02-deployment.md`](docs/02-deployment.md) for the workflow, secrets and troubleshooting; migration history is in [`docs/04-deployment-history.md`](docs/04-deployment-history.md).
 
 Secrets (set with `pnpm wrangler secret put <NAME>`):
 

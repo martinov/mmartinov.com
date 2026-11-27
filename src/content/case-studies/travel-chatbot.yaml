@@ -1,20 +1,20 @@
 order: 1
 title: Travel Discovery Chatbot
 challenge:
-  heading: The Challenge
+  heading: Challenge
   points:
     - Travel agency needed to convert paid ad traffic into qualified leads without growing the sales team
     - Customers arrive with vague wishes ("a beach week in Turkey in July, around €1000"), not specific searches, so matching them to real offers took a salesperson's time
     - Customers wanted to browse in natural, conversational Bulgarian, not fill out rigid search forms
 solution:
-  heading: The Solution
+  heading: Solution
   points:
     - Built an assistant that lets customers search with a simple form or by chatting in Bulgarian, the way they'd talk to a travel agent
     - Searches multiple tour operators' live offers, so prices and availability are always current, and shows them as clickable offer cards
     - Hands every interested customer to the sales team, together with what they were looking for
     - Tracks which ads bring real leads, so ad spend goes where it works
 outcome:
-  heading: The Outcome
+  heading: Outcome
   points:
     - text: "Live in production at "
       href: https://search.pochivki-turcia.bg

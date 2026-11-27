@@ -71,6 +71,10 @@ pnpm wrangler secret put ANTISPAM_SECRET_KEY
 Re-use the current production `ANTISPAM_SECRET_KEY` value so tokens issued just before the cutover
 still validate. A new value also works; it only invalidates contact forms that are open during the switch.
 
+The contact form's rate limiter (`CONTACT_LIMITER`) is not a secret: it is a `ratelimits` binding in
+`wrangler.jsonc` and deploys with the Worker, with no dashboard setup. Its `namespace_id` must stay
+unique in the Cloudflare account, because bindings that share one share their counters, across Workers too.
+
 ### Step 3: Automatic deploys from GitHub
 
 In the Cloudflare dashboard: Workers & Pages → `mmartinov-com` → Settings → Builds → connect the

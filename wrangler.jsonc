@@ -4,6 +4,15 @@
   "compatibility_date": "2026-10-01",
   // Served only on mmartinov.com; the workers.dev copy would duplicate the site
   "workers_dev": false,
+  // Contact form throttle: about two submissions per minute per IP. The
+  // namespace is unique in the account, so no other Worker shares its counters
+  "ratelimits": [
+    {
+      "name": "CONTACT_LIMITER",
+      "namespace_id": "1002",
+      "simple": { "limit": 2, "period": 60 },
+    },
+  ],
   "observability": {
     "enabled": true,
   },

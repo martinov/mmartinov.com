@@ -1,22 +1,26 @@
 /**
- * Anti-spam utilities using signed tokens and honeypot validation.
- *
- * This module provides stateless anti-spam protection that works on
- * distributed deployments like Cloudflare Workers without requiring sessions.
- * The signing secret is passed in by the caller (from astro:env).
+ * Signed, timestamped anti-spam tokens: `base64(timestamp).base64(hmac)`.
+ * The contact server island signs one per page view and the form sends it
+ * back in the `confirm_email` field, which only JavaScript fills. The secret
+ * is passed in by the caller, so this module never touches the environment.
  */
 
-// Token validity duration (1 hour)
-const TOKEN_VALIDITY_MS = 60 * 60 * 1000;
+/** A token older than this has expired. */
+const MAX_AGE_MS = 60 * 60 * 1000;
 
-// Minimum time to fill form (3 seconds)
-const MIN_FORM_TIME_MS = 3000;
+/** A human needs at least this long to fill in the form. */
+const MIN_AGE_MS = 3000;
 
-/**
- * Generate a cryptographic signature for data using HMAC-SHA256
- */
-const sign = async (data: string, secret: string): Promise<string> => {
-  const encoder = new TextEncoder();
+export type TokenProblem =
+  | "missing_token"
+  | "invalid_format"
+  | "invalid_signature"
+  | "token_expired"
+  | "too_fast";
+
+const encoder = new TextEncoder();
+
+const sign = async (value: string, secret: string): Promise<string> => {
   const key = await crypto.subtle.importKey(
     "raw",
     encoder.encode(secret),
@@ -24,144 +28,62 @@ const sign = async (data: string, secret: string): Promise<string> => {
     false,
     ["sign"],
   );
-
-  const signature = await crypto.subtle.sign("HMAC", key, encoder.encode(data));
-
+  const signature = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    encoder.encode(value),
+  );
   return btoa(String.fromCharCode(...new Uint8Array(signature)));
 };
 
-/**
- * Verify a signature matches the expected data
- */
-const verify = async (
-  data: string,
-  signature: string,
-  secret: string,
-): Promise<boolean> => {
-  const expectedSignature = await sign(data, secret);
-  return signature === expectedSignature;
+/** Compares in time independent of where the strings differ. */
+const constantTimeEqual = (a: string, b: string): boolean => {
+  if (a.length !== b.length) return false;
+  let difference = 0;
+  for (let i = 0; i < a.length; i++) {
+    difference |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return difference === 0;
 };
 
-/**
- * Generate a signed anti-spam token.
- * Format: base64(timestamp).base64(signature)
- *
- * The token encodes when it was created, allowing the server to:
- * 1. Verify the token wasn't tampered with (signature check)
- * 2. Verify the token isn't too old (timestamp check)
- * 3. Verify enough time passed before submission (timing check)
- */
-export const generateToken = async (secret: string): Promise<string> => {
-  const timestamp = Date.now().toString();
-  const signature = await sign(timestamp, secret);
-  return `${btoa(timestamp)}.${signature}`;
+/** A token signed at `now` (milliseconds since the epoch). */
+export const generateToken = async (
+  secret: string,
+  now: number,
+): Promise<string> => {
+  const timestamp = now.toString();
+  return `${btoa(timestamp)}.${await sign(timestamp, secret)}`;
 };
 
-/**
- * Validation result with specific error information
- */
-export interface ValidationResult {
-  valid: boolean;
-  error?: string;
-  reason?:
-    | "honeypot_filled"
-    | "missing_token"
-    | "invalid_token_format"
-    | "invalid_signature"
-    | "token_expired"
-    | "submitted_too_fast";
-}
-
-/**
- * Validate an anti-spam token and check honeypot.
- *
- * @param token - The token from the confirm_email field
- * @param honeypotValue - The value from the website honeypot field
- * @param secret - The HMAC key the token was signed with
- * @returns Validation result with error details if invalid
- */
-export const validateSubmission = async (
-  token: string | undefined,
-  honeypotValue: string | undefined,
-  secret: string,
-): Promise<ValidationResult> => {
-  // Check honeypot first (should be empty)
-  if (honeypotValue) {
-    return {
-      valid: false,
-      error: "Invalid submission",
-      reason: "honeypot_filled",
-    };
-  }
-
-  // Token is required
-  if (!token) {
-    return {
-      valid: false,
-      error: "Invalid submission",
-      reason: "missing_token",
-    };
-  }
-
-  // Parse token format: base64(timestamp).signature
-  const parts = token.split(".");
-  if (parts.length !== 2) {
-    return {
-      valid: false,
-      error: "Invalid submission",
-      reason: "invalid_token_format",
-    };
-  }
-
-  const [encodedTimestamp, signature] = parts;
-
-  // Decode timestamp
-  let timestamp: number;
+const decodeTimestamp = (encoded: string): number | null => {
   try {
-    timestamp = parseInt(atob(encodedTimestamp), 10);
-    if (isNaN(timestamp)) throw new Error("Invalid timestamp");
+    const timestamp = Number.parseInt(atob(encoded), 10);
+    return Number.isNaN(timestamp) ? null : timestamp;
   } catch {
-    return {
-      valid: false,
-      error: "Invalid submission",
-      reason: "invalid_token_format",
-    };
+    return null;
   }
+};
 
-  // Verify signature
-  const isValidSignature = await verify(
-    timestamp.toString(),
-    signature,
-    secret,
-  );
+/** What is wrong with `token` at `now`, or null when it is acceptable. */
+export const tokenProblem = async (
+  token: string | undefined,
+  secret: string,
+  now: number,
+): Promise<TokenProblem | null> => {
+  if (!token) return "missing_token";
 
-  if (!isValidSignature) {
-    return {
-      valid: false,
-      error: "Invalid submission",
-      reason: "invalid_signature",
-    };
-  }
+  const parts = token.split(".");
+  if (parts.length !== 2) return "invalid_format";
+  const [encodedTimestamp, signature] = parts as [string, string];
 
-  const now = Date.now();
+  const timestamp = decodeTimestamp(encodedTimestamp);
+  if (timestamp === null) return "invalid_format";
 
-  // Check token isn't expired (older than 1 hour)
-  if (now - timestamp > TOKEN_VALIDITY_MS) {
-    return {
-      valid: false,
-      error: "Form expired. Please refresh the page and try again.",
-      reason: "token_expired",
-    };
-  }
+  const expected = await sign(timestamp.toString(), secret);
+  if (!constantTimeEqual(signature, expected)) return "invalid_signature";
 
-  // Check minimum time elapsed (at least 3 seconds)
-  if (now - timestamp < MIN_FORM_TIME_MS) {
-    return {
-      valid: false,
-      error: "Please take your time filling out the form.",
-      reason: "submitted_too_fast",
-    };
-  }
-
-  return { valid: true };
+  const age = now - timestamp;
+  if (age > MAX_AGE_MS) return "token_expired";
+  if (age < MIN_AGE_MS) return "too_fast";
+  return null;
 };

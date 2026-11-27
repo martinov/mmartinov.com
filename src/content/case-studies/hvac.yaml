@@ -2,14 +2,14 @@ order: 5
 title: HVAC Systems Company - Digital Foundation
 period: 2007 – present
 challenge:
-  heading: The Challenge
+  heading: Challenge
   points:
     - B2B/commercial HVAC company managing projects manually
     - Customer inquiries, quotes, and maintenance schedules handled via email and phone
     - No centralized system for tracking equipment installations or maintenance cycles
     - Inventory management largely manual
 solution:
-  heading: The Solution
+  heading: Solution
   points:
     - Built and launched the company's first website
     - Established a digital presence and lead-generation channel where there was none
@@ -24,7 +24,7 @@ roadmap:
     - title: Customer Portal
       description: Self-service for maintenance requests, documentation access, system history
 approach:
-  heading: The Approach
+  heading: Approach
   points:
     - Start with digital strategy and foundation before automation
     - Identify high-impact, low-risk automation opportunities

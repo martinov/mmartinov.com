@@ -1,4 +1,9 @@
+import type { ActionErrorCode } from "astro:actions";
 import { z } from "astro/zod";
+import { tokenProblem } from "./antispam.ts";
+
+/** Resend's send-email endpoint, unless RESEND_API_URL overrides it. */
+export const DEFAULT_RESEND_API_URL = "https://api.resend.com/emails";
 
 export const contactInput = z.object({
   name: z.string().trim().min(1),
@@ -113,4 +118,126 @@ export const buildContactEmail = (input: ContactInput, receivedAt: Date) => {
       </html>
     `,
   };
+};
+
+/**
+ * Every way a submission with valid fields fails, with the status and message
+ * the Action reports it with. BAD_GATEWAY is the one the form answers with the
+ * direct-email fallback.
+ */
+export const CONTACT_ERRORS = {
+  invalid_submission: { code: "BAD_REQUEST", message: "Invalid submission" },
+  expired: {
+    code: "BAD_REQUEST",
+    message: "Form expired. Please refresh the page and try again.",
+  },
+  too_fast: {
+    code: "BAD_REQUEST",
+    message: "Please take your time filling out the form.",
+  },
+  rate_limited: {
+    code: "TOO_MANY_REQUESTS",
+    message: "Too many messages. Please wait a minute and try again.",
+  },
+  send_failed: {
+    code: "BAD_GATEWAY",
+    message: "Your message could not be sent",
+  },
+} as const satisfies Record<
+  string,
+  { readonly code: ActionErrorCode; readonly message: string }
+>;
+
+export type ContactError = keyof typeof CONTACT_ERRORS;
+
+export type ContactResult =
+  { readonly ok: true } | { readonly ok: false; readonly error: ContactError };
+
+/** The Workers Rate Limiting binding, or a stand-in for it. */
+export interface RateLimiter {
+  limit(options: { key: string }): Promise<{ success: boolean }>;
+}
+
+export interface ContactDependencies {
+  /** Key the anti-spam token was signed with. */
+  readonly secret: string;
+  readonly apiKey: string;
+  readonly resendUrl: string;
+  readonly limiter: RateLimiter;
+  /** The visitor's IP (`CF-Connecting-IP`), the rate limit's key. */
+  readonly ip: string;
+  readonly now: () => number;
+  readonly fetch: typeof fetch;
+}
+
+const fail = (error: ContactError): ContactResult => ({ ok: false, error });
+
+/** Rate limit errors let the request through: a fault never blocks a visitor. */
+const isRateLimited = async (limiter: RateLimiter, ip: string) => {
+  try {
+    const { success } = await limiter.limit({ key: ip });
+    return !success;
+  } catch (e) {
+    console.error("Rate limiting unavailable:", e);
+    return false;
+  }
+};
+
+/**
+ * Handles one contact form submission whose fields the Action's `contactInput`
+ * schema has already accepted, in order: honeypot, anti-spam token, rate
+ * limit, then sending the email through Resend.
+ */
+export const submitContact = async (
+  input: ContactInput,
+  deps: ContactDependencies,
+): Promise<ContactResult> => {
+  if (input.website) {
+    console.log("Anti-spam check failed: honeypot_filled");
+    return fail("invalid_submission");
+  }
+
+  const now = deps.now();
+  const problem = await tokenProblem(input.confirm_email, deps.secret, now);
+  if (problem) {
+    console.log("Anti-spam check failed:", problem);
+    if (problem === "too_fast") return fail("too_fast");
+    if (problem === "token_expired") return fail("expired");
+    return fail("invalid_submission");
+  }
+
+  if (await isRateLimited(deps.limiter, deps.ip)) return fail("rate_limited");
+
+  const email = buildContactEmail(input, new Date(now));
+  // Called unbound: the Workers runtime rejects fetch with a `this` of deps
+  const send = deps.fetch;
+  try {
+    const response = await send(deps.resendUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${deps.apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(email),
+    });
+    if (response.ok) return { ok: true };
+    console.error(
+      "Resend API error:",
+      response.status,
+      await response.text().catch(() => ""),
+    );
+  } catch (e) {
+    console.error("Error sending email via Resend:", e);
+  }
+
+  // With no storage, this log line is the only copy of the submission
+  console.log("Contact form submission (email failed):", {
+    timestamp: new Date(now).toISOString(),
+    name: input.name,
+    email: input.email,
+    company: input.company || "N/A",
+    message: input.message,
+    preferredTime: input.preferredTime || "N/A",
+  });
+  return fail("send_failed");
 };

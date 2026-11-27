@@ -5,7 +5,7 @@ import { generateToken } from "../lib/antispam.ts";
 // Imported lazily: astro:env/server reads every secret on load, and /contact
 // is prerendered where the secrets don't exist (see AGENTS.md)
 const { ANTISPAM_SECRET_KEY } = await import("astro:env/server");
-const antispamToken = await generateToken(ANTISPAM_SECRET_KEY);
+const antispamToken = await generateToken(ANTISPAM_SECRET_KEY, Date.now());
 // The token is timestamped, so a cached copy would expire or be shared
 Astro.response.headers.set("Cache-Control", "no-store");
 ---

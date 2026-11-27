@@ -20,7 +20,10 @@ Review rules live in `CODING_STANDARDS.md`; issue readiness and decisions in `do
   - Every page is prerendered, `contact.astro` included. The only per-request rendering is the `ContactFormIsland` server island (`server:defer`, fetched from `/_server-islands/ContactFormIsland`), which mints a fresh anti-spam token per visit, plus the contact action. Both run in the Worker.
   - The island's fallback slot is the same `ContactForm` markup, `inert`, so loading causes no layout shift. Server islands need JS, so a `<noscript>` block hides the fallback and points to booking/email instead.
 
-- **Actions**: `src/actions/index.ts` defines the `contact` Astro Action (`accept: "form"`, Zod schema `contactInput` from `src/lib/contact.ts`). The island calls it via `actions.contact(formData)`; there is no native-form fallback, since `/contact` is static and a POST to it returns 405. A Resend failure throws `BAD_GATEWAY`, the only code that shows the "email me directly" fallback.
+- **Actions**: `src/actions/index.ts` defines the `contact` Astro Action (`accept: "form"`, Zod schema `contactInput` from `src/lib/contact.ts`). It is a thin adapter: it lazily imports the secrets and the `CONTACT_LIMITER` binding, reads the visitor IP from `CF-Connecting-IP`, calls `submitContact(input, dependencies)` in `src/lib/contact.ts`, and maps the result to an `ActionError` through `CONTACT_ERRORS`. The island calls it via `actions.contact(formData)`; there is no native-form fallback, since `/contact` is static and a POST to it returns 405.
+  - `submitContact` runs, in order: honeypot, anti-spam token (`tokenProblem()` in `src/lib/antispam.ts`), rate limit, Resend. Astro checks the fields against `contactInput` before the handler runs, so invalid fields and rejected spam reach neither the limiter nor Resend. The clock, `fetch` and the limiter are passed in; tests replace only those.
+  - The rate limit is 2 accepted submissions per 60 seconds per IP (`ratelimits` in `wrangler.jsonc`) and reports `TOO_MANY_REQUESTS`. If the limiter throws, the submission goes through.
+  - A Resend rejection or a failed request to Resend reports `BAD_GATEWAY`, the only code that shows the "email me directly" fallback. Anything else that throws surfaces as Astro's `INTERNAL_SERVER_ERROR`.
 
 - **Layout**: `src/layouts/BaseLayout.astro` holds the HTML shell, SEO/OG meta tags, fonts, analytics, Schema.org data, header and footer. Every page wraps its content in it and passes `title` and `description`; canonical/OG URLs and the active nav item come from `Astro.url` and `site` in `astro.config.ts`.
 
@@ -42,6 +45,7 @@ All site content lives in `src/content/`, collection entries included, kept sepa
 
 - `Date` is frozen at the epoch while modules load. Never compute dates at module scope (e.g. a copyright year in a content file); compute them inside component frontmatter or request handlers.
 - `astro:env/server` reads every secret when the module loads, and builds (Cloudflare Workers Builds included) have no secrets. Anything reachable from a prerendered page must import it lazily, inside a handler or component frontmatter: `const { X } = await import("astro:env/server")`. `/contact` reaches it through `ContactFormIsland` and through `ContactForm`'s `astro:actions` import of `src/actions/index.ts`. CI (`.github/workflows/ci.yml`) builds without `.env`, so a top-level import fails the PR check.
+- Bindings come from `import { env } from "cloudflare:workers"`, imported lazily like the secrets and typed in `src/env.d.ts`.
 - With `build.format: "file"`, Astro strips `.html` from request paths before routing, and Cloudflare's asset routing redirects `*.html` to the extensionless path.
 
 ### Styling
@@ -69,7 +73,7 @@ Locally they are read from `.env` (see `.env.example`). **`pnpm dev` and `pnpm p
 ## Testing
 
 - Vitest (`pnpm test`) covers `src/**/*.test.ts`; Playwright lives in the `tests/` workspace. Run `pnpm build` before `pnpm test:e2e`.
-- E2E tests cover routes, navigation and contact-form success/failure on desktop and mobile. They start the built Worker with dummy secrets through `wrangler dev --var` and a local Resend stub. Never switch them to real credentials or reuse a manually started server: local `.env` contains real email keys.
+- E2E tests cover routes, navigation and contact-form success, failure and rate limiting on desktop and mobile. Each contact test sends its own random `CF-Connecting-IP`, so parallel tests don't share the rate limit. They start the built Worker with dummy secrets through `wrangler dev --var` and a local Resend stub. Never switch them to real credentials or reuse a manually started server: local `.env` contains real email keys.
 - CI builds without `.env`, then runs Playwright with no repository secrets. The suite only targets its own local Worker; it does not accept `BASE_URL`.
 
 ## Important Conventions

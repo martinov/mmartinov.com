@@ -51,7 +51,7 @@ export const toFormError = (
   if (error.code === "BAD_GATEWAY") {
     return { message: error.message, sendFailed: true, fields: {} };
   }
-  if (error.code === "BAD_REQUEST") {
+  if (error.code === "BAD_REQUEST" || error.code === "TOO_MANY_REQUESTS") {
     return { message: error.message, sendFailed: false, fields: {} };
   }
   return { message: GENERIC_ERROR, sendFailed: false, fields: {} };

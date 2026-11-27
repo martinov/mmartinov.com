@@ -37,8 +37,8 @@ contact form locally sends a real email to `me@mmartinov.com`. To exercise the f
 
 - `pnpm check`: Prettier, `astro check` and the type check of the `tests/` workspace.
 - `pnpm test`: Vitest unit tests (`src/**/*.test.ts`).
-- `pnpm test:e2e`: Playwright suite in `tests/` (routes, navigation, contact-form success and
-  failure; desktop and mobile). Run `pnpm build` first, and install the browser once with
+- `pnpm test:e2e`: Playwright suite in `tests/` (routes, navigation, contact-form success, failure
+  and rate limiting; desktop and mobile). Run `pnpm build` first, and install the browser once with
   `pnpm --filter mmartinov-tests exec playwright install chromium`.
 
 The e2e suite is stubbed by construction (`tests/playwright.config.ts`): it starts its own
@@ -107,6 +107,10 @@ Runtime secrets are declared with `astro:env` in `astro.config.ts` and read lazi
   set; Astro generates a server-island encryption key per build.
 - **Preview secrets**: none documented, since previews are not configured (section 2). If they are
   set up later they must be separate from production.
+- **Bindings** are not secrets. The contact form's rate limiter (`CONTACT_LIMITER`) is a
+  `ratelimits` binding in `wrangler.jsonc` and deploys with the Worker, with no dashboard setup. Its
+  `namespace_id` must stay unique in the Cloudflare account: bindings that share one share their
+  counters, across Workers too.
 - Email: `from` stays on the verified sender domain `notifications.mmartinov.com`
   (`contact@notifications.mmartinov.com`), `to` is `me@mmartinov.com`, `reply_to` is the visitor.
   See `AGENTS.md`, Email Configuration.

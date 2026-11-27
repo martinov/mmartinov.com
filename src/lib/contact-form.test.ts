@@ -56,6 +56,12 @@ describe("toFormError", () => {
     ).toEqual({ message: "Invalid submission", sendFailed: false, fields: {} });
   });
 
+  it("shows a rate-limit rejection in the banner", () => {
+    expect(
+      toFormError({ code: "TOO_MANY_REQUESTS", message: "Too many messages." }),
+    ).toEqual({ message: "Too many messages.", sendFailed: false, fields: {} });
+  });
+
   it("hides the detail of an unexpected error", () => {
     expect(
       toFormError({ code: "INTERNAL_SERVER_ERROR", message: "boom" }),

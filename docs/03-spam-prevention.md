@@ -135,10 +135,11 @@ if (!data.name || !data.email || !data.message) {
 - Detailed logs server-side only
 - No information leakage
 
-### ✅ Rate Limiting (Future)
-- Could add IP-based rate limiting
-- Cloudflare provides this for free
-- Consider if spam increases
+### ✅ Rate Limiting
+- 2 accepted submissions per 60 seconds per visitor IP (`CF-Connecting-IP`)
+- Workers Rate Limiting binding `CONTACT_LIMITER`, declared under `ratelimits` in `wrangler.jsonc` and deployed with the Worker; no dashboard setup
+- Counted only after the honeypot, token and field checks pass, so rejected spam doesn't use up a visitor's allowance
+- If the limiter itself fails, the submission goes through
 
 ## What We Don't Use (And Why)
 

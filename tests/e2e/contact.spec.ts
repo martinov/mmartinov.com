@@ -2,7 +2,13 @@ import { randomUUID } from "node:crypto";
 import { expect, test, type Page } from "@playwright/test";
 import { FAILED_REPLY_TO, sentEmails } from "../src/resend.ts";
 
-const openContact = async (page: Page) => {
+const randomIp = () =>
+  `198.18.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
+
+// Each test is its own visitor, so parallel tests don't share the
+// two-per-minute rate limit. Only wrangler dev takes the IP from the request.
+const openContact = async (page: Page, ip = randomIp()) => {
+  await page.setExtraHTTPHeaders({ "CF-Connecting-IP": ip });
   await page.goto("/contact");
   await expect(page.locator("#confirm_email")).not.toHaveValue("");
 };
@@ -70,6 +76,34 @@ test("shows the direct-email fallback when Resend rejects a Contact Submission",
   await expect(
     page.getByRole("button", { name: "Send Message" }),
   ).toBeEnabled();
+});
+
+test("turns away a visitor's third Contact Submission within a minute", async ({
+  page,
+}) => {
+  const ip = randomIp();
+  for (let accepted = 0; accepted < 2; accepted++) {
+    await openContact(page, ip);
+    await fillContact(page);
+    await submit(page);
+    await expect(
+      page.getByRole("heading", { name: "Message Sent!" }),
+    ).toBeVisible();
+  }
+
+  await openContact(page, ip);
+  const name = await fillContact(page);
+  await submit(page);
+
+  await expect(page.locator("form")).toContainText(
+    "Too many messages. Please wait a minute and try again.",
+  );
+  await expect(directEmailLink(page)).toHaveCount(0);
+  expect(
+    (await sentEmails()).some((entry) =>
+      entry.payload.subject?.toString().includes(name),
+    ),
+  ).toBe(false);
 });
 
 const invalidFields = [

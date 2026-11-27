@@ -68,7 +68,7 @@ Declared with `astro:env` in `astro.config.ts` and imported lazily from `astro:e
 - `ANTISPAM_SECRET_KEY` - HMAC key for contact-form anti-spam tokens
 - `RESEND_API_URL` - Optional email endpoint for the e2e stub; leave unset in production to use Resend
 
-Locally they are read from `.env` (see `.env.example`). **`pnpm dev` and `pnpm preview` use the real keys in `.env`, so submitting the contact form locally sends a real email.** Shell env vars do not override `.env` in the worker unless `CLOUDFLARE_INCLUDE_PROCESS_ENV=true` is set, so to exercise the send-failure path run `CLOUDFLARE_INCLUDE_PROCESS_ENV=true RESEND_API_KEY=invalid pnpm dev`. In production they are Worker secrets: `pnpm wrangler secret put <NAME>`.
+Locally they are read from `.env` (see `.env.example`). **`pnpm dev` and `pnpm preview` use the real keys in `.env`, so submitting the contact form locally sends a real email.** Shell env vars do not override `.env` in the worker unless `CLOUDFLARE_INCLUDE_PROCESS_ENV=true` is set, so to exercise the send-failure path run `CLOUDFLARE_INCLUDE_PROCESS_ENV=true RESEND_API_KEY=invalid pnpm dev`. In production they are Worker secrets: `pnpm wrangler secret put <NAME>`. Worker Previews don't inherit them: `pnpm wrangler preview base-config secret put <NAME>` sets them for every Preview, and a Preview's contact form sends real email too.
 
 ## Testing
 
@@ -94,7 +94,7 @@ When modifying email functionality (`buildContactEmail()` in `src/lib/contact.ts
 
 ## Deployment
 
-Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`). Read `docs/02-deployment.md` before changing the deploy workflow, secrets or Workers Builds settings; `docs/04-deployment-history.md` is history only.
+Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`), deployed by Workers Builds: production from `main`, Worker Previews from every other branch at `https://<branch>.preview.mmartinov.com`. Read `docs/02-deployment.md` before changing the deploy workflow, secrets or Workers Builds settings; `docs/04-deployment-history.md` is history only.
 
 ## Agent skills
 

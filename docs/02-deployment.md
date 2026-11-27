@@ -18,7 +18,7 @@ Five things are easy to confuse:
 | Local hot reload          | `pnpm dev`                   | Astro dev server in workerd                      | **Real**: reads `.env`                           |
 | Local production build    | `pnpm build && pnpm preview` | The built output in workerd                      | **Real**: reads `.env`                           |
 | Stubbed browser tests     | `pnpm build && pnpm test:e2e` | The built Worker via `wrangler dev` on port 8781 | Stubbed: dummy secrets, Resend stub on port 8782 |
-| Cloudflare branch preview | `pnpm wrangler preview`      | A Worker Preview on Cloudflare                   | Not configured for this Worker (section 2)       |
+| Cloudflare branch preview | push a non-`main` branch     | A Worker Preview on Cloudflare (section 2)       | **Real**: Preview secrets (section 3)            |
 | Production                | merge to `main`              | Worker `mmartinov-com` on `mmartinov.com`        | Real: production Worker secrets                  |
 
 **Real-email warning.** `pnpm dev` and `pnpm preview` read the real keys in `.env`, so submitting the
@@ -67,16 +67,28 @@ preview. A real-email check of a deployed site is a manual, explicitly authorise
 `pnpm deploy` (`astro build && wrangler deploy`) deploys from a local machine straight to
 production. It is a manual fallback, not the normal path, and needs `pnpm wrangler login`.
 
-### Preview deployments: not configured
+### Preview deployments
 
-`wrangler.jsonc` sets `"workers_dev": false` and no `preview_urls`, and nothing in this repository
-documents a branch-preview domain or Preview secrets. Per the current Cloudflare docs,
-`pnpm wrangler preview` creates or updates a Worker Preview for the current branch under the same
-Worker, with its own settings and secrets, and Workers Builds runs it for non-production branches
-once "Builds for Preview branches" is enabled. Whether the dashboard has that enabled is **not
-independently verified**. Do not rely on a Preview for this site until an issue sets it up,
-including preview secrets that cannot mail a real recipient. Klimsyst has this configured; this
-Worker does not.
+A push to any branch other than `main` builds a Worker Preview of that branch under the same Worker,
+so a visible change can be checked before its PR is merged. A branch named `feature-example` is
+served at `https://feature-example.preview.mmartinov.com`; `preview.mmartinov.com` itself serves
+nothing.
+
+In the repository, `wrangler.jsonc` sets `"preview_urls": true`. Without it Wrangler turns preview
+URLs off together with `"workers_dev": false`, and the Previews lose their URL.
+
+The rest is dashboard configuration (Workers & Pages → `mmartinov-com`), **not independently
+verified** here:
+
+- Settings → Builds → builds for non-production branches **on**, with **Set up Worker Previews**
+  (one-way). Preview command `pnpm wrangler preview`; include all branches (`*`), exclude `main`.
+- Domains → custom domain `preview.mmartinov.com`, **Enable for: Preview**. Cloudflare creates the
+  wildcard DNS record and certificate.
+- Preview builds use the same image as production builds, so `PNPM_VERSION` (below) applies to them
+  too.
+
+Previews have their own secrets (section 3), and their contact form sends real email to
+`me@mmartinov.com`. Do not submit it on a Preview unless a real email is intended.
 
 ### Workers Builds `PNPM_VERSION`
 
@@ -105,8 +117,11 @@ Runtime secrets are declared with `astro:env` in `astro.config.ts` and read lazi
 - **Build variables** are a separate store (Workers Builds → Settings → Builds), invisible to the
   running Worker. The only one this guide documents is `PNPM_VERSION` (section 2). No `ASTRO_KEY` is
   set; Astro generates a server-island encryption key per build.
-- **Preview secrets**: none documented, since previews are not configured (section 2). If they are
-  set up later they must be separate from production.
+- **Preview secrets**: Worker Previews do not inherit the production secrets. Set the two required
+  ones once for every Preview with `pnpm wrangler preview base-config secret put <NAME>`, and leave
+  `RESEND_API_URL` unset. The recipient is fixed in code, so a Preview with a working
+  `RESEND_API_KEY` mails `me@mmartinov.com`. A Preview takes the base config secrets when it is
+  created and keeps them; list them with `pnpm wrangler preview secret list --name <preview-name>`.
 - **Bindings** are not secrets. The contact form's rate limiter (`CONTACT_LIMITER`) is a
   `ratelimits` binding in `wrangler.jsonc` and deploys with the Worker, with no dashboard setup. Its
   `namespace_id` must stay unique in the Cloudflare account: bindings that share one share their
@@ -129,7 +144,11 @@ Runtime secrets are declared with `astro:env` in `astro.config.ts` and read lazi
 - Check the browser console, and that `/_actions/contact` and `/_server-islands/ContactFormIsland`
   respond.
 - Check Worker logs: `pnpm wrangler tail`, or Observability in the Cloudflare dashboard.
-- Confirm both required secrets exist: `pnpm wrangler secret list`.
+- Confirm both required secrets exist: `pnpm wrangler secret list` (production) or
+  `pnpm wrangler preview secret list --name <preview-name>` (the branch's Preview).
+- A Preview created before the base config secrets were set has none, and its island fails.
+  Recreate it with `pnpm wrangler preview delete --name <preview-name>`, then retry the branch
+  build.
 - A Resend failure shows the "email me directly" fallback; check the sending domain
   `notifications.mmartinov.com` in Resend.
 

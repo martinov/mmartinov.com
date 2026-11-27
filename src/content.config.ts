@@ -23,6 +23,9 @@ const work = defineCollection({
     // Position on /work, ascending
     order: z.number().int(),
     title: z.string(),
+    // When the engagement ran, shown under the title: "Feb 2025 – Mar 2026",
+    // "2020 – present"
+    period: z.string(),
     challenge: bulletSection,
     solution: bulletSection,
     roadmap: z

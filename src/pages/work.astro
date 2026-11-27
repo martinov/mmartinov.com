@@ -31,9 +31,10 @@ const caseStudies = (await getCollection("work"))
       spacing="large"
     >
       <div>
-        <h2 class="text-2xl sm:text-3xl lg:text-4xl mb-6 sm:mb-8">
-          {caseStudy.title}
-        </h2>
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl mb-2">{caseStudy.title}</h2>
+        <p class="text-sm uppercase tracking-wide text-slate-500 mb-6 sm:mb-8">
+          {caseStudy.period}
+        </p>
 
         {/* Challenge */}
         <div class="mb-10">

@@ -54,6 +54,7 @@ export const formFields = [
     type: "text",
     required: true,
     placeholder: "Your name",
+    error: "Please enter your name.",
   },
   {
     name: "email",
@@ -61,6 +62,7 @@ export const formFields = [
     type: "email",
     required: true,
     placeholder: "your@email.com",
+    error: "Please enter a valid email address.",
   },
   {
     name: "company",
@@ -75,6 +77,7 @@ export const formFields = [
     type: "textarea",
     required: true,
     placeholder: "Tell me about your challenge or project...",
+    error: "Please enter a message.",
     rows: 5,
   },
   {

@@ -1,10 +1,20 @@
 import { useSignal } from "@preact/signals";
 import { useEffect, useRef } from "preact/hooks";
-import { actions } from "astro:actions";
+import { actions, isInputError } from "astro:actions";
 import { buttonClass } from "../lib/button.ts";
-import { GENERIC_ERROR, toFormError } from "../lib/contact-form.ts";
+import {
+  fieldMessage,
+  GENERIC_ERROR,
+  toFormError,
+  type FieldErrors,
+} from "../lib/contact-form.ts";
 import { formFields } from "../content/contact.ts";
 import { siteConfig } from "../content/site.ts";
+
+const INPUT_CLASS =
+  "w-full px-4 py-3.5 border-2 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:border-cyan-700 transition-colors text-base";
+
+type FieldElement = HTMLInputElement | HTMLTextAreaElement;
 
 interface ContactFormProps {
   antispamToken?: string;
@@ -15,6 +25,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
   const submitStatus = useSignal<"idle" | "success" | "error">("idle");
   const errorMessage = useSignal("");
   const sendFailed = useSignal(false);
+  const fieldErrors = useSignal<FieldErrors>({});
   const confirmEmailRef = useRef<HTMLInputElement>(null);
 
   // Fill the confirm_email field with the antispam token via JavaScript
@@ -31,6 +42,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
     submitStatus.value = "idle";
     errorMessage.value = "";
     sendFailed.value = false;
+    fieldErrors.value = {};
 
     const form = e.target as HTMLFormElement;
 
@@ -39,10 +51,21 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
       const { error } = await actions.contact(new FormData(form));
 
       if (error) {
-        const formError = toFormError(error);
+        const formError = toFormError(
+          error,
+          isInputError(error) ? error.fields : undefined,
+        );
         submitStatus.value = "error";
         errorMessage.value = formError.message;
         sendFailed.value = formError.sendFailed;
+        fieldErrors.value = formError.fields;
+        // Focus makes a screen reader announce the field with its error
+        const firstInvalid = formFields.find(
+          (field) => formError.fields[field.name],
+        );
+        if (firstInvalid) {
+          form.querySelector<FieldElement>(`#${firstInvalid.name}`)?.focus();
+        }
       } else {
         submitStatus.value = "success";
         form.reset();
@@ -53,6 +76,35 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
     } finally {
       isSubmitting.value = false;
     }
+  };
+
+  // The browser's own validity (required, type="email") shows the error
+  // before submit; the server's answer replaces it afterwards
+  const validateOnBlur = (e: FocusEvent) => {
+    const field = e.currentTarget as FieldElement;
+    const message = fieldMessage(field.name);
+    if (!message || field.validity.valid) return;
+    fieldErrors.value = { ...fieldErrors.value, [field.name]: message };
+  };
+
+  const clearFieldError = (e: Event) => {
+    const { name } = e.currentTarget as FieldElement;
+    if (!fieldErrors.value[name]) return;
+    const { [name]: _, ...rest } = fieldErrors.value;
+    fieldErrors.value = rest;
+  };
+
+  const fieldProps = (name: string) => {
+    const invalid = Boolean(fieldErrors.value[name]);
+    return {
+      id: name,
+      name,
+      "aria-invalid": invalid ? ("true" as const) : undefined,
+      "aria-describedby": invalid ? `${name}-error` : undefined,
+      onBlur: validateOnBlur,
+      onInput: clearFieldError,
+      class: `${INPUT_CLASS} ${invalid ? "border-red-700" : "border-slate-300"}`,
+    };
   };
 
   return (
@@ -136,28 +188,32 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
               </label>
               {field.type === "textarea" ? (
                 <textarea
-                  id={field.name}
-                  name={field.name}
+                  {...fieldProps(field.name)}
                   required={field.required}
                   placeholder={field.placeholder}
                   rows={field.rows || 5}
-                  class="w-full px-4 py-3.5 border-2 border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:border-cyan-700 transition-colors text-base"
                 />
               ) : (
                 <input
+                  {...fieldProps(field.name)}
                   type={field.type}
-                  id={field.name}
-                  name={field.name}
                   required={field.required}
                   placeholder={field.placeholder}
-                  class="w-full px-4 py-3.5 border-2 border-slate-300 focus:outline-none focus:ring-2 focus:ring-cyan-700 focus:border-cyan-700 transition-colors text-base"
                 />
+              )}
+              {fieldErrors.value[field.name] && (
+                <p id={`${field.name}-error`} class="mt-2 text-sm text-red-700">
+                  {fieldErrors.value[field.name]}
+                </p>
               )}
             </div>
           ))}
 
-          {submitStatus.value === "error" && (
-            <div class="bg-red-50 border-2 border-red-200 text-red-700 px-5 py-4 flex items-start gap-3">
+          {(sendFailed.value || errorMessage.value) && (
+            <div
+              role="alert"
+              class="bg-red-50 border-2 border-red-200 text-red-700 px-5 py-4 flex items-start gap-3"
+            >
               <svg
                 class="w-5 h-5 mt-0.5 flex-shrink-0"
                 fill="currentColor"
@@ -213,7 +269,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   />
                 </svg>
-                Loading...
+                Sending…
               </>
             ) : (
               "Send Message"

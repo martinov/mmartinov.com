@@ -133,6 +133,26 @@ test("flags an invalid email on leaving the field and clears it once corrected",
   await expect(email).not.toHaveAttribute("aria-invalid");
 });
 
+test("accepts a second Contact Submission after the first", async ({
+  page,
+}) => {
+  await openContact(page);
+  await fillContact(page);
+  await submit(page);
+  await page.getByRole("button", { name: "Send another message" }).click();
+  const name = await fillContact(page);
+  await submit(page);
+
+  await expect(
+    page.getByRole("heading", { name: "Message Sent!" }),
+  ).toBeVisible();
+  expect(
+    (await sentEmails()).some((entry) =>
+      entry.payload.subject?.toString().includes(name),
+    ),
+  ).toBe(true);
+});
+
 test("rejects a tampered anti-spam token without sending email", async ({
   page,
 }) => {

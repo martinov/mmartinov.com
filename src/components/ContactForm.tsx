@@ -1,5 +1,4 @@
 import { useSignal } from "@preact/signals";
-import { useEffect, useRef } from "preact/hooks";
 import { actions, isInputError } from "astro:actions";
 import { buttonClass } from "../lib/button.ts";
 import {
@@ -26,15 +25,13 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
   const errorMessage = useSignal("");
   const sendFailed = useSignal(false);
   const fieldErrors = useSignal<FieldErrors>({});
-  const confirmEmailRef = useRef<HTMLInputElement>(null);
 
   // Fill the confirm_email field with the antispam token via JavaScript
-  // Bots that don't execute JS won't have this field filled correctly
-  useEffect(() => {
-    if (confirmEmailRef.current && antispamToken) {
-      confirmEmailRef.current.value = antispamToken;
-    }
-  }, [antispamToken]);
+  // Bots that don't execute JS won't have this field filled correctly.
+  // A ref callback, not an effect: "Send another message" mounts a new input
+  const fillToken = (input: HTMLInputElement | null) => {
+    if (input && antispamToken) input.value = antispamToken;
+  };
 
   const handleSubmit = async (e: Event) => {
     e.preventDefault();
@@ -171,7 +168,7 @@ export default function ContactForm({ antispamToken }: ContactFormProps) {
               type="text"
               id="confirm_email"
               name="confirm_email"
-              ref={confirmEmailRef}
+              ref={fillToken}
               tabIndex={-1}
               autoComplete="off"
             />

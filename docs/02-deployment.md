@@ -70,9 +70,9 @@ production. It is a manual fallback, not the normal path, and needs `pnpm wrangl
 ### Preview deployments
 
 A push to any branch other than `main` builds a Worker Preview of that branch under the same Worker,
-so a visible change can be checked before its PR is merged. A branch named `feature-example` is
-served at `https://feature-example.preview.mmartinov.com`; `preview.mmartinov.com` itself serves
-nothing.
+so a visible change can be checked before its PR is merged. A branch named `feature/example` is
+served at `https://feature-example-mmartinov-com.mmartinov.workers.dev`. The URL is public to anyone
+who has it. There is no custom preview domain.
 
 In the repository, `wrangler.jsonc` sets `"preview_urls": true`. Without it Wrangler turns preview
 URLs off together with `"workers_dev": false`, and the Previews lose their URL.
@@ -82,8 +82,8 @@ verified** here:
 
 - Settings → Builds → builds for non-production branches **on**, with **Set up Worker Previews**
   (one-way). Preview command `pnpm wrangler preview`; include all branches (`*`), exclude `main`.
-- Domains → custom domain `preview.mmartinov.com`, **Enable for: Preview**. Cloudflare creates the
-  wildcard DNS record and certificate.
+- Settings → Domains & Routes → Worker URL: **Preview** (`*-mmartinov-com.mmartinov.workers.dev`)
+  on, **Production** off.
 - Preview builds use the same image as production builds, so `PNPM_VERSION` (below) applies to them
   too.
 

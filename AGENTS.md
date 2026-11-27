@@ -94,7 +94,7 @@ When modifying email functionality (`buildContactEmail()` in `src/lib/contact.ts
 
 ## Deployment
 
-Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`), deployed by Workers Builds: production from `main`, Worker Previews from every other branch at `https://<branch>.preview.mmartinov.com`. Read `docs/02-deployment.md` before changing the deploy workflow, secrets or Workers Builds settings; `docs/04-deployment-history.md` is history only.
+Cloudflare Workers, Worker name `mmartinov-com` (`wrangler.jsonc`), deployed by Workers Builds: production from `main`, Worker Previews from every other branch at `https://<branch>-mmartinov-com.mmartinov.workers.dev`. Read `docs/02-deployment.md` before changing the deploy workflow, secrets or Workers Builds settings; `docs/04-deployment-history.md` is history only.
 
 ## Agent skills
 

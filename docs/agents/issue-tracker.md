@@ -20,7 +20,7 @@ Read its state label (see `triage-labels.md`). An issue with no state label coun
 
 - `ready-for-agent`: build it.
 - `ready-for-human`, `needs-triage`, `needs-info`: stop. The open decisions in it are Martin's: lay out the options with a recommendation and wait for his answer.
-- An issue whose acceptance criteria start with a decision ("Decision recorded", "decide on…") is a decision first: the build waits on the answer, even when one option looks obvious.
+- An unresolved human decision stops the build even on a `ready-for-agent` issue, and so does an issue whose acceptance criteria start with a decision ("Decision recorded", "decide on…"): the build waits on the answer, even when one option looks obvious.
 
 Record each decision as a comment on the issue before building on it, starting `## Decision`. When it is hard to reverse (a storage choice, a public URL scheme, a content model), also write an ADR in `docs/adr/` (see `domain.md`).
 
